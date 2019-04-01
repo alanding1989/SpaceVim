@@ -29,7 +29,7 @@ function! SpaceVim#layers#lang#markdown#plugins() abort
         \ { 'on_ft' : 'markdown',
         \ 'depends': 'open-browser.vim',
         \ 'build' : 'cd app & yarn install' }])
-  call add(plugins, ['lvht/tagbar-markdown',{'merged' : 0}])
+  " call add(plugins, ['lvht/tagbar-markdown',{'merged' : 0}])
   return plugins
 endfunction
 

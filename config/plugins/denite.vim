@@ -106,8 +106,8 @@ call denite#custom#var('menu', 'unite_source_menu_compatibility', 1)
 " KEY MAPPINGS
 let s:insert_mode_mappings = [
       \ ['qw'     , '<denite:enter_mode:normal>'           , 'noremap'],
-      \ ['<ESC>'  , '<denite:enter_mode:normal>'           , 'noremap'],
-      \ ['<C-q>'  , '<denite:quit>'                        , 'noremap'],
+      \ ['<C-o>'  , '<denite:enter_mode:normal>'           , 'noremap'],
+      \ ['<Esc>'  , '<denite:quit>'                        , 'noremap'],
       \ ['<C-j>'  , '<denite:move_to_next_line>'           , 'noremap'],
       \ ['<C-k>'  , '<denite:move_to_previous_line>'       , 'noremap'],
       \ ['<C-b>'  , '<denite:move_caret_to_left>'          , 'noremap'],

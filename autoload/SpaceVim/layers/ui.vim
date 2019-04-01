@@ -10,9 +10,6 @@ scriptencoding utf-8
 function! SpaceVim#layers#ui#plugins() abort
   let plugins = [
         \ ['Yggdroot/indentLine', {'merged' : 0}],
-        \ ['majutsushi/tagbar', {'loadconf' : 1}],
-        \ ['tenfyzhong/tagbar-makefile.vim', {'merged': 0}],
-        \ ['tenfyzhong/tagbar-proto.vim', {'merged': 0}],
         \ ['t9md/vim-choosewin', {'merged' : 0}],
         \ ['mhinz/vim-startify', {'loadconf' : 1, 'merged' : 0}],
         \ ]
@@ -21,6 +18,9 @@ function! SpaceVim#layers#ui#plugins() abort
           \ 'loadconf' : 1}])
     call add(plugins, ['vim-airline/vim-airline-themes',         { 'merged' : 0}])
   endif
+        " \ ['majutsushi/tagbar', {'loadconf' : 1}],
+        " \ ['tenfyzhong/tagbar-makefile.vim', {'merged': 0}],
+        " \ ['tenfyzhong/tagbar-proto.vim', {'merged': 0}],
 
   return plugins
 
@@ -43,12 +43,12 @@ function! SpaceVim#layers#ui#config() abort
         \ ]
   let g:signify_disable_by_default = 0
   let g:signify_line_highlight = 0
-  noremap <silent> <F2> :TagbarToggle<CR>
-  if !empty(g:spacevim_windows_smartclose)
-    call SpaceVim#mapping#def('nnoremap <silent>', g:spacevim_windows_smartclose, ':<C-u>call zvim#util#SmartClose()<cr>',
-          \ 'Smart close windows',
-          \ 'call zvim#util#SmartClose()')
-  endif
+  " noremap <silent> <F2> :TagbarToggle<CR>
+  " if !empty(g:spacevim_windows_smartclose)
+    " call SpaceVim#mapping#def('nnoremap <silent>', g:spacevim_windows_smartclose, ':<C-u>call zvim#util#SmartClose()<cr>',
+          " \ 'Smart close windows',
+          " \ 'call zvim#util#SmartClose()')
+  " endif
   " Ui toggles
   call SpaceVim#mapping#space#def('nnoremap', ['t', '8'], 'call call('
         \ . string(s:_function('s:toggle_fill_column')) . ', [])',
