@@ -83,24 +83,25 @@ function! s:defx_init()
         \ defx#do_action('toggle_select_all')
 
   " Define mappings
-  nnoremap <silent><buffer><expr> gx
-        \ defx#do_action('execute_system')
+  nnoremap <silent><buffer> qq
+        \ :Defx -columns=git:mark:filename:type<CR>
+  " nnoremap <silent><buffer><expr> q
+        " \ defx#do_action('quit')
+  nnoremap <silent><buffer><expr> yy defx#do_action('call', 'DefxYarkPath')
   nnoremap <silent><buffer><expr> c
         \ defx#do_action('copy')
-  nnoremap <silent><buffer><expr> q
-        \ defx#do_action('quit')
   nnoremap <silent><buffer><expr> m
         \ defx#do_action('move')
   nnoremap <silent><buffer><expr> P
         \ defx#do_action('paste')
+  nnoremap <silent><buffer><expr> j
+        \ line('.') == line('$') ? 'gg' : 'j'
+  nnoremap <silent><buffer><expr> k
+        \ line('.') == 1 ? 'G' : 'k'
   nnoremap <silent><buffer><expr> h defx#do_action('call', 'DefxSmartH')
   nnoremap <silent><buffer><expr> <Left> defx#do_action('call', 'DefxSmartH')
-  nnoremap <silent><buffer><expr> l
-        \ defx#is_directory() ?
-        \ defx#do_action('open_tree') . 'j' : defx#do_action('drop')
-  nnoremap <silent><buffer><expr> <Right>
-        \ defx#is_directory() ?
-        \ defx#do_action('open_tree') . 'j' : defx#do_action('open')
+  nnoremap <silent><buffer><expr> l defx#do_action('call', 'DefxSmartL')
+  nnoremap <silent><buffer><expr> <Right> defx#do_action('call', 'DefxSmartL')
   nnoremap <silent><buffer><expr> <Cr>
         \ defx#is_directory() ?
         \ defx#do_action('open_directory') : defx#do_action('drop')
@@ -122,18 +123,15 @@ function! s:defx_init()
   nnoremap <silent><buffer><expr> M
         \ defx#do_action('new_multiple_files')
   nnoremap <silent><buffer><expr> d
+        \ defx#do_action('remove_trash')
+  nnoremap <silent><buffer><expr> D
         \ defx#do_action('remove')
   nnoremap <silent><buffer><expr> r
         \ defx#do_action('rename')
-  nnoremap <silent><buffer><expr> yy defx#do_action('call', 'DefxYarkPath')
   nnoremap <silent><buffer><expr> .
         \ defx#do_action('toggle_ignored_files')
   nnoremap <silent><buffer><expr> ~
         \ defx#do_action('cd')
-  nnoremap <silent><buffer><expr> j
-        \ line('.') == line('$') ? 'gg' : 'j'
-  nnoremap <silent><buffer><expr> k
-        \ line('.') == 1 ? 'G' : 'k'
   nnoremap <silent><buffer><expr> <C-r>
         \ defx#do_action('redraw')
   nnoremap <silent><buffer><expr> <C-g>
@@ -143,7 +141,40 @@ function! s:defx_init()
   nnoremap <silent><buffer><expr> t
         \ defx#do_action('toggle_columns',
         \                'git:icons:mark:filename:type:size:time')
+  nnoremap <silent><buffer><expr> i
+        \ defx#do_action('search')
+  nnoremap <silent><buffer><expr> gx
+        \ defx#do_action('execute_system')
+  nnoremap <silent><buffer><expr> g0
+        \ defx#do_action('execute_command')
 endf
+
+
+function! DefxSmartL(_)
+  if defx#is_directory()
+    call defx#call_action('open_tree')
+    normal! j
+  else
+    let filepath = defx#get_candidate()['action__path']
+    if tabpagewinnr(tabpagenr(), '$') >= 3
+      if has('nvim')
+        let input = input({
+              \ 'prompt'      : 'ChooseWin No.: ',
+              \ 'cancelreturn': 0,
+              \ })
+        if input == 0 | return | endif
+      else
+        let input = input('ChooseWin No.: ')
+      endif
+      if input == winnr() | return | endif
+      exec ': ' . input . 'wincmd w'
+      exec ':e' . filepath
+    else
+      exec 'wincmd w'
+      exec ':e' . filepath
+    endif
+  endif
+endfunction
 
 function! DefxSmartH(_)
   " candidate is opend tree?
