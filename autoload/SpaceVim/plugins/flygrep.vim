@@ -602,10 +602,10 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
     let s:flygrep_win_id = nvim_open_win(s:buffer_id, v:true,
           \ {
           \ 'relative': 'editor',
-          \ 'winwidth': &columns,
+          \ 'width'   : &columns,
           \ 'height'  : flygrep_win_height,
-          \ 'row': &lines - flygrep_win_height - 2,
-          \ 'col': 0
+          \ 'row'     : &lines - flygrep_win_height - 2,
+          \ 'col'     : 0
           \ })
   else
     noautocmd rightbelow split __flygrep__
