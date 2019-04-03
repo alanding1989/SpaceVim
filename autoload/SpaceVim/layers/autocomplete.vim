@@ -30,7 +30,6 @@ let s:SYS = SpaceVim#api#import('system')
 
 function! SpaceVim#layers#autocomplete#plugins() abort
   let plugins = [
-        \ ['honza/vim-snippets',          { 'merged' : 0 }],
         \ ['Shougo/neco-syntax',          { 'on_event' : 'InsertEnter'}],
         \ ['Shougo/context_filetype.vim', { 'on_event' : 'InsertEnter'}],
         \ ['Shougo/neoinclude.vim',       { 'on_event' : 'InsertEnter'}],
@@ -44,7 +43,6 @@ function! SpaceVim#layers#autocomplete#plugins() abort
           \ 'on_ft' : 'neosnippet',
           \ 'loadconf' : 1,
           \ 'on_cmd' : 'NeoSnippetEdit'}])
-    call add(plugins, ['Shougo/neosnippet-snippets', {'merged'  : 0}])
     call add(plugins, ['Shougo/neopairs.vim',        {'on_event': 'InsertEnter'}])
   elseif g:spacevim_snippet_engine ==# 'ultisnips'
     call add(plugins, ['SirVer/ultisnips',{ 'loadconf_before' : 1,

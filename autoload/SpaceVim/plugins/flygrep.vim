@@ -602,10 +602,10 @@ function! SpaceVim#plugins#flygrep#open(agrv) abort
     let s:flygrep_win_id = nvim_open_win(s:buffer_id, v:true,
           \ {
           \ 'relative': 'editor',
-          \ 'width'   : &columns,
+          \ 'winwidth': &columns,
           \ 'height'  : flygrep_win_height,
-          \ 'row'     : &lines - flygrep_win_height - 2,
-          \ 'col'     : 0
+          \ 'row': &lines - flygrep_win_height - 2,
+          \ 'col': 0
           \ })
   else
     noautocmd rightbelow split __flygrep__
@@ -680,10 +680,10 @@ function! s:create_statusline() abort
         \ v:true,
         \ {
         \   'relative': 'editor',
-        \   'width'   : &columns,
+        \   'winwidth': &columns ,
         \   'height'  : 1,
-        \   'row'     : &lines ,
-        \   'col'     : 10
+        \   'row': &lines ,
+        \   'col': 10
         \ })
   call setbufvar(s:statusline_buf_id, '&relativenumber', 0)
   call setbufvar(s:statusline_buf_id, '&number', 0)
