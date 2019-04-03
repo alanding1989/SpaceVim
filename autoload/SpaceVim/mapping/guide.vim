@@ -508,11 +508,11 @@ function! s:winopen() abort " {{{
     endif
     call nvim_open_win(s:bufnr, v:true,
           \ {
-          \ 'relative' : 'editor',
-          \ 'width'    : &columns,
-          \ 'height'   : 12,
-          \ 'row'      : &lines - 14,
-          \ 'col'      : 0
+          \ 'relative': 'editor',
+          \ 'width'   : &columns,
+          \ 'height'  : 12,
+          \ 'row'     : &lines - 14,
+          \ 'col'     : 0
           \ })
   else
     if bufexists(s:bufnr)
