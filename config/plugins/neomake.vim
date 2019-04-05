@@ -12,10 +12,10 @@ let g:neomake_cursormoved_delay = 30
 
 let s:neomake_automake_events = {}
 let s:neomake_automake_events['BufWritePost'] = {'delay': 0}
-let s:neomake_automake_events['BufWinEnter']  = {'delay': 300}
+let s:neomake_automake_events['BufWinEnter']  = {'delay': 500}
 if get(g:, 'spacevim_lint_on_the_fly', 0)
-    let s:neomake_automake_events['TextChanged'] = {'delay': 300}
-    let s:neomake_automake_events['TextChangedI'] = {'delay': 300}
+    let s:neomake_automake_events['TextChanged'] = {'delay': 750}
+    let s:neomake_automake_events['TextChangedI'] = {'delay': 750}
 endif
 
 if !empty(s:neomake_automake_events)

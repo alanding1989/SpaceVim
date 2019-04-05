@@ -102,9 +102,7 @@ function! s:defx_init()
   nnoremap <silent><buffer><expr> <Left> defx#do_action('call', 'DefxSmartH')
   nnoremap <silent><buffer><expr> l defx#do_action('call', 'DefxSmartL')
   nnoremap <silent><buffer><expr> <Right> defx#do_action('call', 'DefxSmartL')
-  nnoremap <silent><buffer><expr> <Cr>
-        \ defx#is_directory() ?
-        \ defx#do_action('open_directory') : defx#do_action('drop')
+  nnoremap <silent><buffer><expr> <Cr> defx#do_action('call', 'DefxSmartCR')
   nnoremap <silent><buffer><expr> <2-LeftMouse>
         \ defx#is_directory() ?
         \ defx#do_action('open_tree') : defx#do_action('drop')
@@ -141,8 +139,6 @@ function! s:defx_init()
   nnoremap <silent><buffer><expr> t
         \ defx#do_action('toggle_columns',
         \                'git:icons:mark:filename:type:size:time')
-  nnoremap <silent><buffer><expr> i
-        \ defx#do_action('search')
   nnoremap <silent><buffer><expr> gx
         \ defx#do_action('execute_system')
   nnoremap <silent><buffer><expr> g0
@@ -154,6 +150,31 @@ function! DefxSmartL(_)
   if defx#is_directory()
     call defx#call_action('open_tree')
     normal! j
+  else
+    let filepath = defx#get_candidate()['action__path']
+    if tabpagewinnr(tabpagenr(), '$') >= 3
+      if has('nvim')
+        let input = input({
+              \ 'prompt'      : 'ChooseWin No.: ',
+              \ 'cancelreturn': 0,
+              \ })
+        if input == 0 | return | endif
+      else
+        let input = input('ChooseWin No.: ')
+      endif
+      if input == winnr() | return | endif
+      exec ': ' . input . 'wincmd w'
+      exec ':e' . filepath
+    else
+      exec 'wincmd w'
+      exec ':e' . filepath
+    endif
+  endif
+endfunction
+
+function! DefxSmartCR(_)
+  if defx#is_directory()
+    call defx#call_action('open_directory')
   else
     let filepath = defx#get_candidate()['action__path']
     if tabpagewinnr(tabpagenr(), '$') >= 3
