@@ -34,7 +34,6 @@ function! SpaceVim#layers#autocomplete#plugins() abort
         \ ['Shougo/context_filetype.vim', { 'on_event' : 'InsertEnter'}],
         \ ['Shougo/neoinclude.vim',       { 'on_event' : 'InsertEnter'}],
         \ ]
-    call add(plugins, ['Shougo/neopairs.vim',        {'on_event': 'InsertEnter'}])
   if g:spacevim_autocomplete_parens
     call add(plugins, ['Raimondi/delimitMate',        { 'merged' : 0}])
   endif
@@ -44,12 +43,13 @@ function! SpaceVim#layers#autocomplete#plugins() abort
           \ 'on_ft' : 'neosnippet',
           \ 'loadconf' : 1,
           \ 'on_cmd' : 'NeoSnippetEdit'}])
+    call add(plugins, ['Shougo/neopairs.vim',    {'on_event': 'InsertEnter'}])
   elseif g:spacevim_snippet_engine ==# 'ultisnips'
     call add(plugins, ['SirVer/ultisnips',{ 'loadconf_before' : 1,
           \ 'merged' : 0}])
   endif
   if g:spacevim_autocomplete_method ==# 'ycm'
-    call add(plugins, ['Valloric/YouCompleteMe',            { 'loadconf_before' : 1, 'merged' : 0}])
+    call add(plugins, ['Valloric/YouCompleteMe', { 'loadconf_before' : 1, 'merged' : 0}])
   elseif g:spacevim_autocomplete_method ==# 'neocomplete'
     call add(plugins, ['Shougo/neocomplete', {
           \ 'on_event' : 'InsertEnter',
