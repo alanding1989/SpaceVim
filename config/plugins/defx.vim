@@ -36,7 +36,7 @@ call defx#custom#column('filename', {
       \ 'opened_icon'   : '',
       \ 'root_icon'     : 'O(∩_∩)O',
       \ })
-      " \ 'root_icon'     : 'R',
+" \ 'root_icon'     : 'R',
 
 
 let g:_spacevim_autoclose_defx = 1
@@ -85,7 +85,7 @@ function! s:defx_init()
   nnoremap <silent><buffer> qq
         \ :Defx -columns=git:mark:filename:type<CR>
   " nnoremap <silent><buffer><expr> q
-        " \ defx#do_action('quit')
+  " \ defx#do_action('quit')
   nnoremap <silent><buffer><expr> yy defx#do_action('call', 'DefxYarkPath')
   nnoremap <silent><buffer><expr> c
         \ defx#do_action('copy')
@@ -145,8 +145,8 @@ function! s:defx_init()
 endf
 
 
+function! DefxSmartL(_) "{{{
 " in this function we should vim-choosewin if possible
-function! DefxSmartL(_)
   if defx#is_directory()
     call defx#call_action('open_tree')
     normal! j
@@ -178,34 +178,43 @@ function! DefxSmartL(_)
       exec 'e' filepath
     endif
   endif
-endfunction
+endfunction "}}}
 
-function! DefxSmartCR(_)
+function! DefxSmartCR(_) "{{{
   if defx#is_directory()
-    call defx#call_action('open_directory')
+    call defx#call_action('open_tree')
+    normal! j
   else
     let filepath = defx#get_candidate()['action__path']
-    if tabpagewinnr(tabpagenr(), '$') >= 3
-      if has('nvim')
-        let input = input({
-              \ 'prompt'      : 'ChooseWin No.: ',
-              \ 'cancelreturn': 0,
-              \ })
-        if input == 0 | return | endif
+    if tabpagewinnr(tabpagenr(), '$') >= 3    " if there are more than 2 normal windows
+      if exists(':ChooseWin') == 2
+        ChooseWin
       else
-        let input = input('ChooseWin No.: ')
+        if has('nvim')
+          let input = input({
+                \ 'prompt'      : 'ChooseWin No.: ',
+                \ 'cancelreturn': 0,
+                \ })
+          if input == 0 | return | endif
+        else
+          let input = input('ChooseWin No.: ')
+        endif
+        if input == winnr()
+          echohl WarningMsg
+          echo 'should`t choose exsiting defx window'
+          echohl None
+        endif
+        exec input . 'wincmd w'
       endif
-      if input == winnr() | return | endif
-      exec ': ' . input . 'wincmd w'
-      exec ':e' . filepath
+      exec 'e' filepath
     else
       exec 'wincmd w'
-      exec ':e' . filepath
+      exec 'e' filepath
     endif
   endif
-endfunction
+endfunction "}}}
 
-function! DefxSmartH(_)
+function! DefxSmartH(_) "{{{
   " candidate is opend tree?
   if defx#is_opened_tree()
     return defx#call_action('close_tree')
@@ -224,7 +233,8 @@ function! DefxSmartH(_)
 
   " if you want close_tree immediately, enable below line.
   call defx#call_action('close_tree')
-endfunction
+endfunction "}}}
+
 
 function! DefxYarkPath(_) abort
   let candidate = defx#get_candidate()
