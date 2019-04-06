@@ -1702,7 +1702,9 @@ The default color for iedit is `red`/`green` which is based on the current color
 | `0`/`<Home>`  | go to the beginning of the current occurrence                                   |
 | `$`/`<End>`   | go to the end of the current occurrence                                         |
 | `D`           | delete the occurrences                                                          |
+| `s`           | delete the character under cursor and switch to iedit-Insert mode               |
 | `S`           | delete the occurrences and switch to iedit-Insert mode                          |
+| `x`           | delete the character under cursor in all the occurrences                        |
 | `gg`          | go to first occurrence                                                          |
 | `G`           | go to last occurrence                                                           |
 | `n`           | go to next occurrence                                                           |
@@ -1712,13 +1714,18 @@ The default color for iedit is `red`/`green` which is based on the current color
 
 **In iedit-Insert mode:**
 
-| Key Bindings | Descriptions                   |
-| ------------ | ------------------------------ |
-| `<Esc>`      | go back to `iedit-Normal` mode |
-| `<Left>`     | Move cursor to left            |
-| `<Right>`    | Move cursor to right           |
-| `Ctrl-w`     | delete words before cursor     |
-| `Ctrl-k`     | delete words after cursor      |
+| Key Bindings             | Descriptions                                                |
+| ------------------------ | ----------------------------------------------------------- |
+| `Ctrl-g` / `<Esc>`       | go back to `iedit-Normal` mode                              |
+| `Ctrl-b` / `<Left>`      | move cursor to left                                         |
+| `Ctrl-f` / `<Right>`     | move cursor to right                                        |
+| `Ctrl-a` / `<Home>`      | moves the cursor to the beginning of the current occurrence |
+| `Ctrl-e` / `<End>`       | moves the cursor to the end of the current occurrence       |
+| `Ctrl-w`                 | delete word before cursor                                   |
+| `Ctrl-k`                 | delete all words after cursor                               |
+| `Ctrl-u`                 | delete all characters before cursor                         |
+| `Ctrl-h` / `<Backspace>` | delete character before cursor                              |
+| `<Delete>`               | delete character after cursor                               |
 
 #### Commenting
 
