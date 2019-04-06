@@ -36,7 +36,7 @@ call defx#custom#column('filename', {
       \ 'opened_icon'   : '',
       \ 'root_icon'     : 'O(∩_∩)O',
       \ })
-" \ 'root_icon'     : 'R',
+      " \ 'root_icon'     : 'R',
 
 
 let g:_spacevim_autoclose_defx = 1
@@ -85,7 +85,7 @@ function! s:defx_init()
   nnoremap <silent><buffer> qq
         \ :Defx -columns=git:mark:filename:type<CR>
   " nnoremap <silent><buffer><expr> q
-  " \ defx#do_action('quit')
+        " \ defx#do_action('quit')
   nnoremap <silent><buffer><expr> yy defx#do_action('call', 'DefxYarkPath')
   nnoremap <silent><buffer><expr> c
         \ defx#do_action('copy')
