@@ -7,7 +7,6 @@
 "=============================================================================
 scriptencoding utf-8
 
-" defx supported is added in https://github.com/SpaceVim/SpaceVim/pull/2282
 
 let s:SYS = SpaceVim#api#import('system')
 
