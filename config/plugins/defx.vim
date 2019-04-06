@@ -182,7 +182,7 @@ endfunction "}}}
 
 function! DefxSmartCR(_) "{{{
   if defx#is_directory()
-    call defx#call_action('open_tree')
+    call defx#call_action('open_directory')
     normal! j
   else
     let filepath = defx#get_candidate()['action__path']
