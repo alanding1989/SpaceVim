@@ -60,25 +60,26 @@ CONTENTS                                                   *SpaceVim-contents*
       14. lang#elixir.............................|SpaceVim-layer-lang-elixir|
       15. lang#elm...................................|SpaceVim-layer-lang-elm|
       16. lang#go.....................................|SpaceVim-layer-lang-go|
-      17. lang#java.................................|SpaceVim-layer-lang-java|
-      18. lang#julia...............................|SpaceVim-layer-lang-julia|
-      19. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
-      20. lang#lua...................................|SpaceVim-layer-lang-lua|
-      21. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
-      22. lang#php...................................|SpaceVim-layer-lang-php|
-      23. lang#pony.................................|SpaceVim-layer-lang-pony|
-      24. lang#processing.....................|SpaceVim-layer-lang-processing|
-      25. lang#puppet.............................|SpaceVim-layer-lang-puppet|
-      26. lang#python.............................|SpaceVim-layer-lang-python|
-      27. lang#rust.................................|SpaceVim-layer-lang-rust|
-      28. lang#scala...............................|SpaceVim-layer-lang-scala|
-      29. lang#xml...................................|SpaceVim-layer-lang-xml|
-      30. operator...................................|SpaceVim-layer-operator|
-      31. shell.........................................|SpaceVim-layer-shell|
-      32. test...........................................|SpaceVim-layer-test|
-      33. tmux...........................................|SpaceVim-layer-tmux|
-      34. tools#dash...............................|SpaceVim-layer-tools-dash|
-      35. tools#zeal...............................|SpaceVim-layer-tools-zeal|
+      17. lang#ipynb...............................|SpaceVim-layer-lang-ipynb|
+      18. lang#java.................................|SpaceVim-layer-lang-java|
+      19. lang#julia...............................|SpaceVim-layer-lang-julia|
+      20. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
+      21. lang#lua...................................|SpaceVim-layer-lang-lua|
+      22. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
+      23. lang#php...................................|SpaceVim-layer-lang-php|
+      24. lang#pony.................................|SpaceVim-layer-lang-pony|
+      25. lang#processing.....................|SpaceVim-layer-lang-processing|
+      26. lang#puppet.............................|SpaceVim-layer-lang-puppet|
+      27. lang#python.............................|SpaceVim-layer-lang-python|
+      28. lang#rust.................................|SpaceVim-layer-lang-rust|
+      29. lang#scala...............................|SpaceVim-layer-lang-scala|
+      30. lang#xml...................................|SpaceVim-layer-lang-xml|
+      31. operator...................................|SpaceVim-layer-operator|
+      32. shell.........................................|SpaceVim-layer-shell|
+      33. test...........................................|SpaceVim-layer-test|
+      34. tmux...........................................|SpaceVim-layer-tmux|
+      35. tools#dash...............................|SpaceVim-layer-tools-dash|
+      36. tools#zeal...............................|SpaceVim-layer-tools-zeal|
   7. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
@@ -1118,6 +1119,16 @@ MAPPINGS
 <
 
 ==============================================================================
+LANG#IPYNB                                         *SpaceVim-layer-lang-ipynb*
+
+To make this layer work well, you should install jedi.
+MAPPINGS
+
+>
+  mode            key             function
+<
+
+==============================================================================
 LANG#JAVA                                           *SpaceVim-layer-lang-java*
 
 This layer is for Java development.
@@ -1343,6 +1354,76 @@ MAPPINGS
 
 ==============================================================================
 LANG#SCALA                                         *SpaceVim-layer-lang-scala*
+
+This layer is for Scala development.
+
+MAPPINGS
+
+>
+  Import key bindings:
+
+  Mode      Key           Function
+  -------------------------------------------------------------
+  normal    <F4>          show candidates for importing of cursor symbol
+  insert    <F4>          show candidates for importing of cursor symbol
+  normal    SPC l i       show candidates for importing of cursor symbol
+  normal    SPC l I       prompt for a qualified import
+  normal    SPC l o       organize imports of current file
+  normal    SPC l S       sort imports of current file
+  insert    <c-j>i        prompt for a qualified import
+  insert    <c-j>o        organize imports of current file
+  insert    <c-j>s        sort imports of current file
+
+  Debug key bindings:
+
+  Mode      Key           Function
+  -------------------------------------------------------------
+  normal    SPC l d t     show debug stack trace of current frame
+  normal    SPC l d c     continue the execution
+  normal    SPC l d b     set a breakpoint for the current line
+  normal    SPC l d B     clear all breakpoints
+  normal    SPC l d l     launching debugger
+  normal    SPC l d i     step into next statement
+  normal    SPC l d o     step over next statement
+  normal    SPC l d O     step out of current function
+
+  Sbt key bindings:
+
+  Mode      Key           Function
+  -------------------------------------------------------------
+  normal    SPC l b c     sbt clean compile
+  normal    SPC l b r     sbt run
+  normal    SPC l b t     sbt test
+  normal    SPC l b d     sbt show project dependencies tree
+  normal    SPC l b l     sbt reload project configuration
+  normal    SPC l b u     sbt update project dependencies
+  normal    SPC l b e     run sbt to generate .ensime config file
+
+  REPL key bindings:
+
+  Mode      Key           Function
+  -------------------------------------------------------------
+  normal    SPC l s i     start a scala inferior REPL process
+  normal    SPC l s b     send buffer and keep code buffer focused
+  normal    SPC l s l     send line and keep code buffer focused
+  normal    SPC l s s     send selection text and keep code buffer focused
+
+  Other key bindings:
+
+  Mode      Key           Function
+  -------------------------------------------------------------
+  normal    SPC l h       show Documentation of cursor symbol
+  normal    SPC l t       show Type of expression of cursor symbol
+  normal    SPC l p       show Hierarchical view of a package
+  normal    SPC l g       find Definition of cursor symbol
+  normal    SPC l u       find Usages of cursor symbol
+  normal    SPC l Q       setup when first-time-use
+<
+CODE FORMATTING
+To make neoformat support scala file, you should install scalariform.
+[`scalariform`](https://github.com/scala-ide/scalariform)
+
+and set 'g:spacevim_layer_lang_scala_formatter' to the path of the jar.
 
 ==============================================================================
 LANG#XML                                             *SpaceVim-layer-lang-xml*

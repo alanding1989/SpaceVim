@@ -11,9 +11,14 @@ function! SpaceVim#layers#lsp#plugins() abort
 
   if SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplete_method') ==# 'coc'
     " nop
-  elseif has('nvim')
-    call add(plugins, ['autozimu/LanguageClient-neovim',
-          \ { 'merged': 0, 'if': has('python3'), 'build' : 'bash install.sh' }])
+  elseif has('nvim') && has('python3')
+    if g:is_win
+      call add(plugins, ['autozimu/LanguageClient-neovim',
+          \ {'merged': 0, 'build': 'powershell -executionpolicy bypass -File install.ps1' }])
+    else
+      call add(plugins, ['autozimu/LanguageClient-neovim',
+            \ {'merged': 0, 'build': 'bash install.sh' }])
+    endif
   else
     call add(plugins, ['prabirshrestha/async.vim', {'merged' : 0}])
     call add(plugins, ['prabirshrestha/vim-lsp', {'merged' : 0}])
