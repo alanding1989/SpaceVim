@@ -20,6 +20,7 @@ function! SpaceVim#layers#leaderf#plugins() abort
   endif
   return plugins
 endfunction
+    " call add(plugins, [expand('D:\devtools\fzf-win'), {'merged': 0}])
 
 
 let s:filename = expand('<sfile>:~')
