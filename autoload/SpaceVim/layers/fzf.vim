@@ -13,14 +13,12 @@ let s:SYS = SpaceVim#api#import('system')
 
 function! SpaceVim#layers#fzf#plugins() abort
   let plugins = []
-  if s:SYS.isWindows
-    call add(plugins, ['junegunn/fzf'      , {'merged': 0}])
-  else
-    call add(plugins, ['/opt/vim/fzf'      , {'merged': 0}])
-  endif
-  call add(plugins, ['Shougo/neoyank.vim'  , {'merged': 0}])
-  call add(plugins, ['Shougo/neomru.vim'   , {'merged': 0}])
-  call add(plugins, ['SpaceVim/fzf-neoyank', {'merged': 0}])
+  " NOTE: TODO this is what I amended
+  call add(plugins, ['/opt/vim/fzf'])
+  " TODO
+  "==============================
+  call add(plugins, ['Shougo/neoyank.vim', {'merged' : 0}])
+  call add(plugins, ['SpaceVim/fzf-neoyank',                { 'merged' : 0}])
   return plugins
 endfunction
 
@@ -176,7 +174,7 @@ function! s:bufopen(e) abort
   let [linenr, col, file_text] = [list[1], list[2]+1, join(list[3:])]
   let lines = getbufline(file_text, linenr)
   let path = file_text
-if empty(lines)
+  if empty(lines)
     if stridx(join(split(getline(linenr))), file_text) == 0
       let lines = [file_text]
       let path = bufname('%')
