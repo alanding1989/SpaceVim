@@ -4,8 +4,8 @@ if g:spacevim_filetree_direction ==# 'right'
 else
   let g:NERDTreeWinPos = 'left'
 endif
-let g:NERDTreeWinSize=get(g:,'NERDTreeWinSize',31)
-let g:NERDTreeChDirMode=get(g:,'NERDTreeChDirMode',1)
+let g:NERDTreeWinSize=get(g:, 'spacevim_sidebar_width', 30)
+let g:NERDTreeChDirMode=get(g:, 'NERDTreeChDirMode', 1)
 augroup nerdtree_zvim
   autocmd!
   autocmd bufenter *
@@ -18,7 +18,7 @@ augroup END
 
 
 function! s:nerdtreeinit() abort
-  nnoremap <silent><buffer> yY  :<C-u>call <SID>copy_to_system_clipboard()<CR>
+  nnoremap <silent><buffer> yy  :<C-u>call <SID>copy_to_system_clipboard()<CR>
   nnoremap <silent><buffer> P  :<C-u>call <SID>paste_to_file_manager()<CR>
 endfunction
 
