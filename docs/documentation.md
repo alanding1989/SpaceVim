@@ -765,16 +765,24 @@ endfunction
 
 ### Fuzzy finder
 
-SpaceVim provides five kinds of fuzzy finder, each of them is configured in a layer(`unite`, `denite`, `leaderf`, `ctrlp` and `fzf` layer).
+SpaceVim provides five fuzzy find tools, each of them is configured in a layer(`unite`, `denite`, `leaderf`, `ctrlp` and `fzf` layer).
 These layers have the same key bindings and features. But they need different dependencies.
 
 Users only need to load one of these layers, they will be able to get these features.
+
+for example, load the denite layer:
+
+```toml
+[[layers]]
+    name = "denite"
+```
 
 **Key bindings**
 
 | Key bindings         | Discription                   |
 | -------------------- | ----------------------------- |
 | `<Leader> f <Space>` | Fuzzy find menu:CustomKeyMaps |
+| `<Leader> f p`       | Fuzzy find menu:AddedPlugins  |
 | `<Leader> f e`       | Fuzzy find register           |
 | `<Leader> f h`       | Fuzzy find history/yank       |
 | `<Leader> f j`       | Fuzzy find jump, change       |
@@ -784,20 +792,21 @@ Users only need to load one of these layers, they will be able to get these feat
 | `<Leader> f q`       | Fuzzy find quick fix          |
 | `<Leader> f r`       | Resumes Unite window          |
 
-But in current version of SpaceVim, leaderf/ctrlp and fzf layer have not be finished.
+**Differences between these layers**
 
-| Feature            | unite | denite | leaderf | ctrlp | fzf |
-| ------------------ | ----- | ------ | ------- | ----- | --- |
-| menu CustomKeyMaps | yes   | yes    | no      | no    | no  |
-| register           | yes   | yes    | no      | yes   | yes |
-| file               | yes   | yes    | yes     | yes   | yes |
-| yank history       | yes   | yes    | no      | no    | yes |
-| jump               | yes   | yes    | no      | yes   | yes |
-| location list      | yes   | yes    | no      | no    | yes |
-| outline            | yes   | yes    | yes     | yes   | yes |
-| message            | yes   | yes    | no      | no    | yes |
-| quickfix list      | yes   | yes    | no      | yes   | yes |
-| resume windows     | yes   | yes    | no      | no    | no  |
+| Feature            | denite | unite | leaderf | ctrlp | fzf |
+| ------------------ | :----: | :---: | :-----: | :---: | --- |
+| CustomKeyMaps menu |  yes   |  yes  |   no    |  no   | no  |
+| AddedPlugins menu  |  yes   |  yes  |   no    |  no   | no  |
+| register           |  yes   |  yes  |   no    |  yes  | yes |
+| file               |  yes   |  yes  |   yes   |  yes  | yes |
+| yank history       |  yes   |  yes  |   no    |  no   | yes |
+| jump               |  yes   |  yes  |   no    |  yes  | yes |
+| location list      |  yes   |  yes  |   no    |  no   | yes |
+| outline            |  yes   |  yes  |   yes   |  yes  | yes |
+| message            |  yes   |  yes  |   no    |  no   | yes |
+| quickfix list      |  yes   |  yes  |   no    |  yes  | yes |
+| resume windows     |  yes   |  yes  |   no    |  no   | no  |
 
 **Key bindings within fuzzy finder buffer**
 
@@ -1117,7 +1126,7 @@ Files manipulation commands (start with f):
 | `SPC f W`    | save a file with elevated privileges (sudo layer)         |
 | `SPC f f`    | open file                                                 |
 | `SPC f F`    | try to open the file under point                          |
-| `SPC f o`    | open a file using the default external program(TODO)      |
+| `SPC f o`    | Find current file in file tree      |
 | `SPC f R`    | rename the current file(TODO)                             |
 | `SPC f s`    | save a file                                               |
 | `SPC f S`    | save all files                                            |
@@ -1191,6 +1200,9 @@ Navigation is centered on the `hjkl` keys with the hope of providing a fast navi
 | `g x`                 | Execute with vimfiler associated                  |
 | `'`                   | Toggle mark current line                          |
 | `V`                   | Clear all marks                                   |
+| `<Home>`              | Jump to first line                                |
+| `<End>`               | Jump to last line                                 |
+| `Ctrl-Home`           | Switch to project root directory                  |
 | `Ctrl-r`              | Redraw                                            |
 
 ##### Open file with file tree.
@@ -1690,27 +1702,29 @@ The default color for iedit is `red`/`green` which is based on the current color
 
 `iedit-Normal` mode inherits from `Normal` mode, the following key bindings are specific to `iedit-Normal` mode.
 
-| Key Binding   | Descriptions                                                                    |
-| ------------- | ------------------------------------------------------------------------------- |
-| `<Esc>`       | go back to `Normal` mode                                                        |
-| `i`           | switch to `iedit-Insert` mode, same as `i`                                      |
-| `a`           | switch to `iedit-Insert` mode, same as `a`                                      |
-| `I`           | go to the beginning of the current occurrence and switch to `iedit-Insert` mode |
-| `A`           | go to the end of the current occurrence and switch to `iedit-Insert` mode       |
-| `<Left>`/`h`  | Move cursor to left                                                             |
-| `<Right>`/`l` | Move cursor to right                                                            |
-| `0`/`<Home>`  | go to the beginning of the current occurrence                                   |
-| `$`/`<End>`   | go to the end of the current occurrence                                         |
-| `D`           | delete the occurrences                                                          |
-| `s`           | delete the character under cursor and switch to iedit-Insert mode               |
-| `S`           | delete the occurrences and switch to iedit-Insert mode                          |
-| `x`           | delete the character under cursor in all the occurrences                        |
-| `gg`          | go to first occurrence                                                          |
-| `G`           | go to last occurrence                                                           |
-| `n`           | go to next occurrence                                                           |
-| `N`           | go to previous occurrence                                                       |
-| `p`           | replace occurrences with last yanked (copied) text                              |
-| `<Tab>`       | toggle current occurrence                                                       |
+| Key Binding   | Descriptions                                                                                                                       |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `<Esc>`       | go back to `Normal` mode                                                                                                           |
+| `i`           | switch to `iedit-Insert` mode, same as `i` in `Normal` model                                                                       |
+| `a`           | switch to `iedit-Insert` mode, same as `a` in `Normal` model                                                                       |
+| `I`           | go to the beginning of the current occurrence and switch to `iedit-Insert` mode, same as `I` in `Normal` model                     |
+| `A`           | go to the end of the current occurrence and switch to `iedit-Insert` mode, same as `A` in `Normal` model                           |
+| `<Left>`/`h`  | Move cursor to left, same as `h` in `Normal` model                                                                                 |
+| `<Right>`/`l` | Move cursor to right, same as `l` in `Normal` model                                                                                |
+| `0`/`<Home>`  | go to the beginning of the current occurrence, same as `0` in `Normal` model                                                       |
+| `$`/`<End>`   | go to the end of the current occurrence, same as `$` in `Normal` model                                                             |
+| `C`           | delete the characters from the cursor to the end in all occurrences and switch to iedit-Insert mode, same as `C` in `Normal` model |
+| `D`           | delete the occurrences, same as `D` in `Normal` model                                                                              |
+| `s`           | delete the character under cursor and switch to iedit-Insert mode, same as `s` in `Normal` model                                   |
+| `S`           | delete the occurrences and switch to iedit-Insert mode, same as `S` in `Normal` model                                              |
+| `x`           | delete the character under cursor in all the occurrences, same as `x` in `Normal` model                                            |
+| `X`           | delete the character before cursor in all the occurrences, same as `X` in `Normal` model                                           |
+| `gg`          | go to first occurrence, same as `gg` in `Normal` model                                                                             |
+| `G`           | go to last occurrence, same as `G` in `Normal` model                                                                               |
+| `n`           | go to next occurrence                                                                                                              |
+| `N`           | go to previous occurrence                                                                                                          |
+| `p`           | replace occurrences with last yanked (copied) text                                                                                 |
+| `<Tab>`       | toggle current occurrence                                                                                                          |
 
 **In iedit-Insert mode:**
 

@@ -18,6 +18,7 @@ function! SpaceVim#layers#fzf#plugins() abort
   " TODO
   "==============================
   call add(plugins, ['Shougo/neoyank.vim', {'merged' : 0}])
+  call add(plugins, ['Shougo/neomru.vim', {'merged' : 0}])
   call add(plugins, ['SpaceVim/fzf-neoyank',                { 'merged' : 0}])
   return plugins
 endfunction
@@ -47,8 +48,7 @@ function! SpaceVim#layers#fzf#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'i'], 'FzfOutline', 'jump to a definition in buffer', 1)
   nnoremap <silent> <C-p> :FzfFiles<cr>
   call SpaceVim#mapping#space#def('nnoremap', ['T', 's'], 'FzfColors', 'fuzzy find colorschemes', 1)
-  let g:_spacevim_mappings.f = {'name' : '+Fuzzy Finder'}
-  call s:defind_fuzzy_finder()
+  call SpaceVim#mapping#space#def('nnoremap', ['f', 'r'], 'FzfMru', 'open-recent-file', 1)
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'f'],
         \ "exe 'FZF ' . fnamemodify(bufname('%'), ':h')",
@@ -60,6 +60,8 @@ function! SpaceVim#layers#fzf#config() abort
         \ ]
         \ ]
         \ , 1)
+  let g:_spacevim_mappings.f = {'name' : '+Fuzzy Finder'}
+  call s:defind_fuzzy_finder()
 endfunction
 
 let s:file = expand('<sfile>:~')
@@ -141,6 +143,39 @@ function! s:defind_fuzzy_finder() abort
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
         \ ]
+
+  nnoremap <silent> <Leader>f<Space> :FzfMenu CustomKeyMaps<CR>
+  let lnum = expand('<slnum>') + s:unite_lnum - 4
+  let g:_spacevim_mappings.f['[SPC]'] = ['FzfMenu CustomKeyMaps',
+        \ 'fuzzy find custom key bindings',
+        \ [
+        \ '[Leader f SPC] is to fuzzy find custom key bindings',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . lnum,
+        \ ]
+        \ ]
+
+  nnoremap <silent> <Leader>fp  :<C-u>FzfMenu AddedPlugins<CR>
+  let lnum = expand('<slnum>') + s:unite_lnum - 4
+  let g:_spacevim_mappings.f.p = ['FzfMenu AddedPlugins',
+        \ 'fuzzy find vim packages',
+        \ [
+        \ '[Leader f p] is to fuzzy find vim packages installed in SpaceVim',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . lnum,
+        \ ]
+        \ ]
+
+  nnoremap <silent> <Leader>ft  :<C-u>FzfTags<CR>
+  let lnum = expand('<slnum>') + s:unite_lnum - 4
+  let g:_spacevim_mappings.f.t = ['FzfTags',
+        \ 'fuzzy find global tags',
+        \ [
+        \ '[Leader f t] is to fuzzy find global tags',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . lnum,
+        \ ]
+        \ ]
 endfunction
 
 command! FzfColors call <SID>colors()
@@ -201,6 +236,7 @@ function! s:jumps() abort
         \   'down':    len(<sid>jumplist()) + 2
         \ }))
 endfunction
+
 command! FzfMessages call <SID>message()
 function! s:yankmessage(e) abort
   let @" = a:e
@@ -218,6 +254,23 @@ function! s:message() abort
         \   'sink':    function('s:yankmessage'),
         \   'options': '+m',
         \   'down':    len(<sid>messagelist()) + 2
+        \ }))
+endfunction
+
+command! FzfMru call <SID>file_mru()
+function! s:open_file(path) abort
+  exe 'e' a:path
+endfunction
+function! s:file_mru() abort
+  let s:source = 'mru'
+  function! s:mru_files() abort
+    return neomru#_gather_file_candidates()
+  endfunction
+  call fzf#run(fzf#wrap('mru', {
+        \ 'source':  reverse(<sid>mru_files()),
+        \ 'sink':    function('s:open_file'),
+        \ 'options': '--reverse',
+        \ 'down' : '40%',
         \ }))
 endfunction
 
@@ -464,3 +517,31 @@ function! s:menu(name) abort
         \   'down': '40%'
         \ }))
 endfunction
+
+
+function! s:tags_sink(line)
+  let parts = split(a:line, '\t\zs')
+  let excmd = matchstr(parts[2:], '^.*\ze;"\t')
+  execute 'silent e' parts[1][:-2]
+  let [magic, &magic] = [&magic, 0]
+  execute excmd
+  let &magic = magic
+endfunction
+
+function! s:tags()
+  if empty(tagfiles())
+    echohl WarningMsg
+    echom 'Preparing tags'
+    echohl None
+    call system('ctags -R')
+  endif
+
+  call fzf#run({
+  \ 'source':  'cat '.join(map(tagfiles(), 'fnamemodify(v:val, ":S")')).
+  \            '| grep -v -a ^!',
+  \ 'options': '+m -d "\t" --with-nth 1,4.. -n 1 --tiebreak=index --reverse',
+  \ 'down':    '40%',
+  \ 'sink':    function('s:tags_sink')})
+endfunction
+
+command! FzfTags call s:tags()

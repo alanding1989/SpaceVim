@@ -1097,7 +1097,7 @@ Buffer 操作相关快捷键都是以 `SPC b` 为前缀的：
 | `SPC f E`   | open a file with elevated privileges (sudo edit)(TODO) |
 | `SPC f f`   | 打开文件                                               |
 | `SPC f F`   | 打开光标下的文件                                       |
-| `SPC f o`   | open a file using the default external program(TODO)   |
+| `SPC f o`   | 代开文件树，并定位到当前文件                           |
 | `SPC f R`   | rename the current file(TODO)                          |
 | `SPC f s`   | 保存文件                                               |
 | `SPC f S`   | 保存所有文件                                           |
@@ -1675,27 +1675,29 @@ SpaceVim uses a powerful iedit mode to quick edit multiple occurrences of a symb
 
 `iedit-Normal` 模式继承自一般模式, 下面所列举的是 `iedit-Normal` 模式专属的快捷键。
 
-| 快捷键          | 功能描述                                                      |
-| --------------- | ------------------------------------------------------------- |
-| `Esc`           | 切换回一般模式                                                |
-| `i`             | 切换至 `iedit-Insert` 模式，类似于 `i`                        |
-| `a`             | 切换至 `iedit-Insert` 模式，类似于 `a`                        |
-| `I`             | 跳至当前 occurrence 并进入 `iedit-Insert` 模式                |
-| `A`             | 跳至当前 occurrence 并进入 `iedit-Insert` 模式                |
-| `<Left>` / `h`  | 左移光标                                                      |
-| `<Right>` / `l` | 右移光标                                                      |
-| `0` / `<Home>`  | 跳至当前 occurrence 的开头                                    |
-| `$` / `<End>`   | 跳至当前 occurrence 的结尾                                    |
-| `D`             | 删除所有 occurrences                                          |
-| `s`             | 删除所有 occurrences 中光标下的字符并进入 `iedit-Insert` 模式 |
-| `S`             | 删除所有 occurrences 并进入 `iedit-Insert` 模式               |
-| `x`             | 删除所有 occurrences 中光标下的字符                           |
-| `gg`            | 跳至第一个 occurrence                                         |
-| `G`             | 跳至最后一个 occurrence                                       |
-| `n`             | 跳至下一个 occurrence                                         |
-| `N`             | 跳至上一个 occurrence                                         |
-| `p`             | 替换所有 occurrences 为最后复制的文本                         |
-| `<Tab>`         | toggle current occurrence                                     |
+| 快捷键          | 功能描述                                                                               |
+| --------------- | -------------------------------------------------------------------------------------- |
+| `<Esc>`         | 切换回一般模式                                                                         |
+| `i`             | 切换至 `iedit-Insert` 模式，类似于一般模式下的 `i`                                     |
+| `a`             | 切换至 `iedit-Insert` 模式，类似于一般模式下的 `a`                                     |
+| `I`             | 跳至当前 occurrence 并进入 `iedit-Insert` 模式，类似于一般模式下的 `I`                 |
+| `A`             | 跳至当前 occurrence 并进入 `iedit-Insert` 模式，类似于一般模式下的 `A`                 |
+| `<Left>` / `h`  | 左移光标，类似于一般模式下的 `h`                                                       |
+| `<Right>` / `l` | 右移光标，类似于一般模式下的 `l`                                                       |
+| `0` / `<Home>`  | 跳至当前 occurrence 的开头，类似于一般模式下的 `0`                                     |
+| `$` / `<End>`   | 跳至当前 occurrence 的结尾，类似于一般模式下的 `$`                                     |
+| `C`             | 删除所有 occurrences 中从光标位置开始到 occurrences 结尾的字符，类似于一般模式下的 `C` |
+| `D`             | 删除所有 occurrences 类似于一般模式下的 `D`                                            |
+| `s`             | 删除所有 occurrences 中光标下的字符并进入 `iedit-Insert` 模式，类似于一般模式下的 `s`  |
+| `S`             | 删除所有 occurrences 并进入 `iedit-Insert` 模式，类似于一般模式下的 `S`                |
+| `x`             | 删除所有 occurrences 中光标下的字符，类似于一般模式下的 `x`                            |
+| `X`             | 删除所有 occurrences 中光标前的字符，类似于一般模式下的 `X`                            |
+| `gg`            | 跳至第一个 occurrence，类似于一般模式下的 `gg`                                         |
+| `G`             | 跳至最后一个 occurrence，类似于一般模式下的 `G`                                        |
+| `n`             | 跳至下一个 occurrence                                                                  |
+| `N`             | 跳至上一个 occurrence                                                                  |
+| `p`             | 替换所有 occurrences 为最后复制的文本                                                  |
+| `<Tab>`         | toggle current occurrence                                                              |
 
 **In iedit-Insert mode:**
 

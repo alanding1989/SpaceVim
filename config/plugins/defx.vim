@@ -31,7 +31,7 @@ call defx#custom#column('mark', {
       \ 'selected_icon': '',
       \ })
 
-call defx#custom#column('filename', {
+call defx#custom#column('icon', {
       \ 'directory_icon': '',
       \ 'opened_icon'   : '',
       \ 'root_icon'     : 'O(∩_∩)O',
@@ -39,14 +39,12 @@ call defx#custom#column('filename', {
       " \ 'root_icon'     : 'R',
 
 
-let g:_spacevim_autoclose_defx = 1
-
 augroup vfinit
   au!
   autocmd FileType defx call s:defx_init()
   " auto close last defx windows
   autocmd BufEnter * nested if
-        \ (!has('vim_starting') && winnr('$') == 1  && g:_spacevim_autoclose_defx
+        \ (!has('vim_starting') && winnr('$') == 1  && g:_spacevim_autoclose_filetree
         \ && &filetype ==# 'defx') |
         \ call s:close_last_vimfiler_windows() | endif
 augroup END
@@ -100,8 +98,9 @@ function! s:defx_init()
   nnoremap <silent><buffer><expr> h defx#do_action('call', 'DefxSmartH')
   nnoremap <silent><buffer><expr> <Left> defx#do_action('call', 'DefxSmartH')
   nnoremap <silent><buffer><expr> l defx#do_action('call', 'DefxSmartL')
+  nnoremap <silent><buffer><expr> o defx#do_action('call', 'DefxSmartL')
   nnoremap <silent><buffer><expr> <Right> defx#do_action('call', 'DefxSmartL')
-  nnoremap <silent><buffer><expr> <Cr> defx#do_action('call', 'DefxSmartCR')
+  nnoremap <silent><buffer><expr> <Cr>    defx#do_action('call', 'DefxSmartCR')
   nnoremap <silent><buffer><expr> <2-LeftMouse>
         \ defx#is_directory() ?
         \ defx#do_action('open_tree') : defx#do_action('drop')
@@ -142,6 +141,10 @@ function! s:defx_init()
         \ defx#do_action('execute_system')
   nnoremap <silent><buffer><expr> g0
         \ defx#do_action('execute_command')
+  nnoremap <silent><buffer> <Home> :call cursor(2, 1)<cr>
+  nnoremap <silent><buffer> <End>  :call cursor(line('$'), 1)<cr>
+  nnoremap <silent><buffer><expr>  <C-Home>
+        \ defx#do_action('cd', SpaceVim#plugins#projectmanager#current_root())
 endf
 
 
@@ -215,6 +218,11 @@ function! DefxSmartCR(_) "{{{
 endfunction "}}}
 
 function! DefxSmartH(_) "{{{
+  " if cursor line is first line, or in empty dir
+  if line('.') ==# 1 || line('$') ==# 1
+    return defx#call_action('cd', ['..'])
+  endif
+
   " candidate is opend tree?
   if defx#is_opened_tree()
     return defx#call_action('close_tree')
