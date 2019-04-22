@@ -1,5 +1,7 @@
 scriptencoding utf-8
 
+let g:LanguageClient_diagnosticsEnable = 0
+let g:lsp_diagnostics_enabled          = 0
 
 
 " 1 open list and move cursor
