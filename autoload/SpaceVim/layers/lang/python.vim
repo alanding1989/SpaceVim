@@ -30,7 +30,7 @@ function! SpaceVim#layers#lang#python#plugins() abort
   endif
   call add(plugins, ['heavenshell/vim-pydocstring',
         \ { 'on_cmd' : 'Pydocstring'}])
-  call add(plugins, ['Vimjas/vim-python-pep8-indent', 
+  call add(plugins, ['Vimjas/vim-python-pep8-indent',
         \ { 'on_ft' : 'python'}])
   return plugins
 endfunction
@@ -50,7 +50,7 @@ function! SpaceVim#layers#lang#python#config() abort
 
   " }}}
 
-  call SpaceVim#plugins#runner#reg_runner('python', 
+  call SpaceVim#plugins#runner#reg_runner('python',
         \ {
         \ 'exe' : function('s:getexe'),
         \ 'opt' : ['-'],

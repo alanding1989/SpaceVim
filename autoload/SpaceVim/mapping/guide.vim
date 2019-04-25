@@ -400,7 +400,6 @@ function! s:start_buffer() abort " {{{
           \ 'row'      : &lines - layout.win_dim - 4,
           \ 'col'      : 0
           \ })
-
   else
     if g:leaderGuide_vertical
       noautocmd execute 'vert res '.layout.win_dim
@@ -511,8 +510,8 @@ function! s:winopen() abort " {{{
           \ 'relative': 'editor',
           \ 'width'   : &columns,
           \ 'height'  : 12,
-          \ 'row': &lines - 14,
-          \ 'col': 0
+          \ 'row'     : &lines - 14,
+          \ 'col'     : 0
           \ })
   else
     if bufexists(s:bufnr)

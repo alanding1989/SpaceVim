@@ -682,8 +682,8 @@ function! s:create_statusline() abort
         \   'relative': 'editor',
         \   'winwidth': &columns ,
         \   'height'  : 1,
-        \   'row': &lines ,
-        \   'col': 10
+        \   'row'     : &lines ,
+        \   'col'     : 10
         \ })
   call setbufvar(s:statusline_buf_id, '&relativenumber', 0)
   call setbufvar(s:statusline_buf_id, '&number', 0)
