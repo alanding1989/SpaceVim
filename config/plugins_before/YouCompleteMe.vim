@@ -13,7 +13,7 @@ let g:ycm_seed_identifiers_with_syntax =
 let g:ycm_key_invoke_completion =
       \ get(g:, 'ycm_key_invoke_completion', '<leader><tab>')
 
-let g:ycm_semantic_triggers = get(g:, 'ycm_semantic_triggers', {})
+" let g:ycm_semantic_triggers = get(g:, 'ycm_semantic_triggers', {})
 
 function! s:set_ft_triggers(ft, expr, override) abort
   if a:override

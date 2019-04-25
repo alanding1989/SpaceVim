@@ -49,7 +49,8 @@ function! SpaceVim#layers#autocomplete#plugins() abort
           \ 'merged' : 0}])
   endif
   if g:spacevim_autocomplete_method ==# 'ycm'
-    call add(plugins, ['Valloric/YouCompleteMe', { 'loadconf_before' : 1, 'merged' : 0}])
+    call add(plugins, ['Valloric/YouCompleteMe', { 'loadconf_before' : 1, 'merged' : 0,
+          \ 'build': './install.py --clang-completer'}])
   elseif g:spacevim_autocomplete_method ==# 'neocomplete'
     call add(plugins, ['Shougo/neocomplete', {
           \ 'on_event' : 'InsertEnter',
