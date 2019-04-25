@@ -1285,7 +1285,11 @@ To make this layer work well, you should install Windows PowerShell.
 MAPPINGS
 
 >
-  mode            key             function
+  mode        key         function
+  -------------------------------------------------------------
+  normal      SPC l h     show Documentation of cursor symbol
+  normal      SPC l e     rename cursor symbol
+  normal      SPC l r     find reference of cursor symbol
 <
 
 ==============================================================================
