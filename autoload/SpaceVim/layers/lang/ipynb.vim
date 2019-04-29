@@ -37,7 +37,14 @@ function! SpaceVim#layers#lang#ipynb#plugins() abort
 endfunction
 
 
-let s:format_on_save = 0
+"function! SpaceVim#layers#lang#ipynb#plugins() abort
+"  let plugins = []
+"  " TODO: use remote plugin https://github.com/szymonmaszke/vimpyter
+"  call add(plugins, ['wsdjeg/vimpyter', {'merged' : 0}])
+"  return plugins
+"endfunction
+
+
 function! SpaceVim#layers#lang#ipynb#config() abort
   if !SpaceVim#layers#lsp#check_filetype('ipynb')
     let g:jedi#completions_command    = ''
