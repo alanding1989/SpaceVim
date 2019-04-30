@@ -21,14 +21,12 @@ scriptencoding utf-8
 "   normal      SPC l r     find reference of cursor symbol
 " <
 
-let s:SYS = SpaceVim#api#import('system')
-
 
 function! SpaceVim#layers#lang#powershell#plugins() abort
   let plugins = []
-  if s:SYS.isWindows && g:spacevim_autocomplete_method ==# 'coc'
-    " syntax highlighting and indent
-    call add(plugins, ['PProvost/vim-ps1'    , {'on_ft': 'ps1', 'for': 'ps1'}])
+  " syntax highlighting and indent
+  call add(plugins, ['PProvost/vim-ps1', {'on_ft': 'ps1', 'for': 'ps1'}])
+  if g:spacevim_autocomplete_method ==# 'coc'
     call add(plugins, ['yatli/coc-powershell', {'build': 'call coc#powershell#install()',
           \ 'do': { -> coc#powershell#install()}}])
   endif
