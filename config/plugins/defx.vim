@@ -85,6 +85,7 @@ function! s:defx_init()
   " nnoremap <silent><buffer><expr> q
         " \ defx#do_action('quit')
   nnoremap <silent><buffer><expr> yy defx#do_action('call', 'DefxYarkPath')
+  nnoremap <silent><buffer><expr> L  defx#do_action('call', 'DefxYarkSrcLayout')
   nnoremap <silent><buffer><expr> c
         \ defx#do_action('copy')
   nnoremap <silent><buffer><expr> m
@@ -243,8 +244,7 @@ function! DefxSmartH(_) "{{{
   call defx#call_action('close_tree')
 endfunction "}}}
 
-
-function! DefxYarkSrcLayout(name) abort
+function! DefxYarkSrcLayout(_) abort "{{{
   if defx#is_directory()
     let dirpath = defx#get_candidate()['action__path']
   else
@@ -253,10 +253,21 @@ function! DefxYarkSrcLayout(name) abort
     echohl NONE
     return
   endif
-  exec '!cp -r "'.g:home.'extools/projectdir'.a:name 
+  if has('nvim')
+    let input = input({
+          \ 'prompt'      : 'Input dirname : ',
+          \ 'cancelreturn': 0,
+          \ })
+    if input == 0 | return | endif
+  else
+    let input = input('Input dirname : ')
+  endif
+  exec '!cp -r "'.g:home.'extools/projectdir/'.input
         \ .'" "'.dirpath.'"'
-  echo 'yarked: '.g:home.'extools/projectdir'.a:name 
+  echo 'yarked: '.g:home.'extools/projectdir/'.input
 endfunction
+"}}}
+
 
 function! DefxYarkPath(_) abort
   let candidate = defx#get_candidate()
