@@ -244,6 +244,20 @@ function! DefxSmartH(_) "{{{
 endfunction "}}}
 
 
+function! DefxYarkSrcLayout(name) abort
+  if defx#is_directory()
+    let dirpath = defx#get_candidate()['action__path']
+  else
+    echohl WarningMsg
+    echo 'candidate is not a directory'
+    echohl NONE
+    return
+  endif
+  exec '!cp -r "'.g:home.'extools/projectdir'.a:name 
+        \ .'" "'.dirpath.'"'
+  echo 'yarked: '.g:home.'extools/projectdir'.a:name 
+endfunction
+
 function! DefxYarkPath(_) abort
   let candidate = defx#get_candidate()
   let @+ = candidate['action__path']
