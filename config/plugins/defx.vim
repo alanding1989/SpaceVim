@@ -165,7 +165,7 @@ function! DefxSmartL(_) "{{{
                 \ 'prompt'      : 'ChooseWin No.: ',
                 \ 'cancelreturn': 0,
                 \ })
-          if input == 0 | return | endif
+          if input =~# 0 | return | endif
         else
           let input = input('ChooseWin No.: ')
         endif
@@ -199,7 +199,7 @@ function! DefxSmartCR(_) "{{{
                 \ 'prompt'      : 'ChooseWin No.: ',
                 \ 'cancelreturn': 0,
                 \ })
-          if input == 0 | return | endif
+          if input =~# 0 | return | endif
         else
           let input = input('ChooseWin No.: ')
         endif
@@ -255,12 +255,12 @@ function! DefxYarkSrcLayout(_) abort "{{{
   endif
   if has('nvim')
     let input = input({
-          \ 'prompt'      : 'Input dirname : ',
+          \ 'prompt'      : 'Input SrcDirname : ',
           \ 'cancelreturn': 0,
           \ })
-    if input == 0 | return | endif
+    if input =~# 0 | return | endif
   else
-    let input = input('Input dirname : ')
+    let input = input('Input SrcDirname : ')
   endif
   exec '!cp -r "'.g:home.'extools/projectdir/'.input
         \ .'" "'.dirpath.'"'
