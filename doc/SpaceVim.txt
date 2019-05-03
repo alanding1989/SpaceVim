@@ -1421,10 +1421,17 @@ MAPPINGS
   normal    SPC l b c     sbt clean compile
   normal    SPC l b r     sbt run
   normal    SPC l b t     sbt test
+  normal    SPC l b p     sbt package
   normal    SPC l b d     sbt show project dependencies tree
-  normal    SPC l b l     sbt reload project configuration
-  normal    SPC l b u     sbt update project dependencies
+  normal    SPC l b l     sbt reload project build definition
+  normal    SPC l b u     sbt update external dependencies
   normal    SPC l b e     run sbt to generate .ensime config file
+
+  Execute key bindings:
+
+  Mode      Key           Function
+  -------------------------------------------------------------
+  normal    SPC l r m     run main class
 
   REPL key bindings:
 
@@ -1439,7 +1446,7 @@ MAPPINGS
 
   Mode      Key           Function
   -------------------------------------------------------------
-  normal    SPC l Q       setup when first-time-use-ensime
+  normal    SPC l Q       bootstrap server when first-time-use
   normal    SPC l h       show Documentation of cursor symbol
   normal    SPC l R       inline local refactoring of cursor symbol
   normal    SPC l e       rename cursor symbol
@@ -1447,6 +1454,7 @@ MAPPINGS
   normal    SPC l t       show Type of expression of cursor symbol
   normal    SPC l p       show Hierarchical view of a package
   normal    SPC l r       find Usages of cursor symbol
+
 <
 CODE FORMATTING
 To make neoformat support scala file, you should install scalariform.
