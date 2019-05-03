@@ -258,7 +258,11 @@ function! s:go_to_def() abort
 endfunction
 
 function! s:execCMD(cmd) abort
-  call unite#start([['output/shellcmd', a:cmd]], {'log': 1, 'wrap': 1,'start_insert':0})
+  try
+    call unite#start([['output/shellcmd', a:cmd]], {'log': 1, 'wrap': 1,'start_insert':0})
+  catch
+    exec '!'.a:cmd
+  endtry
 endfunction
 
 " vim:set et sw=2 cc=80:
