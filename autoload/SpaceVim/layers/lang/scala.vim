@@ -216,6 +216,9 @@ function! s:language_specified_mappings() abort
   " Sbt
   let g:_spacevim_mappings_space.l.b = {'name' : '+Sbt'}
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','b', 'e'], 'call call('
+        \ . string(function('s:execCMD')) . ', ["sbt new"])',
+        \ 'run sbt to generate .ensime config file', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','b', 'e'], 'call call('
         \ . string(function('s:execCMD')) . ', ["sbt ensimeConfig"])',
         \ 'run sbt to generate .ensime config file', 1)
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','b', 'c'], 'call call('
