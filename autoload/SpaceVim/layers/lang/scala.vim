@@ -142,7 +142,7 @@ function! SpaceVim#layers#lang#scala#config() abort
   augroup END
   let g:neoformat_enabled_scala = ['scalariform']
   let g:neoformat_scala_scalariform = {
-        \ 'exe': 'scala',
+        \ 'exe': 'java',
         \ 'args': ['-jar', get(g:,'spacevim_layer_lang_scala_formatter', ''), '-'],
         \ 'stdin': 1,
         \ }
