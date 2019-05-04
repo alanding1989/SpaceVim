@@ -40,7 +40,7 @@ endfunction
 
 
 function! SpaceVim#layers#git#config() abort
-  let g:signify_vcs_list = ['hg']
+  " let g:signify_vcs_list = ['hg']
   let g:_spacevim_mappings_space.g = get(g:_spacevim_mappings_space, 'g',  {'name' : '+VersionControl/git'})
   if s:git_plugin ==# 'gina'
     call SpaceVim#mapping#space#def('nnoremap', ['g', 's'], 'Gina status --opener=10split', 'git status', 1)

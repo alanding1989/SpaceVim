@@ -99,13 +99,13 @@ function! SpaceVim#layers#core#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'b'], '<C-o>', 'jump backward', 0)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'f'], '<C-i>', 'jump forward', 0)
 
-  " file tree key bindings
-  call SpaceVim#mapping#space#def('nnoremap', ['j', 'd'], 'call call('
-        \ . string(s:_function('s:explore_current_dir')) . ', [0])',
-        \ 'Explore current directory', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['j', 'D'], 'call call('
-        \ . string(s:_function('s:explore_current_dir')) . ', [1])',
-        \ 'Explore current directory(other windows)', 1)
+  " " file tree key bindings
+  " call SpaceVim#mapping#space#def('nnoremap', ['j', 'd'], 'call call('
+  "       \ . string(s:_function('s:explore_current_dir')) . ', [0])',
+  "       \ 'Explore current directory', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['j', 'D'], 'call call('
+  "       \ . string(s:_function('s:explore_current_dir')) . ', [1])',
+  "       \ 'Explore current directory(other windows)', 1)
 
   call SpaceVim#mapping#space#def('nmap', ['j', 'j'], '<Plug>(easymotion-overwin-f)', 'jump to a character', 0)
   call SpaceVim#mapping#space#def('nmap', ['j', 'J'], '<Plug>(easymotion-overwin-f2)', 'jump to a suite of two characters', 0)
