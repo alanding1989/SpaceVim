@@ -161,12 +161,19 @@ function! SpaceVim#layers#shell#open_default_shell(open_with_file_cwd) abort
   endfor
 
   " no terminal window found. Open a new window
-  let cmd = s:default_position ==# 'top' ?
-        \ 'topleft split' :
-        \ s:default_position ==# 'bottom' ?
-        \ 'botright split' :
-        \ s:default_position ==# 'right' ?
-        \ 'rightbelow vsplit' : 'leftabove vsplit'
+  if winwidth(0) < 80
+    let cmd = s:default_position ==# 'top' ?
+          \ 'topleft split' :
+          \ s:default_position ==# 'bottom' ?
+          \ 'botright split' : 'topleft split'
+  else
+    let cmd = s:default_position ==# 'top' ?
+          \ 'topleft split' :
+          \ s:default_position ==# 'bottom' ?
+          \ 'botright split' :
+          \ s:default_position ==# 'right' ?
+          \ 'rightbelow vsplit' : 'leftabove vsplit'
+  endif
   exe cmd
   let w:shell_layer_win = 1
   let lines = &lines * s:default_height / 100
