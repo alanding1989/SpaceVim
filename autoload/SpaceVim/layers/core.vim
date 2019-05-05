@@ -174,9 +174,9 @@ function! SpaceVim#layers#core#config() abort
   let g:_spacevim_mappings_space.f.C = {'name' : '+Files/convert'}
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'C', 'd'], 'update | e ++ff=dos | w', 'unix2dos', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'C', 'u'], 'update | e ++ff=dos | setlocal ff=unix | w', 'dos2unix', 1)
-  " call SpaceVim#mapping#space#def('nnoremap', ['f', 'D'], 'call call('
-        " \ . string(s:_function('s:delete_current_buffer_file')) . ', [])',
-        " \ 'delete-current-buffer-file', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['f', 'D'], 'call call('
+        \ . string(s:_function('s:delete_current_buffer_file')) . ', [])',
+        \ 'delete-current-buffer-file', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'F'], 'normal! gf', 'open-cursor-file', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['f', '/'], 'call SpaceVim#plugins#find#open()', 'find-files', 1)
   if s:SYS.isWindows
