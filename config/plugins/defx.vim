@@ -132,8 +132,7 @@ function! s:defx_init()
         \ defx#do_action('redraw')
   nnoremap <silent><buffer><expr> <C-g>
         \ defx#do_action('print')
-  nnoremap <silent><buffer><expr> cd
-        \ defx#do_action('change_vim_cwd')
+  nnoremap <silent><buffer><expr> cd defx#do_action('call', 'DefxChangeDir')
   nnoremap <silent><buffer><expr> t
         \ defx#do_action('toggle_columns',
         \                'git:mark:indent:icon:filename:type:size:time')
@@ -141,6 +140,7 @@ function! s:defx_init()
         \ defx#do_action('execute_system')
   nnoremap <silent><buffer><expr> g0
         \ defx#do_action('execute_command')
+  nnoremap <silent><buffer><expr> gs defx#do_action('call', 'DefxExeShell')
   nnoremap <silent><buffer> <Home> :call cursor(2, 1)<cr>
   nnoremap <silent><buffer> <End>  :call cursor(line('$'), 1)<cr>
   nnoremap <silent><buffer><expr>  <C-Home>
@@ -149,7 +149,7 @@ endf
 
 
 function! DefxSmartL(_) "{{{
-" in this function we should vim-choosewin if possible
+" in this function we should check vim-choosewin if possible
   if defx#is_directory()
     call defx#call_action('open_tree')
     normal! j
@@ -202,7 +202,9 @@ function! DefxSmartH(_) "{{{
   call defx#call_action('close_tree')
 endfunction "}}}
 
+
 function! DefxSmartCR(_) "{{{
+" in this function we should check vim-choosewin if possible
   if defx#is_directory()
     call defx#call_action('open_directory')
     normal! j
@@ -252,6 +254,37 @@ function! DefxYarkSrcLayout(_) abort "{{{
   echohl NONE
 endfunction
 "}}}
+
+function! DefxExeShell(_) abort "{{{
+  if defx#is_directory()
+    echohl WarningMsg
+    echo ' Candidate is not a shell script'
+    echohl NONE
+  else
+    let filepath = defx#get_candidate()['action__path']
+    let ext = fnamemodify(filepath, ':e')
+    if ext ==# 'sh'
+      call system('sh ', filepath)
+    elseif ext ==# 'bat' || ext ==# 'ps1'
+      call system('powershell ', filepath)
+    else
+      echohl WarningMsg
+      echo ' Candidate is not a shell script'
+      echohl NONE
+    endif
+    if v:shell_error
+      echo v:shell_error
+    endif
+  end
+endfunction
+"}}}
+
+function! DefxChangeDir(_) abort "{{{
+  call defx#call_action('change_vim_cwd')
+  echo 'Current dir is: ' . getcwd()
+endfunction
+"}}}
+
 
 
 function! DefxYarkPath(_) abort
