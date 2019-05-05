@@ -38,8 +38,7 @@ endfunction
 let s:file = expand('<sfile>:~')
 let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#shell#config() abort
-  call SpaceVim#mapping#space#def('nnoremap', ["9"], 'call call('
-        \ . string(function('s:open_default_shell')) . ', [0])',
+  call SpaceVim#mapping#space#def('nnoremap', ['9'], 'call SpaceVim#layers#shell#open_default_shell(0)',
         \ ['open shell',
         \ [
         \ "[SPC '] is to open or jump to default shell window",
@@ -47,8 +46,7 @@ function! SpaceVim#layers#shell#config() abort
         \ 'Definition: ' . s:file . ':' . s:lnum,
         \ ]
         \ ], 1)
-  call SpaceVim#mapping#space#def('nnoremap', ["0"], 'call call('
-        \ . string(function('s:open_default_shell')) . ', [1])',
+  call SpaceVim#mapping#space#def('nnoremap', ['0'], 'call SpaceVim#layers#shell#open_default_shell(1)',
         \ ["open shell in current file's path",
         \ [
         \ "[SPC \"] is to open or jump to default shell window with the current file's pwd",
@@ -128,7 +126,7 @@ endfunction
 
 let s:open_terminals_buffers = []
 " shell windows shoud be toggleable, and can be hide.
-function! s:open_default_shell(open_with_file_cwd) abort
+function! SpaceVim#layers#shell#open_default_shell(open_with_file_cwd) abort
   if a:open_with_file_cwd
     if getwinvar(winnr(), '&buftype') ==# 'terminal'
       let path = getbufvar(winbufnr(winnr()), '_spacevim_shell_cwd', SpaceVim#plugins#projectmanager#current_root())
