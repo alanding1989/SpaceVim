@@ -202,7 +202,7 @@ function! SpaceVim#default#keyBindings() abort
 
 
   "Use jk switch to normal mode
-  inoremap jk <esc>
+  " inoremap jk <esc>
 
   " "]<End> or ]<Home> move current line to the end or the begin of current buffer
   " nnoremap <silent>]<End> ddGp``
