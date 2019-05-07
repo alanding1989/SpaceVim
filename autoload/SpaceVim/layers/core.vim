@@ -86,8 +86,8 @@ function! SpaceVim#layers#core#config() abort
   " " Select last paste
   " nnoremap <silent><expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
 
-  call SpaceVim#mapping#space#def('nnoremap', ['f', 's'], 'write', 'save buffer', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['f', 'S'], 'wall', 'save all buffer', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['f', 's'], 'write', 'save buffer', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['f', 'S'], 'wall', 'save all buffer', 1)
   " help mappings
   call SpaceVim#mapping#space#def('nnoremap', ['h', 'I'], 'call SpaceVim#issue#report()', 'Report an issue of SpaceVim', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['h', 'l'], 'SPLayer -l', 'lists all the layers available in SpaceVim', 1)
@@ -174,10 +174,10 @@ function! SpaceVim#layers#core#config() abort
   let g:_spacevim_mappings_space.f.C = {'name' : '+Files/convert'}
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'C', 'd'], 'update | e ++ff=dos | w', 'unix2dos', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'C', 'u'], 'update | e ++ff=dos | setlocal ff=unix | w', 'dos2unix', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['f', 'D'], 'call call('
-        \ . string(s:_function('s:delete_current_buffer_file')) . ', [])',
-        \ 'delete-current-buffer-file', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['f', 'F'], 'normal! gf', 'open-cursor-file', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['f', 'D'], 'call call('
+        " \ . string(s:_function('s:delete_current_buffer_file')) . ', [])',
+        " \ 'delete-current-buffer-file', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['f', 'F'], 'normal! gf', 'open-cursor-file', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['f', '/'], 'call SpaceVim#plugins#find#open()', 'find-files', 1)
   if s:SYS.isWindows
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'd'], 'call call('
@@ -204,20 +204,20 @@ function! SpaceVim#layers#core#config() abort
   "   call SpaceVim#mapping#space#def('nnoremap', ['b', 't'], 'Defx -no-toggle', 'show_file_tree_at_buffer_dir', 1)
   " endif
 
-  call SpaceVim#mapping#space#def('nnoremap', ['f', 'y'], 'call zvim#util#CopyToClipboard()', 'show-and-copy-buffer-filename', 1)
-  let g:_spacevim_mappings_space.f.v = {'name' : '+Vim(SpaceVim)'}
-  call SpaceVim#mapping#space#def('nnoremap', ['f', 'v', 'v'], 'let @+=g:spacevim_version | echo g:spacevim_version', 'display-and-copy-version', 1)
-
-  let lnum = expand('<slnum>') + s:lnum - 1
-  call SpaceVim#mapping#space#def('nnoremap', ['f', 'v', 'd'], 'SPConfig',
-        \ ['open-custom-configuration',
-        \ [
-        \ '[SPC f v d] is to open the custom configuration file for SpaceVim',
-        \ '',
-        \ 'Definition: ' . s:filename . ':' . lnum,
-        \ ]
-        \ ]
-        \ , 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['f', 'y'], 'call zvim#util#CopyToClipboard()', 'show-and-copy-buffer-filename', 1)
+  " let g:_spacevim_mappings_space.f.v = {'name' : '+Vim(SpaceVim)'}
+  " call SpaceVim#mapping#space#def('nnoremap', ['f', 'v', 'v'], 'let @+=g:spacevim_version | echo g:spacevim_version', 'display-and-copy-version', 1)
+"
+  " let lnum = expand('<slnum>') + s:lnum - 1
+  " call SpaceVim#mapping#space#def('nnoremap', ['f', 'v', 'd'], 'SPConfig',
+        " \ ['open-custom-configuration',
+        " \ [
+        " \ '[SPC f v d] is to open the custom configuration file for SpaceVim',
+        " \ '',
+        " \ 'Definition: ' . s:filename . ':' . lnum,
+        " \ ]
+        " \ ]
+        " \ , 1)
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['n', '-'], 'call call('
         \ . string(s:_function('s:number_transient_state')) . ', ["-"])',
