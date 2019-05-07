@@ -200,9 +200,10 @@ function! SpaceVim#layers#core#config() abort
   "   " TODO: fix all these command
   "   call SpaceVim#mapping#space#def('nnoremap', ['f', 't'], 'Defx', 'toggle_file_tree', 1)
   "   call SpaceVim#mapping#space#def('nnoremap', ['f', 'T'], 'Defx -no-toggle', 'show_file_tree', 1)
-  "   call SpaceVim#mapping#space#def('nnoremap', ['f', 'o'], "Defx  -no-toggle -search=`expand('%:p')` `getcwd()`", 'open_file_tree', 1)
+  "   call SpaceVim#mapping#space#def('nnoremap', ['f', 'o'], "Defx  -no-toggle -search=`expand('%:p')` `stridx(expand('%:p'), getcwd()) < 0? expand('%:p:h'): getcwd()`", 'open_file_tree', 1)
   "   call SpaceVim#mapping#space#def('nnoremap', ['b', 't'], 'Defx -no-toggle', 'show_file_tree_at_buffer_dir', 1)
   " endif
+
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'y'], 'call zvim#util#CopyToClipboard()', 'show-and-copy-buffer-filename', 1)
   let g:_spacevim_mappings_space.f.v = {'name' : '+Vim(SpaceVim)'}
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'v', 'v'], 'let @+=g:spacevim_version | echo g:spacevim_version', 'display-and-copy-version', 1)
@@ -400,7 +401,7 @@ function! s:split_string(newline) abort
         break
       endif
     endwhile
-    let l:connector = a:newline ? "\n" : ""
+    let l:connector = a:newline ? "\n" : ''
     let l:save_register_m = @m
     let @m = sep . l:connector . sep
     normal! "mp
@@ -443,7 +444,7 @@ function! s:safe_erase_buffer() abort
 endfunction
 
 function! s:ToggleWinDiskManager() abort
-  if bufexists("__windisk__")
+  if bufexists('__windisk__')
     execute 'bd "__windisk__"'
   else
     call SpaceVim#plugins#windisk#open()
