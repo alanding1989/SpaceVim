@@ -21,7 +21,7 @@ function! SpaceVim#layers#edit#plugins() abort
         \ ['kana/vim-textobj-user'],
         \ ['kana/vim-textobj-indent'],
         \ ['kana/vim-textobj-line'],
-        \ ['dhruvasagar/vim-table-mode'],
+        \ ['dhruvasagar/vim-table-mode', {'merged': 0}],
         \ ['kana/vim-textobj-entire'],
         \ ['gcmt/wildfire.vim',{'on_map' : '<Plug>(wildfire-'}],
         \ ['easymotion/vim-easymotion'],
