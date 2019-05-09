@@ -25,7 +25,7 @@ scriptencoding utf-8
 function! SpaceVim#layers#lang#powershell#plugins() abort
   let plugins = []
   " syntax highlighting and indent
-  call add(plugins, ['PProvost/vim-ps1', {'on_ft': 'ps1', 'for': 'ps1'}])
+  call add(plugins, ['PProvost/vim-ps1', {'merged': 0}])
   if g:spacevim_autocomplete_method ==# 'coc'
     call add(plugins, ['yatli/coc-powershell', {'build': 'call coc#powershell#install()',
           \ 'do': { -> coc#powershell#install()}}])
@@ -42,7 +42,7 @@ endfunction
 
 
 function! s:language_specified_mappings() abort
-  if SpaceVim#layers#lsp#check_filetype('ps1')
+  if g:spacevim_autocomplete_method ==# 'coc'
     nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
 
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'h'],
