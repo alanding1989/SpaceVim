@@ -123,8 +123,16 @@ let g:deoplete#sources#jedi#python_path = g:python3_host_prog
 call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
 call deoplete#custom#source('file/include', 'matchers', ['matcher_head'])
 
-call deoplete#custom#source('ultisnips' , 'rank', 1000)
-call deoplete#custom#source('neosnippet', 'rank', 1000)
+call deoplete#custom#source('ultisnips' , 'rank', 800)
+call deoplete#custom#source('neosnippet', 'rank', 800)
+
+" deoplete-tabline
+call deoplete#custom#source('tabline', 'rank', 1000)
+call deoplete#custom#var('tabline', {
+      \ 'line_limit'     : 500,
+      \ 'max_num_results': 20,
+      \ })
+
 
 " inoremap <expr><C-h> deoplete#mappings#smart_close_popup()."\<C-h>"
 " inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
