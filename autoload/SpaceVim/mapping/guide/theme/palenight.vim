@@ -48,26 +48,31 @@ let s:guiChangedColor   = '#5f5f5f'
 " group_in: windows id in iedit-normal mode
 
 function! SpaceVim#mapping#guide#theme#palenight#palette() abort
-  return [
-        \ [ s:guiBlack , s:gui08 , s:ctermBlack , s:cterm08 ],
-        \ [ s:guiWhite , s:gui02 , s:ctermWhite , s:cterm02 ],
-        \ [ s:guiWhite , s:gui02 , s:ctermWhite , s:cterm02 ],
-        \ [ s:gui01    , s:cterm01 ],
-        \ [ s:guiBlack , s:gui07 , s:ctermBlack , s:cterm07 ],
-        \ [ s:guiBlack , s:gui06 , s:ctermBlack , s:cterm06 ],
-        \ [ s:guiBlack , s:gui05 , s:ctermWhite , s:cterm05 ],
-        \ ['#282828', '#689d6a', 235, 72],
-        \ ['#282828', '#8f3f71', 235, 132],
-        \ ]
-  " return [
-        " \ [ s:guiBlack , s:gui08 , s:ctermBlack , s:cterm08 ],
-        " \ [ s:guiWhite , s:gui01 , s:ctermWhite , s:cterm01 ],
-        " \ [ s:guiWhite , s:gui01 , s:ctermWhite , s:cterm01 ],
-        " \ [ s:guiChangedColor, s:ctermChangedColor],
-        " \ [ s:guiBlack , s:gui07 , s:ctermBlack , s:cterm07 ],
-        " \ [ s:guiBlack , s:gui06 , s:ctermBlack , s:cterm06 ],
-        " \ [ s:guiBlack , s:gui05 , s:ctermWhite , s:cterm05 ],
-        " \ ['#282828', '#689d6a', 235, 72],
-        " \ ['#282828', '#8f3f71', 235, 132],
-        " \ ]
+  if g:spacevim_statusline_bright
+    return [
+          \ [ s:guiBlack , s:gui08 , s:ctermBlack , s:cterm08 ],
+          \ [ s:guiWhite , s:gui02 , s:ctermWhite , s:cterm02 ],
+          \ [ s:guiWhite , s:gui02 , s:ctermWhite , s:cterm02 ],
+          \ [ s:gui01    , s:cterm01 ],
+          \ [ s:guiBlack , s:gui07 , s:ctermBlack , s:cterm07 ],
+          \ [ s:guiBlack , s:gui06 , s:ctermBlack , s:cterm06 ],
+          \ [ s:guiBlack , s:gui05 , s:ctermWhite , s:cterm05 ],
+          \ ['#282828', '#689d6a', 235, 72],
+          \ ['#282828', '#8f3f71', 235, 132],
+          \ 'bright'
+          \ ]
+  else
+    return [
+          \ [ s:guiBlack , s:gui08 , s:ctermBlack , s:cterm08 ],
+          \ [ s:guiWhite , s:gui01 , s:ctermWhite , s:cterm01 ],
+          \ [ s:guiWhite , s:gui01 , s:ctermWhite , s:cterm01 ],
+          \ [ s:guiChangedColor, s:ctermChangedColor],
+          \ [ s:guiBlack , s:gui07 , s:ctermBlack , s:cterm07 ],
+          \ [ s:guiBlack , s:gui06 , s:ctermBlack , s:cterm06 ],
+          \ [ s:guiBlack , s:gui05 , s:ctermWhite , s:cterm05 ],
+          \ ['#282828', '#689d6a', 235, 72],
+          \ ['#282828', '#8f3f71', 235, 132],
+          \ 'dark',
+          \ ]
+  endif
 endfunction
