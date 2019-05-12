@@ -21,16 +21,18 @@ function! s:load_plugins() abort
   for group in SpaceVim#layers#get()
     let g:_spacevim_plugin_layer = group
     for plugin in s:getLayerPlugins(group)
-      if len(plugin) == 2
-        call zvim#plug#add(plugin[0], plugin[1])
-        if zvim#plug#tap(split(plugin[0], '/')[-1]) && get(plugin[1], 'loadconf', 0 )
-          call zvim#plug#defind_hooks(split(plugin[0], '/')[-1])
+      if index(g:spacevim_disabled_plugins, split(plugin[0], '/')[-1]) == -1
+        if len(plugin) == 2
+          call zvim#plug#add(plugin[0], plugin[1])
+          if zvim#plug#tap(split(plugin[0], '/')[-1]) && get(plugin[1], 'loadconf', 0 )
+            call zvim#plug#defind_hooks(split(plugin[0], '/')[-1])
+          endif
+          if zvim#plug#tap(split(plugin[0], '/')[-1]) && get(plugin[1], 'loadconf_before', 0 )
+            call zvim#plug#loadPluginBefore(split(plugin[0], '/')[-1])
+          endif
+        else
+          call zvim#plug#add(plugin[0])
         endif
-        if zvim#plug#tap(split(plugin[0], '/')[-1]) && get(plugin[1], 'loadconf_before', 0 )
-          call zvim#plug#loadPluginBefore(split(plugin[0], '/')[-1])
-        endif
-      else
-        call zvim#plug#add(plugin[0])
       endif
     endfor
     call s:loadLayerConfig(group)
