@@ -12,7 +12,7 @@ function! SpaceVim#plugins#load() abort
     call zvim#plug#begin(g:spacevim_plugin_bundle_dir)
     call zvim#plug#fetch()
     call s:load_plugins()
-    call s:disable_plugins(g:spacevim_disabled_plugins)
+    " call s:disable_plugins(g:spacevim_disabled_plugins)
     call zvim#plug#end()
   endif
 

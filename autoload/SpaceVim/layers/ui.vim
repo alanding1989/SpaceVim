@@ -44,11 +44,11 @@ function! SpaceVim#layers#ui#config() abort
   " let g:signify_disable_by_default = 0
   " let g:signify_line_highlight = 0
 
-  if s:enable_sidebar
-    noremap <silent> <F2> :call SpaceVim#plugins#sidebar#toggle()<CR>
-  else
-    noremap <silent> <F2> :TagbarToggle<CR>
-  endif
+  " if s:enable_sidebar
+    " noremap <silent> <F2> :call SpaceVim#plugins#sidebar#toggle()<CR>
+  " else
+    " noremap <silent> <F2> :TagbarToggle<CR>
+  " endif
 
   " if !empty(g:spacevim_windows_smartclose)
   "   call SpaceVim#mapping#def('nnoremap <silent>', g:spacevim_windows_smartclose, ':<C-u>call zvim#util#SmartClose()<cr>',
