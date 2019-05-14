@@ -12,7 +12,6 @@ function! SpaceVim#plugins#load() abort
     call zvim#plug#begin(g:spacevim_plugin_bundle_dir)
     call zvim#plug#fetch()
     call s:load_plugins()
-    " call s:disable_plugins(g:spacevim_disabled_plugins)
     call zvim#plug#end()
   endif
 
@@ -62,18 +61,6 @@ function! s:loadLayerConfig(layer) abort
   catch /^Vim\%((\a\+)\)\=:E117/
   endtry
 
-endfunction
-
-function! s:disable_plugins(plugin_list) abort
-  if g:spacevim_plugin_manager ==# 'dein'
-    for name in a:plugin_list
-      call dein#disable(name)
-    endfor
-  elseif g:spacevim_plugin_manager ==# 'neobundle'
-    for name in a:plugin_list
-      call neobundle#config#disable(name)
-    endfor
-  endif
 endfunction
 
 function! SpaceVim#plugins#get(...) abort
