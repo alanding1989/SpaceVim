@@ -99,7 +99,8 @@ call deoplete#custom#source('racer', 'mark', 'rust')
 
 " vim
 call deoplete#custom#option('ignore_sources', {'vim': ['tag']})
-call deoplete#custom#source('neco-vim'  , 'rank', 9999)
+call deoplete#custom#source('neco-vim'  , 'rank', 9998)
+call deoplete#custom#source('vim'  , 'rank', 9998)
 
 " clojure
 let g:deoplete#keyword_patterns.clojure = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
@@ -119,23 +120,33 @@ call deoplete#custom#source('python', 'mark', 'py')
 let g:deoplete#sources#jedi#python_path = g:python3_host_prog
 " let g:deoplete#sources#jedi#extra_path  = g:python_host_prog
 
+
+
 " public settings
 call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
-call deoplete#custom#source('file/include', 'matchers', ['matcher_head'])
+call deoplete#custom#source('_', 'filters' , ['matcher_head'])
+call deoplete#custom#source('_', 'converters', ['converter_auto_delimiter', 'remove_overlap'])
 
-call deoplete#custom#source('ultisnips' , 'rank', 800)
-call deoplete#custom#source('neosnippet', 'rank', 800)
+call deoplete#custom#source('buffer', 'mark', '*')
+call deoplete#custom#source('buffer', 'rank', 800)
+
+call deoplete#custom#source('file/include' , 'matchers', ['matcher_head'])
+
+" snippet
+call deoplete#custom#source('neosnippet', 'rank', 9999)
+call deoplete#custom#source('ultisnips' , 'rank', 9999)
+call deoplete#custom#source('neosnippet', 'matchers', ['matcher_head'])
+call deoplete#custom#source('ultisnips' , 'matchers', ['matcher_head'])
 
 " deoplete-tabline
-call deoplete#custom#source('tabline', 'rank', 1000)
+call deoplete#custom#source('tabline', 'rank', 800)
 call deoplete#custom#var('tabline', {
+      \ 'rank'           : 800,
       \ 'line_limit'     : 500,
       \ 'max_num_results': 20,
       \ })
 
 
-" inoremap <expr><C-h> deoplete#mappings#smart_close_popup()."\<C-h>"
-" inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
 set isfname-==
 
 " vim:set et sw=2:
