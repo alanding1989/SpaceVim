@@ -11,25 +11,25 @@
 let s:SID = SpaceVim#api#import('vim#sid')
 
 function! SpaceVim#layers#lang#vim#plugins() abort
-  let plugins = [
-        \ ['syngan/vim-vimlint',                     { 'on_ft' : 'vim'}],
-        \ ['ynkdir/vim-vimlparser',                  { 'on_ft' : 'vim'}],
-        \ ['todesking/vint-syntastic',               { 'on_ft' : 'vim'}],
-        \ ]
-  call add(plugins,['tweekmonster/exception.vim', {'merged' : 0}])
-  call add(plugins,['wsdjeg/vim-lookup', {'merged' : 0}])
-  call add(plugins,['Shougo/neco-vim',              { 'on_event' : 'InsertEnter', 'loadconf_before' : 1}])
-  if g:spacevim_autocomplete_method ==# 'asyncomplete'
-    call add(plugins, ['prabirshrestha/asyncomplete-necovim.vim', {
-          \ 'loadconf' : 1,
-          \ 'merged' : 0,
-          \ }])
-  elseif g:spacevim_autocomplete_method ==# 'coc'
-    call add(plugins, ['neoclide/coc-neco', {'merged' : 0}])
-  elseif g:spacevim_autocomplete_method ==# 'completor'
-    " call add(plugins, ['kyouryuukunn/completor-necovim', {'merged' : 0}])
-    " This plugin has bug in neovim-qt win 7
-    " https://github.com/maralla/completor.vim/issues/250
+  let plugins = []
+  if !SpaceVim#layers#lsp#check_filetype('vim')
+    let plugins = [
+          \ ['syngan/vim-vimlint',                     { 'on_ft' : 'vim'}],
+          \ ['ynkdir/vim-vimlparser',                  { 'on_ft' : 'vim'}],
+          \ ['todesking/vint-syntastic',               { 'on_ft' : 'vim'}],
+          \ ]
+    call add(plugins,['tweekmonster/exception.vim', {'merged' : 0}])
+    call add(plugins,['wsdjeg/vim-lookup', {'merged' : 0}])
+    call add(plugins,['Shougo/neco-vim',              { 'on_event' : 'InsertEnter', 'loadconf_before' : 1}])
+    if g:spacevim_autocomplete_method ==# 'asyncomplete'
+      call add(plugins, ['prabirshrestha/asyncomplete-necovim.vim', { 'loadconf' : 1, 'merged' : 0 }])
+    elseif g:spacevim_autocomplete_method ==# 'coc'
+      call add(plugins, ['neoclide/coc-neco', {'merged' : 0}])
+    elseif g:spacevim_autocomplete_method ==# 'completor'
+      " call add(plugins, ['kyouryuukunn/completor-necovim', {'merged' : 0}])
+      " This plugin has bug in neovim-qt win 7
+      " https://github.com/maralla/completor.vim/issues/250
+    endif
   endif
   call add(plugins,['tweekmonster/helpful.vim',      {'on_cmd': 'HelpfulVersion'}])
   return plugins
