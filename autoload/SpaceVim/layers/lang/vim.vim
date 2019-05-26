@@ -23,6 +23,7 @@ function! SpaceVim#layers#lang#vim#plugins() abort
   endif
   call add(plugins,['Shougo/neco-vim',              { 'on_event' : 'InsertEnter', 'loadconf_before' : 1}])
   call add(plugins,['tweekmonster/helpful.vim',      {'on_cmd': 'HelpfulVersion'}])
+
   if g:spacevim_autocomplete_method ==# 'asyncomplete'
     call add(plugins, ['prabirshrestha/asyncomplete-necovim.vim', { 'loadconf' : 1, 'merged' : 0 }])
   elseif g:spacevim_autocomplete_method ==# 'coc'
