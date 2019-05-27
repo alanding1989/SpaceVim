@@ -99,8 +99,8 @@ call deoplete#custom#source('racer', 'mark', 'rust')
 
 " vim
 call deoplete#custom#option('ignore_sources', {'vim': ['tag']})
-call deoplete#custom#source('neco-vim'  , 'rank', 9998)
 call deoplete#custom#source('vim'  , 'rank', 9998)
+call deoplete#custom#source('LC', 'rank', 9999)
 
 " clojure
 let g:deoplete#keyword_patterns.clojure = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'

@@ -248,7 +248,7 @@ function! DefxYarkSrcLayout(_) abort "{{{
   if srcname =~# 0 | return | endif
   let dname = input('Input DestinationDirname/Cancel(n) : ')
   if dname ==# 'n' | return | endif
-  let srcp = expand(g:home.'extools/projectdir/'.srcname)
+  let srcp = expand(g:home.'extools/src-template/'.srcname)
   let tarp = expand(dirpath.'/'.dname)
   silent exec '!cp -rf '.srcp.' '.tarp
   echohl WarningMsg 

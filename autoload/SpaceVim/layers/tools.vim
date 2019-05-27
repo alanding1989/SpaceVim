@@ -67,12 +67,6 @@ function! SpaceVim#layers#tools#config() abort
   let g:rainbow#pairs = [['(', ')'], ['[', ']'],['{','}']]
   " List of colors that you do not want. ANSI code or #RRGGBB
   let g:rainbow#blacklist = [233, 234]
-  if maparg('<C-_>', 'v') ==# ''
-    vnoremap <silent> <C-_> <Esc>:Ydv<CR>
-  endif
-  if maparg('<C-_>', 'n') ==# ''
-    nnoremap <silent> <C-_> <Esc>:Ydc<CR>
-  endif
 endfunction
 
 " vim:set et sw=2 cc=80:

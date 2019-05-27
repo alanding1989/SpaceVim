@@ -116,9 +116,9 @@ function! SpaceVim#layers#lang#scala#plugins() abort
   let plugins = [ 
         \ ['derekwyatt/vim-scala', {'on_ft': 'scala'}],
         \ ]
-  if has('python3') || has('python')
-    call add(plugins, ['ensime/ensime-vim', {'on_ft': 'scala'}])
-  endif
+  " if has('python3') || has('python')
+    " call add(plugins, ['ensime/ensime-vim', {'on_ft': 'scala'}])
+  " endif
   return plugins
 endfunction
 
@@ -127,17 +127,12 @@ function! SpaceVim#layers#lang#scala#config() abort
   let g:scala_use_default_keymappings = 0
   call SpaceVim#mapping#space#regesit_lang_mappings('scala', function('s:language_specified_mappings'))
   call SpaceVim#plugins#repl#reg('scala', 'scala')
+  call SpaceVim#mapping#gd#add('scala', function('s:go_to_def'))
   call add(g:spacevim_project_rooter_patterns, 'build.sbt')
   augroup SpaceVim_lang_scala
     auto!
-    if !SpaceVim#layers#lsp#check_filetype('scala')
-      " no omnifunc for scala
-      " autocmd FileType scala setlocal omnifunc=scalacomplete#Complete
-      call SpaceVim#mapping#gd#add('scala', function('s:go_to_def'))
-    endif
-    " ftdetect/sbt.vim
     autocmd BufRead,BufNewFile *.sbt set filetype=scala
-    autocmd BufWritePost *.scala silent :EnTypeCheck
+    " autocmd BufWritePost *.scala silent :EnTypeCheck
   augroup END
   let g:neoformat_enabled_scala = neoformat#formatters#scala#enabled()
   let g:neoformat_scala_scalariform = {
@@ -280,7 +275,11 @@ endfunction
 
 
 function! s:go_to_def() abort
-  EnDeclarationSplit v
+  if SpaceVim#layers#lsp#check_filetype('scala')
+    call SpaceVim#lsp#go_to_def()
+  else
+    EnDeclarationSplit v
+  endif
 endfunction
 
 function! s:execCMD(cmd) abort
