@@ -59,7 +59,7 @@ scriptencoding utf-8
 "
 "   Mode      Key           Function
 "   -------------------------------------------------------------
-"   normal    SPC l r m     run main class
+"   normal    SPC l r       run main class
 "
 "   REPL key bindings:
 "
@@ -81,7 +81,7 @@ scriptencoding utf-8
 "   normal    SPC l g       find Definition of cursor symbol
 "   normal    SPC l t       show Type of expression of cursor symbol
 "   normal    SPC l p       show Hierarchical view of a package
-"   normal    SPC l r       find Usages of cursor symbol
+"   normal    SPC l u       find Usages of cursor symbol
 "
 " <
 " @subsection Code formatting
@@ -132,7 +132,9 @@ function! SpaceVim#layers#lang#scala#config() abort
   augroup SpaceVim_lang_scala
     auto!
     autocmd BufRead,BufNewFile *.sbt set filetype=scala
-    " autocmd BufWritePost *.scala silent :EnTypeCheck
+    if g:spacevim_autocomplete_method ==# 'coc'
+      autocmd BufWritePost *.scala silent :EnTypeCheck
+    endif
   augroup END
   let g:neoformat_enabled_scala = neoformat#formatters#scala#enabled()
   let g:neoformat_scala_scalariform = {
@@ -146,12 +148,14 @@ endfunction
 function! s:language_specified_mappings() abort
   " ensime-vim {{{
   " nnoremap <silent><buffer> gd :EnDeclarationSplit v<CR>
-  nmap <silent><buffer> <F4>   :EnSuggestImport<CR>
-  imap <silent><buffer> <F4>   <esc>:EnSuggestImport<CR>
-  imap <silent><buffer> <c-j>i <esc>:EnAddImport<CR>
-  imap <silent><buffer> <c-j>o <esc>:EnOrganizeImports<CR>
-  imap <silent><buffer> <c-j>s <esc>:SortScalaImports<CR>
-  nmap <silent><buffer> K      :EnDocBrowse<CR>
+  nnoremap <silent><buffer> <F4>     :EnSuggestImport<CR>
+  inoremap <silent><buffer> <F4>     <esc>:EnSuggestImport<CR>
+  inoremap <silent><buffer> <c-j>i   <esc>:EnAddImport<CR>
+  inoremap <silent><buffer> <c-j>o   <esc>:EnOrganizeImports<CR>
+  inoremap <silent><buffer> <c-j>s   <esc>:SortScalaImports<CR>
+  if !SpaceVim#layers#lsp#check_filetype('scala')
+    nnoremap <silent><buffer> K      :EnDocBrowse<CR>
+  endif
 
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','Q'],
         \ 'EnInstall',
@@ -175,7 +179,7 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','p'],
         \ 'EnShowPackage',
         \ 'show Hierarchical view of a package', 1)
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','r'],
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','u'],
         \ 'EnUsages',
         \ 'find Usages of cursor symbol', 1)
 
@@ -199,9 +203,11 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','d','i'],
         \ 'EnDebugStep',
         \ 'step into next statement', 1)
+  nnoremap <buffer><F7>    :EnDebugStep<CR>
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','d','o'],
         \ 'EnDebugNext',
         \ 'step over next statement', 1)
+  nnoremap <buffer><F8>    :EnDebugNext<CR>
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','d','O'],
         \ 'EnDebugNext',
         \ 'step out of current function', 1)
@@ -229,6 +235,7 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','r', 'm'], 'call call('
         \ . string(function('s:execCMD')) . ', ["sbt run"])',
         \ 'Run main class', 1)
+  nnoremap <buffer><F10>  :call <sid>execCMD('sbt run')<CR>
 
   " Sbt
   let g:_spacevim_mappings_space.l.b = {'name' : '+Sbt'}

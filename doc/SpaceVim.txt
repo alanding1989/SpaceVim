@@ -1434,7 +1434,7 @@ MAPPINGS
 
   Mode      Key           Function
   -------------------------------------------------------------
-  normal    SPC l r m     run main class
+  normal    SPC l r       run main class
 
   REPL key bindings:
 
@@ -1456,7 +1456,7 @@ MAPPINGS
   normal    SPC l g       find Definition of cursor symbol
   normal    SPC l t       show Type of expression of cursor symbol
   normal    SPC l p       show Hierarchical view of a package
-  normal    SPC l r       find Usages of cursor symbol
+  normal    SPC l u       find Usages of cursor symbol
 
 <
 CODE FORMATTING
