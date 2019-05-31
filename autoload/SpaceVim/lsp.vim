@@ -19,7 +19,7 @@ if SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplete_me
     " Since a:cmds[0], i.e. the language server command can be a full path,
     " which can potentially contain dots, we just take it's last part, if any
     " dots are present.
-    " 
+    "
     " Clearly, with this implementation, an edge case could be the following
     "
     " [layers.override_cmd]
@@ -29,8 +29,8 @@ if SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplete_me
     " the last part `bin/ccls` is the same, whereas the commands are not
     " actually the same.
     " We need to keep an id to distinguish among conflicting keys.
-    
-    if stridx(a:cmds[0], '.') >= 0 
+
+    if stridx(a:cmds[0], '.') >= 0
       let l:key = split(a:cmds[0], "\\.")[-1]
     else
       let l:key = a:cmds[0]
