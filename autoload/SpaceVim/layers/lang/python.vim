@@ -152,6 +152,6 @@ endfunction
 function! SpaceVim#layers#lang#python#set_variable(var) abort
 
   let s:format_on_save = get(a:var,
-        \ 'format-on-save',
+        \ 'format_on_save',
         \ 0)
 endfunction

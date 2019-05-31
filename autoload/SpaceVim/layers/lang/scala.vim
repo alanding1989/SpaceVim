@@ -85,13 +85,13 @@ scriptencoding utf-8
 "
 " <
 " SpaceVim uses [`ensime-vim`](http://ensime.github.io/editors/vim/install/)
-" to provide code completion, format, sort imports etc, if has python support.
-" Also you can enable lsp layer to has a better experience.
+" to provide code completion, format, sort imports etc, if vim has python support.
+" Also you can enable lsp layer to have a better experience.
 "
 "
 " @subsection language server `metals-vim`
 "
-" Right now `metals-vim` works with `coc.nvim` to offer a richer user experience 
+" Right now `metals-vim` works with `coc.nvim` to offer a richer user experience
 " than other servers(LanguageClient-neovim or vim-lsp). Please make sure that
 " `metals-vim` executable is in your `system $PATH`. Installation guide is here:
 " [`metals-vim`](https://scalameta.org/metals/docs/editors/vim.html)
@@ -110,7 +110,7 @@ scriptencoding utf-8
 "
 " 2. Integration ENSIME with your build tools, here we use sbt.
 "    add (sbt-ensime) as global plugin for sbt:
-"    Put code `addSbtPlugin("org.ensime" % "sbt-ensime" % "2.6.1")` in file 
+"    Put code `addSbtPlugin("org.ensime" % "sbt-ensime" % "2.6.1")` in file
 "    '~/.sbt/plugins/plugins.sbt' (create if not exists).
 "    Armed with your build tool plugin, generate the `.ensime` config file from
 "    your project directory in command line, e.g. for sbt use `sbt ensimeConfig`,
@@ -127,19 +127,25 @@ scriptencoding utf-8
 "
 " @subsection Code formatting
 "
-" 1.  To make neoformat support scala file, you should install scalariform.
-"     [`scalariform`](https://github.com/scala-ide/scalariform)
-"     and set 'g:spacevim_layer_lang_scala_formatter' to the path of the jar.
+" 1.  To make neoformat support scala file, you should install scalariform:
+"     [`scalariform`](https://github.com/scala-ide/scalariform) or scalafmt:
+"     [`scalafmt`](https://scalameta.org/scalafmt/docs/configuration.html)
+"     and set layer option 'scala_formatter_path' to the path of scalariform.jar
+"     or executable scalafmt.
 "
-" 2.  If lsp [`metals-vim`](https://scalameta.org/metals/docs/editors/overview.html)
-"     is enabled, it will automatically use 
-"     [`scalafmt`](https://scalameta.org/scalafmt/docs/configuration.html) 
-"     to format code.
+" 2.  If you want to configure the format style, you should set layer option
+"     `scala_formatter_scalariform_config_path` or
+"     `scala_formatter_scalafmt_config_path` to the path of the config file.
+"
+" 3.  You can also set layer option `format_on_save=1` to enable auto format 
+"     when you save buffer.
+"
 
 
 function! SpaceVim#layers#lang#scala#plugins() abort
-  let plugins = [ 
-        \ ['derekwyatt/vim-scala', {'on_ft': 'scala'}],
+  let plugins = [
+        \ ['alanding1989/vim-scala', {'on_ft' : 'scala'}],
+        \ ['derekwyatt/vim-sbt'    , {'merged': 0}],
         \ ]
   if has('python3') || has('python')
     call add(plugins, ['ensime/ensime-vim', {'on_ft': 'scala'}])
@@ -156,28 +162,55 @@ function! SpaceVim#layers#lang#scala#config() abort
   call add(g:spacevim_project_rooter_patterns, 'build.sbt')
   augroup SpaceVim_lang_scala
     auto!
-    autocmd BufRead,BufNewFile *.sbt set filetype=scala
-    if exists(':EnTypeCheck')
+    if has('python3') || has('python')
       autocmd BufWritePost *.scala silent :EnTypeCheck
+    endif
+    if s:format_on_save
+      autocmd BufWritePost *.scala  Neoformat
     endif
   augroup END
 
-  let g:neoformat_enabled_scala = neoformat#formatters#scala#enabled()
-  let g:neoformat_scala_scalariform = {
-        \ 'exe': 'java',
-        \ 'args': ['-jar', get(g:,'spacevim_layer_lang_scala_formatter', ''), '-'],
-        \ 'stdin': 1,
-        \ }
+
+  if match(s:scala_formatter_path, 'scalariform') > -1
+    let g:neoformat_enabled_scala  = ['scalariform']
+    let g:neoformat_scala_scalariform = {
+          \ 'exe'   : 'java',
+          \ 'stdin' : 1,
+          \ 'args': s:scala_formatter_scalariform_config_path !=# ''
+          \     ? ['-jar', get(s:,'scala_formatter_path', ''), '-p='
+          \     . s:scala_formatter_scalariform_config_path  , '--stdout', '%:p']
+          \     : ['-jar', get(s:,'scala_formatter_path', ''), '--stdout', '%:p']
+          \ }
+  elseif match(s:scala_formatter_path, 'scalafmt') > -1
+    let g:neoformat_enabled_scala     = ['scalafmt']
+    let g:neoformat_scala_scalafmt = {
+          \ 'exe'   : 'scalafmt',
+          \ 'stdin' : 1,
+          \ 'args'  : s:scala_formatter_scalafmt_config_path !=# ''
+          \     ? ['-c ' . s:scala_formatter_scalafmt_config_path, '%:p']
+          \     : ['%:p']
+          \ }
+  endif
+
+  if 0
+    " enable debug
+    let g:neoformat_verbose = 1
+    let g:neoformat_scala_scalafmt.stderr = 1
+    let g:neoformat_scala_scalariform.stderr = 1
+  endif
 endfunction
 
 
 function! s:language_specified_mappings() abort
   " ensime-vim {{{
   if exists(':EnTypeCheck')
+    " this is dynamicly call and generate variable
+    " `g:_spacevim_mappings_space.l, b:spacevim_lang_spcified_mappings`
+    " after entering vim, so check `exists(':EnTypeCheck')` is ok.
     nnoremap <silent><buffer> <F4>     :EnSuggestImport<CR>
-    inoremap <silent><buffer> <F4>     <esc>:EnSuggestImport<CR>
-    inoremap <silent><buffer> <c-;>i   <esc>:EnAddImport<CR>
-    inoremap <silent><buffer> <c-;>o   <esc>:EnOrganizeImports<CR>
+    inoremap <silent><buffer> <F4>     <Esc>:EnSuggestImport<CR>
+    inoremap <silent><buffer> <C-;>i   <Esc>:EnAddImport<CR>
+    inoremap <silent><buffer> <C-;>o   <Esc>:EnOrganizeImports<CR>
     if !SpaceVim#layers#lsp#check_filetype('scala')
       nnoremap <silent><buffer> K      :EnDocBrowse<CR>
     endif
@@ -197,7 +230,7 @@ function! s:language_specified_mappings() abort
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l','g'],
           \ 'EnDeclarationSplit v',
           \ 'find Definition of cursor symbol', 1)
-    xnoremap <silent><buffer> <space>lt :EnType selection<CR>
+    xnoremap <silent><buffer> <Space>lt :EnType selection<CR>
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l','t'],
           \ 'EnType',
           \ 'show Type of expression of cursor symbol', 1)
@@ -249,15 +282,14 @@ function! s:language_specified_mappings() abort
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l','i','o'],
           \ 'EnOrganizeImports',
           \ 'Organize imports of current file', 1) " }}}
-    " }}}
   endif
+  " }}}
 
   " import `vim-scala`
-  let g:_spacevim_mappings_space.l.i = 
+  let g:_spacevim_mappings_space.l.i =
         \ get(g:_spacevim_mappings_space.l, 'i', {'name' : '+Import'})
   inoremap <silent><buffer> <C-;>s   <Esc>:SortScalaImports<CR>
-
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','i','s'],
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'i', 's'],
         \ 'SortScalaImports', 'sort imports', 1)
 
   if SpaceVim#layers#lsp#check_filetype('scala') && executable('metals-vim')
@@ -273,8 +305,7 @@ function! s:language_specified_mappings() abort
   endif
 
   " Execute
-  let g:_spacevim_mappings_space.l.r = {'name' : '+Run'}
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','r', 'm'], 'call call('
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','r'], 'call call('
         \ . string(function('s:execCMD')) . ', ["sbt run"])',
         \ 'Run main class', 1)
   nnoremap <buffer><F10>  :call <sid>execCMD('sbt run')<CR>
@@ -323,6 +354,23 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 's'],
         \ 'call SpaceVim#plugins#repl#send("selection")',
         \ 'send selection and keep code buffer focused', 1)
+endfunction
+
+
+let s:format_on_save                          = 0
+let s:formatter_scalariform_path              = ''
+let s:scala_formatter_scalariform_config_path = ''
+let s:scala_formatter_scalafmt_config_path    = ''
+function! SpaceVim#layers#lang#scala#set_variable(var) abort
+  let s:format_on_save = get(a:var, 'format_on_save', 0)
+
+  let s:scala_formatter_path = get(a:var, 'scala_formatter_path', '')
+
+  let s:scala_formatter_scalariform_config_path =
+        \ expand(get(a:var, 'scala_formatter_scalariform_config_path', ''))
+
+  let s:scala_formatter_scalafmt_config_path    =
+        \ expand(get(a:var, 'scala_formatter_scalafmt_config_path', ''))
 endfunction
 
 

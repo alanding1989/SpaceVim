@@ -61,24 +61,25 @@ function! SpaceVim#layers#lang#go#config() abort
   let g:neomake_go_gometalinter_args = ['--disable-all']
   let g:go_snippet_engine = 'neosnippet'
 
-  if SpaceVim#layers#lsp#check_filetype('go')
-    call SpaceVim#mapping#gd#add('go',
-          \ function('SpaceVim#lsp#go_to_def'))
-  else
-    call SpaceVim#mapping#gd#add('go', function('s:go_to_def'))
-  endif
+  call SpaceVim#mapping#gd#add('go', function('s:go_to_def'))
   call SpaceVim#mapping#space#regesit_lang_mappings('go', function('s:language_specified_mappings'))
   call SpaceVim#plugins#runner#reg_runner('go', 'go run %s')
 endfunction
 
+
 function! s:go_to_def() abort
-  call go#def#Jump('')
+  if SpaceVim#layers#lsp#check_filetype('go')
+    call SpaceVim#lsp#go_to_def()
+  else
+    call go#def#Jump('')
+  endif
 endfunction
+
 
 function! s:language_specified_mappings() abort
 
   call SpaceVim#mapping#space#langSPC('nmap', ['l','a'],
-        \ ':GoAlternate',
+        \ 'GoAlternate',
         \ 'go alternate', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','b'],
         \ '<Plug>(go-build)',
@@ -99,7 +100,7 @@ function! s:language_specified_mappings() abort
         \ '<Plug>(go-def)',
         \ 'go def', 0)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','G'],
-        \ ':GoGenerate',
+        \ 'GoGenerate',
         \ 'go generate', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','h'],
         \ '<Plug>(go-info)',
@@ -108,31 +109,31 @@ function! s:language_specified_mappings() abort
         \ '<Plug>(go-implements)',
         \ 'go implements', 0)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','I'],
-        \ ':GoImpl',
+        \ 'GoImpl',
         \ 'impl stubs', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','k'],
-        \ ':GoAddTags',
+        \ 'GoAddTags',
         \ 'add tags', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','K'],
-        \ ':GoRemoveTags',
+        \ 'GoRemoveTags',
         \ 'remove tags', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','l'],
-        \ ':GoDecls',
+        \ 'GoDecls',
         \ 'decl file', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','L'],
-        \ ':GoDeclsDir',
+        \ 'GoDeclsDir',
         \ 'decl dir', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','m'],
-        \ ':GoImports',
+        \ 'GoImports',
         \ 'format imports', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','M'],
-        \ ':GoImport ',
+        \ 'GoImport ',
         \ 'add import', 0)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','x'],
-        \ ':GoReferrers',
+        \ 'GoReferrers',
         \ 'go referrers', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s'],
-        \ ':GoFillStruct',
+        \ 'GoFillStruct',
         \ 'fill struct', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','t'],
         \ 'GoTest',
@@ -141,7 +142,7 @@ function! s:language_specified_mappings() abort
         \ 'GoTestFunc',
         \ 'go test function', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','v'],
-        \ ':GoFreevars',
+        \ 'GoFreevars',
         \ 'freevars', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
 endfunction

@@ -24,7 +24,7 @@ function! SpaceVim#layers#git#plugins() abort
         \ ['junegunn/gv.vim'       , {'on_cmd': ['GV']}],
         \ ['tpope/vim-fugitive'    , {'merged': 0}]     ,
         \ ]
-  if g:spacevim_gitgutter_plugin ==# 'gitgutter'
+  if g:spacevim_gitgutter_plugin ==# 'vim-gitgutter'
     call add(plugins, ['airblade/vim-gitgutter', {'merged': 0}])
   endif
   if s:git_plugin ==# 'gina'

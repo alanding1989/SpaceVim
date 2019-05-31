@@ -1460,8 +1460,8 @@ MAPPINGS
 
 <
 SpaceVim uses [`ensime-vim`](http://ensime.github.io/editors/vim/install/) to
-provide code completion, format, sort imports etc, if has python support. Also
-you can enable lsp layer to has a better experience.
+provide code completion, format, sort imports etc, if vim has python support.
+Also you can enable lsp layer to have a better experience.
 
 
 LANGUAGE SERVER `METALS-VIM`
@@ -1485,8 +1485,8 @@ please see: [`ensime-vim`](http://ensime.github.io/editors/vim/install/)
 
   2. Integration ENSIME with your build tools, here we use sbt. add
     (sbt-ensime) as global plugin for sbt: Put code `addSbtPlugin("org.ensime"
-    % "sbt-ensime" % "2.6.1")` in file  '~/.sbt/plugins/plugins.sbt' (create
-    if not exists). Armed with your build tool plugin, generate the `.ensime`
+    % "sbt-ensime" % "2.6.1")` in file '~/.sbt/plugins/plugins.sbt' (create if
+    not exists). Armed with your build tool plugin, generate the `.ensime`
     config file from your project directory in command line, e.g. for sbt use
     `sbt ensimeConfig`, or `./gradlew ensime` for Gradle. the first time will
     take several minutes.
@@ -1502,15 +1502,19 @@ please see: [`ensime-vim`](http://ensime.github.io/editors/vim/install/)
 
 CODE FORMATTING
 
-  1. To make neoformat support scala file, you should install scalariform.
-    [`scalariform`](https://github.com/scala-ide/scalariform) and set
-    'g:spacevim_layer_lang_scala_formatter' to the path of the jar.
+  1. To make neoformat support scala file, you should install scalariform:
+    [`scalariform`](https://github.com/scala-ide/scalariform) or scalafmt:
+    [`scalafmt`](https://scalameta.org/scalafmt/docs/configuration.html) and
+    set layer option 'scala_formatter_path' to the path of scalariform.jar or
+    executable scalafmt.
 
-  2. If lsp
-    [`metals-vim`](https://scalameta.org/metals/docs/editors/overview.html) is
-    enabled, it will automatically use
-    [`scalafmt`](https://scalameta.org/scalafmt/docs/configuration.html)  to
-    format code.
+  2. If you want to configure the format style, you should set layer option
+    `scala_formatter_scalariform_config_path` or
+    `scala_formatter_scalafmt_config_path` to the path of the config file.
+
+  3. You can also set layer option `format_on_save=1` to enable auto format
+    when you save buffer.
+
 
 ==============================================================================
 LANG#XML                                             *SpaceVim-layer-lang-xml*
