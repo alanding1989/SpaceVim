@@ -160,6 +160,7 @@ function! SpaceVim#layers#lang#scala#config() abort
   call SpaceVim#plugins#repl#reg('scala', 'scala')
   call SpaceVim#mapping#gd#add('scala', function('s:go_to_def'))
   call add(g:spacevim_project_rooter_patterns, 'build.sbt')
+
   augroup SpaceVim_lang_scala
     auto!
     if has('python3') || has('python')
@@ -169,7 +170,6 @@ function! SpaceVim#layers#lang#scala#config() abort
       autocmd BufWritePost *.scala  Neoformat
     endif
   augroup END
-
 
   if match(s:scala_formatter_path, 'scalariform') > -1
     let g:neoformat_enabled_scala  = ['scalariform']
@@ -241,36 +241,6 @@ function! s:language_specified_mappings() abort
           \ 'EnUsages',
           \ 'find Usages of cursor symbol', 1)
 
-    " debug {{{
-    let g:_spacevim_mappings_space.l.d = {'name' : '+Debug'}
-    call SpaceVim#mapping#space#langSPC('nnoremap', ['l','d','t'],
-          \ 'EnDebugBacktrace',
-          \ 'show debug stack trace of current frame', 1)
-    call SpaceVim#mapping#space#langSPC('nnoremap', ['l','d','c'],
-          \ 'EnDebugContinue',
-          \ 'continue the execution', 1)
-    call SpaceVim#mapping#space#langSPC('nnoremap', ['l','d','b'],
-          \ 'EnDebugSetBreak',
-          \ 'set a breakpoint for the current line', 1)
-    call SpaceVim#mapping#space#langSPC('nnoremap', ['l','d','B'],
-          \ 'EnDebugClearBreaks',
-          \ 'clear all breakpoints', 1)
-    call SpaceVim#mapping#space#langSPC('nnoremap', ['l','d','l'],
-          \ 'EnDebugStart',
-          \ 'launching debugger', 1)
-    call SpaceVim#mapping#space#langSPC('nnoremap', ['l','d','i'],
-          \ 'EnDebugStep',
-          \ 'step into next statement', 1)
-    nnoremap <buffer><F7>    :EnDebugStep<CR>
-    call SpaceVim#mapping#space#langSPC('nnoremap', ['l','d','o'],
-          \ 'EnDebugNext',
-          \ 'step over next statement', 1)
-    nnoremap <buffer><F8>    :EnDebugNext<CR>
-    call SpaceVim#mapping#space#langSPC('nnoremap', ['l','d','O'],
-          \ 'EnDebugNext',
-          \ 'step out of current function', 1)
-    "}}}
-
     " import {{{
     let g:_spacevim_mappings_space.l.i = {'name' : '+Import'}
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l','i','i'],
@@ -319,8 +289,8 @@ function! s:language_specified_mappings() abort
   endif
 
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','b', 'c'], 'call call('
-        \ . string(function('s:execCMD')) . ', ["sbt ~compile"])',
-        \ 'Run sbt continuous compile', 1)
+        \ . string(function('s:execCMD')) . ', ["sbt compile"])',
+        \ 'Run sbt compile', 1)
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','b', 'C'], 'call call('
         \ . string(function('s:execCMD')) . ', ["sbt clean compile"])',
         \ 'Run sbt clean compile', 1)
@@ -330,9 +300,6 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','b', 'p'], 'call call('
         \ . string(function('s:execCMD')) . ', ["sbt package"])',
         \ 'Run sbt to package jar', 1)
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','b', 'd'], 'call call('
-        \ . string(function('s:execCMD')) . ', ["sbt inspect tree compile:sources"])',
-        \ 'Run sbt to show project dependencies tree', 1)
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','b', 'l'], 'call call('
         \ . string(function('s:execCMD')) . ', ["sbt reload"])',
         \ 'Run sbt to reload build definition', 1)
