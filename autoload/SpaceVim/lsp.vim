@@ -30,6 +30,8 @@ if SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplete_me
     " actually the same.
     " We need to keep an id to distinguish among conflicting keys.
 
+    return
+
     if stridx(a:cmds[0], '.') >= 0
       let l:key = split(a:cmds[0], "\\.")[-1]
     else
@@ -52,10 +54,10 @@ if SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplete_me
 
     let s:coc_language_servers_key_id_map[l:key] = s:coc_language_servers_key_id_map[l:key] + 1
 
-    " augroup spacevim_lsp_layer
-      " autocmd!
-      " autocmd! User CocNvimInit :call coc#config("languageserver", s:coc_language_servers)
-    " augroup END
+    augroup spacevim_lsp_layer
+      autocmd!
+      autocmd! User CocNvimInit :call coc#config("languageserver", s:coc_language_servers)
+    augroup END
   endfunction
 
   function! SpaceVim#lsp#show_doc() abort
