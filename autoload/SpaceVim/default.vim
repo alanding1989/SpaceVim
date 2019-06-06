@@ -252,9 +252,9 @@ function! SpaceVim#default#keyBindings() abort
 
 
   " Fast saving
-  nnoremap <C-s> :<C-u>w<CR>
-  vnoremap <C-s> :<C-u>w<CR>
-  cnoremap <C-s> <C-u>w<CR>
+  " nnoremap <C-s> :<C-u>w<CR>
+  " vnoremap <C-s> :<C-u>w<CR>
+  " cnoremap <C-s> <C-u>w<CR>
 
   " Tabs
   nnoremap <silent>g0 :<C-u>tabfirst<CR>
@@ -265,13 +265,13 @@ function! SpaceVim#default#keyBindings() abort
   " nnoremap <silent> ,<Space> :<C-u>silent! keeppatterns %substitute/\s\+$//e<CR>
 
   " C-r: Easier search and replace
-  xnoremap <C-r> :<C-u>call <SID>VSetSearch()<CR>:,$s/<C-R>=@/<CR>//gc<left><left><left>
-  function! s:VSetSearch() abort
-    let temp = @s
-    norm! gv"sy
-    let @/ = '\V' . substitute(escape(@s, '/\'), '\n', '\\n', 'g')
-    let @s = temp
-  endfunction
+  " xnoremap <C-r> :<C-u>call <SID>VSetSearch()<CR>:,$s/<C-R>=@/<CR>//gc<left><left><left>
+  " function! s:VSetSearch() abort
+    " let temp = @s
+    " norm! gv"sy
+    " let @/ = '\V' . substitute(escape(@s, '/\'), '\n', '\\n', 'g')
+    " let @s = temp
+  " endfunction
 
   " "irssi like hot key
   " nnoremap <silent><M-1> :<C-u>call <SID>tobur(1)<CR>
