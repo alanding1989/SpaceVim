@@ -1,6 +1,6 @@
 "=============================================================================
 " ui.vim --- SpaceVim ui layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -51,9 +51,10 @@ function! SpaceVim#layers#ui#config() abort
   " endif
 
   " if !empty(g:spacevim_windows_smartclose)
-  "   call SpaceVim#mapping#def('nnoremap <silent>', g:spacevim_windows_smartclose, ':<C-u>call zvim#util#SmartClose()<cr>',
+  "   call SpaceVim#mapping#def('nnoremap <silent>', g:spacevim_windows_smartclose, ':<C-u>call SpaceVim#mapping#SmartClose()<cr>',
   "         \ 'Smart close windows',
-  "         \ 'call zvim#util#SmartClose()')
+  "         \ 'call SpaceVim#mapping#SmartClose()')
+  " endif
 
   " Ui toggles
   call SpaceVim#mapping#space#def('nnoremap', ['t', '8'], 'call call('
