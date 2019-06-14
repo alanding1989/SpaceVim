@@ -202,21 +202,20 @@ function! SpaceVim#layers#core#config() abort
   "   call SpaceVim#mapping#space#def('nnoremap', ['f', 'o'], "Defx  -no-toggle -search=`expand('%:p')` `stridx(expand('%:p'), getcwd()) < 0? expand('%:p:h'): getcwd()`", 'open_file_tree', 1)
   "   call SpaceVim#mapping#space#def('nnoremap', ['b', 't'], 'Defx -no-toggle', 'show_file_tree_at_buffer_dir', 1)
   " endif
-
-  " call SpaceVim#mapping#space#def('nnoremap', ['f', 'y'], 'call zvim#util#CopyToClipboard()', 'show-and-copy-buffer-filename', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['f', 'y'], 'call SpaceVim#util#CopyToClipboard()', 'show-and-copy-buffer-filename', 1)
   " let g:_spacevim_mappings_space.f.v = {'name' : '+Vim(SpaceVim)'}
   " call SpaceVim#mapping#space#def('nnoremap', ['f', 'v', 'v'], 'let @+=g:spacevim_version | echo g:spacevim_version', 'display-and-copy-version', 1)
-"
   " let lnum = expand('<slnum>') + s:lnum - 1
   " call SpaceVim#mapping#space#def('nnoremap', ['f', 'v', 'd'], 'SPConfig',
-        " \ ['open-custom-configuration',
-        " \ [
-        " \ '[SPC f v d] is to open the custom configuration file for SpaceVim',
-        " \ '',
-        " \ 'Definition: ' . s:filename . ':' . lnum,
-        " \ ]
-        " \ ]
-        " \ , 1)
+  "       \ ['open-custom-configuration',
+  "       \ [
+  "       \ '[SPC f v d] is to open the custom configuration file for SpaceVim',
+  "       \ '',
+  "       \ 'Definition: ' . s:filename . ':' . lnum,
+  "       \ ]
+  "       \ ]
+  "       \ , 1)
+
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['n', '-'], 'call call('
         \ . string(s:_function('s:number_transient_state')) . ', ["-"])',
