@@ -85,26 +85,29 @@ CONTENTS                                                   *SpaceVim-contents*
       15. lang#elixir.............................|SpaceVim-layer-lang-elixir|
       16. lang#elm...................................|SpaceVim-layer-lang-elm|
       17. lang#go.....................................|SpaceVim-layer-lang-go|
-      18. lang#java.................................|SpaceVim-layer-lang-java|
-      19. lang#julia...............................|SpaceVim-layer-lang-julia|
-      20. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
-      21. lang#lua...................................|SpaceVim-layer-lang-lua|
-      22. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
-      23. lang#php...................................|SpaceVim-layer-lang-php|
-      24. lang#pony.................................|SpaceVim-layer-lang-pony|
-      25. lang#powershell.....................|SpaceVim-layer-lang-powershell|
-      26. lang#processing.....................|SpaceVim-layer-lang-processing|
-      27. lang#puppet.............................|SpaceVim-layer-lang-puppet|
-      28. lang#python.............................|SpaceVim-layer-lang-python|
-      29. lang#rust.................................|SpaceVim-layer-lang-rust|
-      30. lang#scala...............................|SpaceVim-layer-lang-scala|
-      31. lang#xml...................................|SpaceVim-layer-lang-xml|
-      32. operator...................................|SpaceVim-layer-operator|
-      33. shell.........................................|SpaceVim-layer-shell|
-      34. test...........................................|SpaceVim-layer-test|
-      35. tmux...........................................|SpaceVim-layer-tmux|
-      36. tools#dash...............................|SpaceVim-layer-tools-dash|
-      37. tools#zeal...............................|SpaceVim-layer-tools-zeal|
+      18. lang#groovy.............................|SpaceVim-layer-lang-groovy|
+      19. lang#java.................................|SpaceVim-layer-lang-java|
+      20. lang#julia...............................|SpaceVim-layer-lang-julia|
+      21. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
+      22. lang#lua...................................|SpaceVim-layer-lang-lua|
+      23. lang#nim...................................|SpaceVim-layer-lang-nim|
+      24. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
+      25. lang#php...................................|SpaceVim-layer-lang-php|
+      26. lang#pony.................................|SpaceVim-layer-lang-pony|
+      27. lang#processing.....................|SpaceVim-layer-lang-processing|
+      28. lang#prolog.............................|SpaceVim-layer-lang-prolog|
+      29. lang#puppet.............................|SpaceVim-layer-lang-puppet|
+      30. lang#python.............................|SpaceVim-layer-lang-python|
+      31. lang#rust.................................|SpaceVim-layer-lang-rust|
+      32. lang#scala...............................|SpaceVim-layer-lang-scala|
+      33. lang#tcl...................................|SpaceVim-layer-lang-tcl|
+      34. lang#xml...................................|SpaceVim-layer-lang-xml|
+      35. operator...................................|SpaceVim-layer-operator|
+      36. shell.........................................|SpaceVim-layer-shell|
+      37. test...........................................|SpaceVim-layer-test|
+      38. tmux...........................................|SpaceVim-layer-tmux|
+      39. tools#dash...............................|SpaceVim-layer-tools-dash|
+      40. tools#zeal...............................|SpaceVim-layer-tools-zeal|
   7. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
@@ -1138,6 +1141,11 @@ LAYERS                                                       *SpaceVim-layers*
 
   SpaceVim support such layers:
 
+languages:
+
+https://www.scriptol.com/programming/list-programming-languages.php#query-lang
+uage
+
 ==============================================================================
 AUTOCOMPLETE                                           *SpaceVim-autocomplete*
 
@@ -1427,6 +1435,35 @@ MAPPINGS
 <
 
 ==============================================================================
+LANG#GROOVY                                       *SpaceVim-layer-lang-groovy*
+
+This layer is for groovy development, disabled by default, to enable this
+layer, add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#groovy'
+<
+
+KEY BINDINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l r         run current file
+<
+
+This layer also provides REPL support for groovy, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
+
+==============================================================================
 LANG#JAVA                                           *SpaceVim-layer-lang-java*
 
 This layer is for Java development.
@@ -1525,13 +1562,51 @@ LANG#LUA                                             *SpaceVim-layer-lang-lua*
 
 This layer includes utilities and language-specific mappings for lua
 development.
+>
+  [[layers]]
+    name = 'lang#lua'
+<
 
-MAPPINGS
+KEY BINDINGS
 
 >
   Mode            Key             Function
   ---------------------------------------------
-  normal          SPC l r         lua run
+  normal          SPC l r         run current script
+  normal          SPC l b         compile current file
+<
+
+This layer also provides REPL support for lua, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
+
+==============================================================================
+LANG#NIM                                             *SpaceVim-layer-lang-nim*
+
+This layer is for nim development, disabled by default, to enable this layer,
+add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#nim'
+<
+
+KEY BINDINGS
+
+>
+  Mode      Key           Function
+  -------------------------------------------------------------
+  normal    SPC l r       run current file
+  normal    SPC l d       show symbol info
+  normal    SPC l e       rename symbol in file
+  normal    SPC l E       rename symbol in project
+  normal    g d           go to definition
 <
 
 ==============================================================================
@@ -1590,6 +1665,17 @@ MAPPINGS
   -----------------------------------------------
   normal      SPC l r     execute current sketch
 <
+
+==============================================================================
+LANG#PROLOG                                       *SpaceVim-layer-lang-prolog*
+
+This layer is for prolog development, disabled by default, to enable this
+layer, add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#prolog'
+<
+
 
 ==============================================================================
 LANG#PUPPET                                       *SpaceVim-layer-lang-puppet*
@@ -1793,6 +1879,35 @@ CODE FORMATTING
 
   3. You can also set layer option `format_on_save=1` to enable auto format
     when you save buffer.
+
+
+==============================================================================
+LANG#TCL                                             *SpaceVim-layer-lang-tcl*
+
+This layer is for tcl development, disabled by default, to enable this layer,
+add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#tcl'
+<
+
+KEY BINDINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l r         run current file
+<
+
+This layer also provides REPL support for tcl, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
 
 
 ==============================================================================
