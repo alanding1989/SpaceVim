@@ -190,6 +190,9 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l', 'g', 't'],
         \ '<Plug>(JavaComplete-Generate-ToString)',
         \ 'Generate toString function', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l', 'g', 'n'],
+        \ '<Plug>(JavaComplete-Generate-NewClass)',
+        \ 'Generate NewClass in current Package', 0)
 
   " Jump
   let g:_spacevim_mappings_space.l.j = {'name' : '+Jump'}
@@ -222,16 +225,18 @@ function! s:language_specified_mappings() abort
         \ 'Run maven test', 1)
 
   " Gradle
-  let g:_spacevim_mappings_space.l.g = {'name' : '+Gradle'}
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','g', 'b'], 'call call('
+  let g:_spacevim_mappings_space.l.d = {'name' : '+Gradle'}
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','d', 'b'], 'call call('
         \ . string(function('s:execCMD')) . ', ["gradle clean build"])',
         \ 'Run gradle clean build', 1)
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','g', 'B'], 'call call('
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','d', 'B'], 'call call('
         \ . string(function('s:execCMD')) . ', ["gradle build"])',
         \ 'Run gradle build', 1)
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','g', 't'], 'call call('
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','d', 't'], 'call call('
         \ . string(function('s:execCMD')) . ', ["gradle test"])',
         \ 'Run gradle test', 1)
+  
+  " REPL
   let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],
         \ 'call SpaceVim#plugins#repl#start("java")',
@@ -249,8 +254,8 @@ function! s:language_specified_mappings() abort
   if SpaceVim#layers#lsp#check_filetype('java')
     nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
 
-    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
-          \ 'call SpaceVim#lsp#show_doc()', 'show_document', 1)
+    " call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
+          " \ 'call SpaceVim#lsp#show_doc()', 'show_document', 1)
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
           \ 'call SpaceVim#lsp#rename()', 'rename symbol', 1)
   endif
