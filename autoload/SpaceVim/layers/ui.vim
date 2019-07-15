@@ -10,7 +10,7 @@ scriptencoding utf-8
 function! SpaceVim#layers#ui#plugins() abort
   let plugins = [
         \ ['Yggdroot/indentLine', {'merged' : 0}],
-        \ ['majutsushi/tagbar', {'loadconf' : 1}],
+        \ ['wsdjeg/tagbar', {'loadconf' : 1, 'merged' : 0}],
         \ ['tenfyzhong/tagbar-makefile.vim', {'merged': 0}],
         \ ['tenfyzhong/tagbar-proto.vim', {'merged': 0}],
         \ ['t9md/vim-choosewin', {'merged' : 0}],
@@ -36,7 +36,7 @@ function! SpaceVim#layers#ui#config() abort
   let g:indentLine_char = get(g:, 'indentLine_char', '┊')
   let g:indentLine_concealcursor = 'niv'
   let g:indentLine_conceallevel = 2
-  let g:indentLine_fileTypeExclude = ['help', 'man', 'startify', 'vimfiler']
+  let g:indentLine_fileTypeExclude = ['help', 'man', 'startify', 'vimfiler', 'json']
   let g:better_whitespace_filetypes_blacklist = ['diff', 'gitcommit', 'unite',
         \ 'qf', 'help', 'markdown', 'leaderGuide',
         \ 'startify'

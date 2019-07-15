@@ -107,10 +107,16 @@ function! SpaceVim#layers#core#config() abort
         \ . string(s:_function('s:explore_current_dir')) . ', [1])',
         \ 'Explore current directory(other windows)', 1)
 
-  call SpaceVim#mapping#space#def('nmap', ['j', 'j'], '<Plug>(easymotion-overwin-f)', 'jump to a character', 0)
+  " call SpaceVim#mapping#space#def('nmap', ['j', 'j'], '<Plug>(easymotion-overwin-f)', 'jump to a character', 0)
+  call SpaceVim#mapping#space#def('nmap', ['j', 'j'], '<Plug>(better-easymotion-overwin-f)', 'jump or select to a character', 0, 1)
+  nnoremap <silent> <Plug>(better-easymotion-overwin-f) :call <SID>better_easymotion_overwin_f(0)<Cr>
+  xnoremap <silent> <Plug>(better-easymotion-overwin-f) :<C-U>call <SID>better_easymotion_overwin_f(1)<Cr>
   call SpaceVim#mapping#space#def('nmap', ['j', 'J'], '<Plug>(easymotion-overwin-f2)', 'jump to a suite of two characters', 0)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'k'], 'j==', 'go to next line and indent', 0)
-  call SpaceVim#mapping#space#def('nmap', ['j', 'l'], '<Plug>(easymotion-overwin-line)', 'jump to a line', 0)
+  " call SpaceVim#mapping#space#def('nmap', ['j', 'l'], '<Plug>(easymotion-overwin-line)', 'jump to a line', 0)
+  call SpaceVim#mapping#space#def('nmap', ['j', 'l'], '<Plug>(better-easymotion-overwin-line)', 'jump or select to a line', 0, 1)
+  nnoremap <silent> <Plug>(better-easymotion-overwin-line) :call <SID>better_easymotion_overwin_line(0)<Cr>
+  xnoremap <silent> <Plug>(better-easymotion-overwin-line) :<C-U>call <SID>better_easymotion_overwin_line(1)<Cr>
   call SpaceVim#mapping#space#def('nmap', ['j', 'v'], '<Plug>(easymotion-overwin-line)', 'jump to a line', 0)
   call SpaceVim#mapping#space#def('nmap', ['j', 'w'], '<Plug>(easymotion-overwin-w)', 'jump to a word', 0)
   call SpaceVim#mapping#space#def('nmap', ['j', 'q'], '<Plug>(easymotion-overwin-line)', 'jump to a line', 0)
@@ -410,8 +416,15 @@ function! s:split_string(newline) abort
   endif
 endfunction
 
+
+" @toto add sting highlight for other filetype
+let s:string_hi = {
+      \ 'c' : 'cCppString',
+      \ 'cpp' : 'cCppString',
+      \ }
+
 function! s:is_string(l, c) abort
-  return synIDattr(synID(a:l, a:c, 1), 'name') == &filetype . 'String'
+  return synIDattr(synID(a:l, a:c, 1), 'name') == get(s:string_hi, &filetype, &filetype . 'String')
 endfunction
 
 " function() wrapper
@@ -650,6 +663,51 @@ function! s:comment_to_line(invert) abort
   else
     call feedkeys("\<Plug>NERDCommenterComment")
   endif
+endfunction
+
+function! s:better_easymotion_overwin_line(is_visual) abort
+  let current_line = line('.')
+  try
+    if a:is_visual
+      call EasyMotion#Sol(0, 2)
+    else
+      call EasyMotion#overwin#line()
+    endif
+    " clear cmd line
+    noautocmd normal! :
+    if a:is_visual
+      let last_line = line('.')
+      exe current_line
+      if last_line > current_line
+        exe 'normal! V' . (last_line - current_line) . 'j'
+      else
+        exe 'normal! V' . (current_line - last_line) . 'k'
+      endif
+    endif
+  catch /^Vim\%((\a\+)\)\=:E117/
+
+  endtry
+endfunction
+
+function! s:better_easymotion_overwin_f(is_visual) abort
+  let [current_line, current_col] = getpos('.')[1:2]
+  try
+    call EasyMotion#OverwinF(1)
+    " clear cmd line
+    noautocmd normal! :
+    if a:is_visual
+      let last_line = line('.')
+      let [last_line, last_col] = getpos('.')[1:2]
+      call cursor(current_line, current_col)
+      if last_line > current_line        
+        exe 'normal! v' . (last_line - current_line) . 'j0' . last_col . '|'
+      else
+        exe 'normal! v' . (current_line - last_line) . 'k0' . last_col . '|' 
+      endif
+    endif
+  catch /^Vim\%((\a\+)\)\=:E117/
+
+  endtry
 endfunction
 
 function! s:comment_paragraphs(invert) abort

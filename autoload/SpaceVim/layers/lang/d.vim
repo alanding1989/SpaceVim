@@ -1,5 +1,5 @@
 "=============================================================================
-" pascal.vim --- vlang language support in SpaceVim
+" d.vim --- D programming language support
 " Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
@@ -7,23 +7,27 @@
 "=============================================================================
 
 
-function! SpaceVim#layers#lang#v#plugins() abort
+function! SpaceVim#layers#lang#d#plugins() abort
   let plugins = []
-  call add(plugins, ['wsdjeg/v-vim', {'merged' : 0}])
+  call add(plugins, ['wsdjeg/vim-dlang', {'merged' : 0}])
+  if g:spacevim_autocomplete_method ==# 'deoplete'
+    call add(plugins, ['landaire/deoplete-d', {'merged' : 0}])
+  endif
   return plugins
 endfunction
 
-function! SpaceVim#layers#lang#v#config() abort
-  call SpaceVim#plugins#repl#reg('vlang', 'vrepl')
-  call SpaceVim#mapping#space#regesit_lang_mappings('vlang', function('s:language_specified_mappings'))
-  call SpaceVim#plugins#runner#reg_runner('vlang', 'v run %s')
+
+function! SpaceVim#layers#lang#d#config() abort
+  call SpaceVim#plugins#runner#reg_runner('d', 'dmd -run %s')
+  call SpaceVim#plugins#repl#reg('d', 'dub run drepl')
+  call SpaceVim#mapping#space#regesit_lang_mappings('d', function('s:language_specified_mappings'))
 endfunction
 
 function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
   let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],
-        \ 'call SpaceVim#plugins#repl#start("vlang")',
+        \ 'call SpaceVim#plugins#repl#start("d")',
         \ 'start REPL process', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'l'],
         \ 'call SpaceVim#plugins#repl#send("line")',

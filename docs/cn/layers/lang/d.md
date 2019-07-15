@@ -1,10 +1,10 @@
 ---
-title: "SpaceVim lang#pact 模块"
-description: "这一模块为 pact 开发提供支持，包括交互式编程、一键运行等特性。"
+title: "SpaceVim lang#d 模块"
+description: "这一模块为 d 开发提供支持，包括语法高亮、自动补全、一键运行等特性。"
 lang: cn
 ---
 
-# [可用模块](../../) >> lang#pact
+# [可用模块](../../) >> lang#d
 
 <!-- vim-markdown-toc GFM -->
 
@@ -18,7 +18,7 @@ lang: cn
 
 ## 模块简介
 
-这一模块为在 SpaceVim 中进行 pact 开发提供了支持。
+这一模块为在 SpaceVim 中进行 d 开发提供了支持。
 
 ## 启用模块
 
@@ -26,18 +26,24 @@ lang: cn
 
 ```toml
 [[layers]]
-  name = "lang#pact"
+  name = "lang#d"
+```
+
+安装D语言交互式编程工具：
+
+```sh
+dub fetch drepl
 ```
 
 ## 快捷键
 
 ### 运行当前脚本
 
-在编辑 pact 文件时，可通过快捷键 `SPC l r` 快速异步运行当前文件，运行结果会展示在一个独立的执行窗口内。
+在编辑 d 文件时，可通过快捷键 `SPC l r` 快速异步运行当前文件，运行结果会展示在一个独立的执行窗口内。
 
 ### 交互式编程
 
-启动 `pact` 交互进程，快捷键为： `SPC l s i`。
+启动 `dub run drepl` 交互进程，快捷键为： `SPC l s i`。
 
 将代码传输给 REPL 进程执行：
 

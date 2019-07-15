@@ -89,6 +89,7 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [lang#c](lang/c/)                                     | 这一模块为 SpaceVim 提供了 C/C++/Object-C 的开发支持，包括代码补全、语法检查等特性。                                                |
 | [lang#clojure](lang/clojure/)                         | 这一模块为 SpaceVim 提供了 Clojure 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                           |
 | [lang#csharp](lang/csharp/)                           | 这一模块为 SpaceVim 提供了 CSharp 的开发支持，包括代码高亮、对齐、补全等特性。                                                      |
+| [lang#d](lang/d/)                                     | 这一模块为 d 开发提供支持，包括语法高亮、自动补全、一键运行等特性。                                                                 |
 | [lang#dart](lang/dart/)                               | 这一模块为 SpaceVim 提供了 Dart 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                              |
 | [lang#dockerfile](lang/dockerfile/)                   | 这一模块为 SpaceVim 提供了 Dockerfile 编辑的部分功能支持，包括语法高亮和自动补全。                                                  |
 | [lang#elixir](lang/elixir/)                           | 这一模块为 SpaceVim 提供了 Elixir 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                            |
@@ -98,6 +99,7 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [lang#fsharp](lang/fsharp/)                           | 这一模块为 SpaceVim 提供了 FSharp 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                            |
 | [lang#go](lang/go/)                                   | 这一模块为 SpaceVim 提供了 Go 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                                |
 | [lang#groovy](lang/groovy/)                           | 这一模块为 Groovy 开发提供支持，包括交互式编程、一键运行等特性。                                                                    |
+| [lang#hack](lang/hack/)                               | 这一模块为 hack 开发提供支持，包括交互式编程、一键运行等特性。                                                                      |
 | [lang#haskell](lang/haskell/)                         | 这一模块为 SpaceVim 提供了 Haskell 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                           |
 | [lang#html](lang/html/)                               | 这一模块为 SpaceVim 提供了 HTML 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                              |
 | [lang#hy](lang/hy/)                                   | 这一模块为 hy 开发提供支持，包括交互式编程、一键运行等特性。                                                                        |
@@ -118,6 +120,8 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [lang#perl](lang/perl/)                               | 这一模块为 Perl 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                            |
 | [lang#php](lang/php/)                                 | 这一模块为 SpaceVim 提供了 PHP 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                               |
 | [lang#plantuml](lang/plantuml/)                       | 这一模块为 SpaceVim 提供了 PlantUML 的开发支持，包括语法高亮、实时预览等特性。                                                      |
+| [lang#pony](lang/pony/)                               | 这一模块为 pony 开发提供支持，包括交互式编程、一键运行等特性。                                                                      |
+| [lang#powershell](lang/powershell/)                   | 这一模块为 powershell 开发提供支持，包括交互式编程、一键运行等特性。                                                                |
 | [lang#prolog](lang/prolog/)                           | 这一模块为 Prolog 开发提供支持，包括交互式编程、一键运行等特性。                                                                    |
 | [lang#puppet](lang/puppet/)                           | 这一模块为 SpaceVim 提供了 Puppet 的开发支持，包括语法高亮、语言服务器支持。                                                        |
 | [lang#purescript](lang/purescript/)                   | 这一模块为 SpaceVim 提供了 PureScript 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                        |
@@ -133,6 +137,7 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [lang#swift](lang/swift/)                             | 这一模块为 SpaceVim 提供了 Swift 的开发支持，包括语法高亮、语法检查等特性。                                                         |
 | [lang#tcl](lang/tcl/)                                 | 这一模块为 Tcl 开发提供支持，包括交互式编程、一键运行等特性。                                                                       |
 | [lang#typescript](lang/typescript/)                   | 这一模块为 SpaceVim 提供了 TypeScript 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                        |
+| [lang#v](lang/v/)                                     | 这一模块为 v 开发提供支持，包括交互式编程、一键运行等特性。                                                                         |
 | [lang#vim](lang/vim/)                                 | 这一模块为 SpaceVim 提供了 Vimscript 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                         |
 | [lang#vue](lang/vue/)                                 | 这一模块为 SpaceVim 提供了 Vue 的的开发支持，包括代码补全、语法检查、代码格式化等特性。                                             |
 | [language-server-protocol](language-server-protocol/) | 这一模块为 SpaceVim 提供了 language server protocol 的支持，提供更多语言相关服务。                                                  |
