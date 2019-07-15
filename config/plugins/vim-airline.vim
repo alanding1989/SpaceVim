@@ -1,4 +1,4 @@
-" scriptencoding utf-8
+scriptencoding utf-8
 " let g:airline_powerline_fonts = g:spacevim_enable_powerline_fonts
 " let g:airline_skip_empty_sections = 1
 " let g:airline#extensions#tabline#enabled = 1

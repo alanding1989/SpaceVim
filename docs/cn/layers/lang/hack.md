@@ -1,24 +1,24 @@
 ---
-title: "SpaceVim lang#pact 模块"
-description: "这一模块为 pact 开发提供支持，包括交互式编程、一键运行等特性。"
+title: "SpaceVim lang#hack 模块"
+description: "这一模块为 hack 开发提供支持，包括交互式编程、一键运行等特性。"
 lang: cn
 ---
 
-# [可用模块](../../) >> lang#pact
+# [可用模块](../../) >> lang#hack
 
 <!-- vim-markdown-toc GFM -->
 
 - [模块简介](#模块简介)
 - [启用模块](#启用模块)
 - [快捷键](#快捷键)
-  - [运行当前脚本](#运行当前脚本)
   - [交互式编程](#交互式编程)
+  - [运行当前脚本](#运行当前脚本)
 
 <!-- vim-markdown-toc -->
 
 ## 模块简介
 
-这一模块为在 SpaceVim 中进行 pact 开发提供了支持。
+这一模块为在 SpaceVim 中进行 hack 开发提供了支持。
 
 ## 启用模块
 
@@ -26,18 +26,14 @@ lang: cn
 
 ```toml
 [[layers]]
-  name = "lang#pact"
+  name = "lang#hack"
 ```
 
 ## 快捷键
 
-### 运行当前脚本
-
-在编辑 pact 文件时，可通过快捷键 `SPC l r` 快速异步运行当前文件，运行结果会展示在一个独立的执行窗口内。
-
 ### 交互式编程
 
-启动 `pact` 交互进程，快捷键为： `SPC l s i`。
+启动 `hhvm` 交互进程，快捷键为： `SPC l s i`。
 
 将代码传输给 REPL 进程执行：
 
@@ -46,3 +42,9 @@ lang: cn
 | `SPC l s b` | 发送整个文件内容至 REPL |
 | `SPC l s l` | 发送当前行内容至 REPL   |
 | `SPC l s s` | 发送已选中的内容至 REPL |
+
+### 运行当前脚本
+
+在编辑 hack 文件时，可通过快捷键 `SPC l r` 快速异步运行当前文件，运行结果会展示在一个独立的执行窗口内。
+
+
