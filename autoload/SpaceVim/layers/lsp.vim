@@ -129,7 +129,7 @@ let s:lsp_servers = {
       \ 'rust'       : ['rustup', 'run', 'nightly', 'rls'],
       \ 'scala'      : ['metals-vim'],
       \ 'sh'         : ['bash-language-server', 'start'],
-      \ 'typescript' : ['typescript-language-server', '--stdio'],
+      \ 'typescript' : ['javascript-typescript-stdio'],
       \ 'ruby'       : ['solargraph.BAT',  'stdio'],
       \ 'vim'        : ['vim-language-server', '--stdio'],
       \ 'vue'        : ['vls']
