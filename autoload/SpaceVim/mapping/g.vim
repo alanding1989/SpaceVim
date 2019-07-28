@@ -50,10 +50,10 @@ function! SpaceVim#mapping#g#init() abort
   " nnoremap gf gf
   " let g:_spacevim_mappings_g['F'] = ['call feedkeys("gF", "n")', 'edit file under cursor(jump to line after name)']
   " nnoremap gF gF
-  " let g:_spacevim_mappings_g['j'] = ['call feedkeys("gj", "n")', 'move cursor down screen line']
-  " nnoremap gj gj
-  " let g:_spacevim_mappings_g['k'] = ['call feedkeys("gk", "n")', 'move cursor up screen line']
-  " nnoremap gk gk
+  let g:_spacevim_mappings_g['j'] = ['call feedkeys("gj", "n")', 'move cursor down screen line']
+  nnoremap gj gj
+  let g:_spacevim_mappings_g['k'] = ['call feedkeys("gk", "n")', 'move cursor up screen line']
+  nnoremap gk gk
   " let g:_spacevim_mappings_g['u'] = ['call feedkeys("gu", "n")', 'make motion text lowercase']
   " nnoremap gu gu
   " let g:_spacevim_mappings_g['E'] = ['call feedkeys("gE", "n")', 'end of previous word']
