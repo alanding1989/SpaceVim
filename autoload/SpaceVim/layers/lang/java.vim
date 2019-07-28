@@ -143,13 +143,13 @@ function! s:language_specified_mappings() abort
   nmap <silent><buffer> <F4> <Plug>(JavaComplete-Imports-Add)
   imap <silent><buffer> <F4> <Plug>(JavaComplete-Imports-Add)
 
-  imap <silent><buffer> <C-j>I <Plug>(JavaComplete-Imports-AddMissing)
-  imap <silent><buffer> <C-j>R <Plug>(JavaComplete-Imports-RemoveUnused)
-  imap <silent><buffer> <C-j>i <Plug>(JavaComplete-Imports-AddSmart)
-  imap <silent><buffer> <C-j>s <Plug>(JavaComplete-Generate-AccessorSetter)
-  imap <silent><buffer> <C-j>g <Plug>(JavaComplete-Generate-AccessorGetter)
-  imap <silent><buffer> <C-j>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
-  imap <silent><buffer> <C-j>jM <Plug>(JavaComplete-Generate-AbstractMethods)
+  imap <silent><buffer> <C-;>I <Plug>(JavaComplete-Imports-AddMissing)
+  imap <silent><buffer> <C-;>R <Plug>(JavaComplete-Imports-RemoveUnused)
+  imap <silent><buffer> <C-;>i <Plug>(JavaComplete-Imports-AddSmart)
+  imap <silent><buffer> <C-;>s <Plug>(JavaComplete-Generate-AccessorSetter)
+  imap <silent><buffer> <C-;>g <Plug>(JavaComplete-Generate-AccessorGetter)
+  imap <silent><buffer> <C-;>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
+  imap <silent><buffer> <C-;>jM <Plug>(JavaComplete-Generate-AbstractMethods)
   " Import key bindings
   call SpaceVim#mapping#space#langSPC('nmap', ['l','I'],
         \ '<Plug>(JavaComplete-Imports-AddMissing)',
