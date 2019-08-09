@@ -213,7 +213,7 @@ function! SpaceVim#mapping#close_term_buffer(...) abort
     exe 'bd!' . abuf
     " fuck the terminal windows
     if get(w:, 'shell_layer_win', 0) == 1
-      bd
+      close
     endif
     return
   endif
