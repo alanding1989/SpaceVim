@@ -617,7 +617,6 @@ function! s:complete_input_history(str,num) abort
 endfunction
 
 let s:MPT._function_key = {
-      \ "\<Tab>" : function('s:next_item'),
       \ "\<C-j>" : function('s:next_item'),
       \ "\<ScrollWheelDown>" : function('s:next_item'),
       \ "\<S-tab>" : function('s:previous_item'),
@@ -627,7 +626,7 @@ let s:MPT._function_key = {
       \ "\<LeftMouse>" : function('s:move_cursor'),
       \ "\<2-LeftMouse>" : function('s:double_click'),
       \ "\<C-f>" : function('s:start_filter'),
-      \ "\<C-v>" : function('s:open_item_vertically'),
+      \ "\<C-i>" : function('s:open_item_vertically'),
       \ "\<C-s>" : function('s:open_item_horizontally'),
       \ "\<M-r>" : function('s:start_replace'),
       \ "\<C-p>" : function('s:toggle_preview'),
