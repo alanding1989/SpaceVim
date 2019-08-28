@@ -101,7 +101,7 @@ function! s:language_specified_mappings() abort
           \ 'call SpaceVim#lsp#show_doc()', 'show documentation', 1)
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
           \ 'call SpaceVim#lsp#rename()', 'rename symbol', 1)
-    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'c'],
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'u'],
           \ 'call SpaceVim#lsp#references()', 'show references', 1)
   else
     nmap <silent><buffer> K <Plug>(rust-doc)
