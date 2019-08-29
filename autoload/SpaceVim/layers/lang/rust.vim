@@ -53,6 +53,7 @@ function! SpaceVim#layers#lang#rust#plugins() abort
   let plugins = [
         \ ['racer-rust/vim-racer', { 'on_ft' : 'rust' }],
         \ ['rust-lang/rust.vim',   { 'on_ft' : 'rust', 'merged' : 1 }],
+        \ ['timonv/vim-cargo', { 'on_ft' : 'rust' }],
         \ ]
   return plugins
 endfunction
@@ -71,8 +72,8 @@ function! SpaceVim#layers#lang#rust#config() abort
   endif
 
   let runner = {
-        \ 'exe' : 'rustc',
-        \ 'targetopt' : '-o',
+        \ 'exe' : 'cargo',
+        \ 'targetopt' : 'run',
         \ 'opt' : ['-'],
         \ 'usestdin' : 1,
         \ }

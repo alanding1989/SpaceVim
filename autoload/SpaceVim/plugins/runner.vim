@@ -20,9 +20,9 @@ function! s:open_win() abort
   if s:bufnr != 0 && bufexists(s:bufnr)
     exe 'bd ' . s:bufnr
   endif
-  botright split __runner__
-  let lines = &lines * 30 / 100
-  exe 'resize ' . lines
+  rightbelow vsplit __runner__
+  " let lines = &lines * 30 / 100
+  " exe 'resize ' . lines
   setlocal buftype=nofile bufhidden=wipe nobuflisted nolist nomodifiable
         \ noswapfile
         \ nowrap
