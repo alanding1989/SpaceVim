@@ -19,7 +19,7 @@ endfunction
 
 function! SpaceVim#layers#lang#sh#config() abort
   " chrisbra/vim-zsh {{{
-  let g:zsh_fold_enable = 1
+  let g:zsh_fold_enable = 0
   " }}}
 
     call SpaceVim#layers#edit#add_ft_head_tamplate('sh',
