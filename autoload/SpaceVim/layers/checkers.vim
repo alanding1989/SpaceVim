@@ -71,9 +71,10 @@ function! SpaceVim#layers#checkers#config() abort
   " call SpaceVim#mapping#space#def('nnoremap', ['e', 'n'], 'call call('
         " \ . string(s:_function('s:jump_to_next_error')) . ', [])',
         " \ 'next-error', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['e', 'v'], '', 'verify-syntax-checker-setup', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['e', 'l'], 'call call('
         \ . string(s:_function('s:toggle_show_error')) . ', [0])',
-        \ 'toggle showing the error list', 1)
+        \ 'toggle-showing-the-error-list', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['e', 'L'], 'call call('
         \ . string(s:_function('s:toggle_show_error')) . ', [1])',
         \ 'toggle showing the error list', 1)
@@ -94,7 +95,7 @@ function! SpaceVim#layers#checkers#config() abort
         " \ 'toggle syntax checker', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['e', 'e'], 'call call('
         \ . string(s:_function('s:explain_the_error')) . ', [])',
-        \ 'explain the error', 1)
+        \ 'explain-the-error', 1)
   augroup SpaceVim_layer_checker
     autocmd!
     if g:spacevim_enable_neomake && !g:spacevim_enable_ale
