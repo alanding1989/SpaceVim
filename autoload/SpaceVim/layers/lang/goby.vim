@@ -1,35 +1,28 @@
 "=============================================================================
-" crystal.vim --- SpaceVim lang#crystal layer
+" goby.vim --- goby language support
 " Copyright (c) 2016-2019 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
-""
-" @section lang#crystal, layer-lang-crystal
-" @parentsection layers
-" @subsection Intro
-" The lang#crystal layer provides crystal filetype detection and syntax highlight,
-" crystal tool and crystal spec integration.
-
-function! SpaceVim#layers#lang#crystal#plugins() abort
-  return [
-      \ ['rhysd/vim-crystal', { 'on_ft' : 'crystal' }]
-      \ ]
+function! SpaceVim#layers#lang#goby#plugins() abort
+  let plugins = []
+  call add(plugins, ['wsdjeg/vim-goby', {'merged' : 0}])
+  return plugins
 endfunction
 
-function! SpaceVim#layers#lang#crystal#config() abort
-  call SpaceVim#plugins#repl#reg('crystal', 'icr')
-  call SpaceVim#plugins#runner#reg_runner('crystal', 'crystal run --no-color %s')
-  call SpaceVim#mapping#space#regesit_lang_mappings('crystal', function('s:language_specified_mappings'))
+function! SpaceVim#layers#lang#goby#config() abort
+  call SpaceVim#plugins#repl#reg('goby', 'goby -i')
+  call SpaceVim#plugins#runner#reg_runner('goby', 'goby %s')
+  call SpaceVim#mapping#space#regesit_lang_mappings('goby', function('s:language_specified_mappings'))
 endfunction
 
 function! s:language_specified_mappings() abort
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
   let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],
-        \ 'call SpaceVim#plugins#repl#start("crystal")',
+        \ 'call SpaceVim#plugins#repl#start("goby")',
         \ 'start REPL process', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'l'],
         \ 'call SpaceVim#plugins#repl#send("line")',
@@ -41,4 +34,3 @@ function! s:language_specified_mappings() abort
         \ 'call SpaceVim#plugins#repl#send("selection")',
         \ 'send selection and keep code buffer focused', 1)
 endfunction
-
