@@ -92,7 +92,6 @@ scriptencoding utf-8
 " let g:airline#extensions#tabline#buffers_label = 'BUFFERS'
 " let g:airline#extensions#tabline#tabs_label = 'TABS'
 
-<<<<<<< HEAD
 " if g:spacevim_enable_os_fileformat_icon
   " let s:sys = SpaceVim#api#import('system')
   " let g:airline_section_y = " %{&fenc . ' ' . SpaceVim#api#import('system').fileformat()} "
