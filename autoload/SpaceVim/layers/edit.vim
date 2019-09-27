@@ -673,10 +673,10 @@ else
   endfunction
 endif
 
-augroup spacevim_layer_edit
-  au!
-  autocmd FileType * call <SID>add_buffer_head()
-augroup END
+" augroup spacevim_layer_edit
+  " au!
+  " autocmd FileType * call <SID>add_buffer_head()
+" augroup END
 let s:ft_head_tp = {}
 function! s:add_buffer_head() abort
   if has_key(s:ft_head_tp, &ft) && getline(1) == '' && line('$')  == 1
