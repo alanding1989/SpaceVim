@@ -39,6 +39,9 @@ call defx#custom#column('icon', {
       \ 'root_icon'     : 'R',
       \ })
 
+call defx#custom#column('filename', {
+      \ 'max_width': -90,
+      \ })
 
 augroup vfinit
   au!
@@ -160,6 +163,11 @@ function! s:defx_init()
   nnoremap <silent><buffer><expr> Y     defx#do_action('call', 'YankName')
   nnoremap <silent><buffer><expr> yy    defx#do_action('call', 'DefxYarkPath')
   nnoremap <silent><buffer><expr> ys    defx#do_action('call', 'DefxYarkSrcLayout')
+
+	nnoremap <silent><buffer><expr> > defx#do_action('resize',
+	\ defx#get_context().winwidth + 10)
+	nnoremap <silent><buffer><expr> < defx#do_action('resize',
+	\ defx#get_context().winwidth - 10)
 endf
 
 
