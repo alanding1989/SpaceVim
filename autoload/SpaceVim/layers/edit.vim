@@ -202,27 +202,6 @@ function! SpaceVim#layers#edit#config() abort
         " \ . string(s:_function('s:transpose_with_next')) . ', ["line"])',
         " \ 'swap current line with next one', 1)
 
-  " transpose
-  let g:_spacevim_mappings_space.x.t = {'name' : '+transpose'}
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 't', 'c'], 'call call('
-        \ . string(s:_function('s:transpose_with_previous')) . ', ["character"])',
-        \ 'swap-current-character-with-previous-one', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 't', 'w'], 'call call('
-        \ . string(s:_function('s:transpose_with_previous')) . ', ["word"])',
-        \ 'swap-current-word-with-previous-one', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 't', 'l'], 'call call('
-        \ . string(s:_function('s:transpose_with_previous')) . ', ["line"])',
-        \ 'swap-current-line-with-previous-one', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 't', 'C'], 'call call('
-        \ . string(s:_function('s:transpose_with_next')) . ', ["character"])',
-        \ 'swap-current-character-with-next-one', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 't', 'W'], 'call call('
-        \ . string(s:_function('s:transpose_with_next')) . ', ["word"])',
-        \ 'swap-current-word-with-next-one', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 't', 'L'], 'call call('
-        \ . string(s:_function('s:transpose_with_next')) . ', ["line"])',
-        \ 'swap-current-line-with-next-one', 1)
-
 endfunction
 
 function! s:transpose_with_previous(type) abort
