@@ -124,15 +124,16 @@ let s:lsp_servers = {
       \ 'objcpp'     : ['clangd'],
       \ 'php'        : ['php', g:spacevim_plugin_bundle_dir . 'repos/github.com/felixfbecker/php-language-server/bin/php-language-server.php'],
       \ 'purescript' : ['purescript-language-server', '--stdio'],
-      \ 'python'     : ['pyls'],
-      \ 'ipynb'      : ['pyls'],
-      \ 'rust'       : ['rustup', 'run', 'nightly', 'rls'],
-      \ 'scala'      : ['metals-vim'],
-      \ 'sh'         : ['bash-language-server', 'start'],
-      \ 'typescript' : ['javascript-typescript-stdio'],
-      \ 'ruby'       : ['solargraph.BAT',  'stdio'],
+      \ 'python' : ['pyls'],
+      \ 'ipynb'   : ['pyls'],
+      \ 'crystal' : ['scry'],
+      \ 'rust' : ['rustup', 'run', 'nightly', 'rls'],
+      \ 'scala' : ['metals-vim'],
+      \ 'sh' : ['bash-language-server', 'start'],
+      \ 'typescript' : ['typescript-language-server', '--stdio'],
+      \ 'ruby' : ['solargraph.BAT',  'stdio'],
       \ 'vim'        : ['vim-language-server', '--stdio'],
-      \ 'vue'        : ['vls']
+      \ 'vue' : ['vls']
       \ }
 
 function! SpaceVim#layers#lsp#set_variable(var) abort

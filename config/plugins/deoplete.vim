@@ -155,7 +155,7 @@ call deoplete#custom#var('tabline', {
       \ })
 
 
-if g:spacevim_autocomplete_parens && exists("g:loaded_delimitMate")
+if g:spacevim_autocomplete_parens && exists('g:loaded_delimitMate')
   imap <expr><C-h> deoplete#smart_close_popup()."<Plug>delimitMateBS"
   imap <expr><BS> deoplete#smart_close_popup()."<Plug>delimitMateBS"
 else
