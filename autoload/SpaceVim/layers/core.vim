@@ -56,46 +56,46 @@ function! SpaceVim#layers#core#config() abort
     noremap <silent> <F3> :NERDTreeToggle<CR>
   endif
   let g:matchup_matchparen_status_offscreen = 0
-  " Unimpaired bindings
-  " Quickly add empty lines
-  nnoremap <silent> [<Space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>
-  nnoremap <silent> ]<Space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
+  " " Unimpaired bindings
+  " " Quickly add empty lines
+  " nnoremap <silent> [<Space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>
+  " nnoremap <silent> ]<Space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
+  "
+  " "]e or [e move current line ,count can be useed
+  " nnoremap <silent>[e  :<c-u>execute 'move -1-'. v:count1<cr>
+  " nnoremap <silent>]e  :<c-u>execute 'move +'. v:count1<cr>
+  "
+  " " [b or ]n go to previous or next buffer
+  " nnoremap <silent> [b :<c-u>bN \| stopinsert<cr>
+  " nnoremap <silent> ]b :<c-u>bn \| stopinsert<cr>
+  "
+  " " [f or ]f go to next or previous file in dir
+  " nnoremap <silent> ]f :<c-u>call <SID>next_file()<cr>
+  " nnoremap <silent> [f :<c-u>call <SID>previous_file()<cr>
+  "
+  " " [l or ]l go to next and previous error
+  " nnoremap <silent> [l :lprevious<cr>
+  " nnoremap <silent> ]l :lnext<cr>
+  "
+  " " [c or ]c go to next or previous vcs hunk
+  "
+  " " [w or ]w go to next or previous window
+  " nnoremap <silent> [w :call <SID>previous_window()<cr>
+  " nnoremap <silent> ]w :call <SID>next_window()<cr>
+  "
+  " " [t or ]t for next and previous tab
+  " nnoremap <silent> [t :tabprevious<cr>
+  " nnoremap <silent> ]t :tabnext<cr>
+  "
+  " " [p or ]p for p and P
+  " nnoremap <silent> [p P
+  " nnoremap <silent> ]p p
+  "
+  " " Select last paste
+  " nnoremap <silent><expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
 
-  "]e or [e move current line ,count can be used
-  nnoremap <silent>[e  :<c-u>execute 'move -1-'. v:count1<cr>
-  nnoremap <silent>]e  :<c-u>execute 'move +'. v:count1<cr>
-
-  " [b or ]n go to previous or next buffer
-  nnoremap <silent> [b :<c-u>bN \| stopinsert<cr>
-  nnoremap <silent> ]b :<c-u>bn \| stopinsert<cr>
-
-  " [f or ]f go to next or previous file in dir
-  nnoremap <silent> ]f :<c-u>call <SID>next_file()<cr>
-  nnoremap <silent> [f :<c-u>call <SID>previous_file()<cr>
-
-  " [l or ]l go to next and previous error
-  nnoremap <silent> [l :lprevious<cr>
-  nnoremap <silent> ]l :lnext<cr>
-
-  " [c or ]c go to next or previous vcs hunk
-
-  " [w or ]w go to next or previous window
-  nnoremap <silent> [w :call <SID>previous_window()<cr>
-  nnoremap <silent> ]w :call <SID>next_window()<cr>
-
-  " [t or ]t for next and previous tab
-  nnoremap <silent> [t :tabprevious<cr>
-  nnoremap <silent> ]t :tabnext<cr>
-
-  " [p or ]p for p and P
-  nnoremap <silent> [p P
-  nnoremap <silent> ]p p
-
-  " Select last paste
-  nnoremap <silent><expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
-
-  call SpaceVim#mapping#space#def('nnoremap', ['f', 's'], 'write', 'save-current-file', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['f', 'S'], 'wall', 'save-all-files', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['f', 's'], 'write', 'save buffer', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['f', 'S'], 'wall', 'save all buffer', 1)
   " help mappings
   call SpaceVim#mapping#space#def('nnoremap', ['h', 'I'], 'call SpaceVim#issue#report()', 'report-issue-or-bug', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['h', 'l'], 'SPLayer -l', 'list-all-layers', 1)
@@ -108,13 +108,13 @@ function! SpaceVim#layers#core#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'b'], '<C-o>', 'jump-backward', 0)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'f'], '<C-i>', 'jump-forward', 0)
 
-  " file tree key bindings
-  call SpaceVim#mapping#space#def('nnoremap', ['j', 'd'], 'call call('
-        \ . string(s:_function('s:explore_current_dir')) . ', [0])',
-        \ 'explore-current-directory', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['j', 'D'], 'call call('
-        \ . string(s:_function('s:explore_current_dir')) . ', [1])',
-        \ 'split-explore-current-directory', 1)
+  " " file tree key bindings
+  " call SpaceVim#mapping#space#def('nnoremap', ['j', 'd'], 'call call('
+  "       \ . string(s:_function('s:explore_current_dir')) . ', [0])',
+  "       \ 'Explore current directory', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['j', 'D'], 'call call('
+  "       \ . string(s:_function('s:explore_current_dir')) . ', [1])',
+  "       \ 'Explore current directory(other windows)', 1)
 
   " call SpaceVim#mapping#space#def('nmap', ['j', 'j'], '<Plug>(easymotion-overwin-f)', 'jump to a character', 0)
   call SpaceVim#mapping#space#def('nmap', ['j', 'j'], '<Plug>(better-easymotion-overwin-f)', 'jump-or-select-to-a-character', 0, 1)
@@ -145,8 +145,9 @@ function! SpaceVim#layers#core#config() abort
         \ 'rotate-windows-backward', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'u'], 'call call('
         \ . string(s:_function('s:jump_to_url')) . ', [])',
-        \ 'jump-to-url', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['<Tab>'], 'try | b# | catch | endtry', 'last-buffer', 1)
+        \ 'jump to url', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['<Tab>'], 'try | b# | catch | endtry', 'last buffer', 1)
+
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['b', '.'], 'call call('
         \ . string(s:_function('s:buffer_transient_state')) . ', [])',
@@ -189,10 +190,10 @@ function! SpaceVim#layers#core#config() abort
   let g:_spacevim_mappings_space.f.C = {'name' : '+Files/convert'}
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'C', 'd'], 'update | e ++ff=dos | w', 'unix2dos', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'C', 'u'], 'update | e ++ff=dos | setlocal ff=unix | w', 'dos2unix', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['f', 'D'], 'call call('
-        \ . string(s:_function('s:delete_current_buffer_file')) . ', [])',
-        \ 'delete-current-buffer-file', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['f', 'F'], 'normal! gf', 'open-cursor-file', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['f', 'D'], 'call call('
+        " \ . string(s:_function('s:delete_current_buffer_file')) . ', [])',
+        " \ 'delete-current-buffer-file', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['f', 'F'], 'normal! gf', 'open-cursor-file', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['f', '/'], 'call SpaceVim#plugins#find#open()', 'find-files', 1)
   if s:SYS.isWindows
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'd'], 'call call('
@@ -200,37 +201,38 @@ function! SpaceVim#layers#core#config() abort
           \ 'toggle-disk-manager', 1)
   endif
 
-  " file tree key bindings
-  if g:spacevim_filemanager ==# 'vimfiler'
-    call SpaceVim#mapping#space#def('nnoremap', ['f', 't'], 'VimFiler | doautocmd WinEnter', 'toggle-file-tree', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['f', 'T'], 'VimFiler -no-toggle | doautocmd WinEnter', 'open-file-tree', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['f', 'o'], 'VimFiler -find', 'find-file-in-file-tree', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['b', 't'], 'VimFilerBufferDir -no-toggle', 'open-filetree-in-buffer-dir', 1)
-  elseif g:spacevim_filemanager ==# 'nerdtree'
-    call SpaceVim#mapping#space#def('nnoremap', ['f', 't'], 'NERDTreeToggle', 'toggle-file-tree', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['f', 'T'], 'NERDTree', 'show-file-tree', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['f', 'o'], 'NERDTreeFind', 'open-file-tree', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['b', 't'], 'NERDTree %', 'show-file-tree-at-buffer-dir', 1)
-  elseif g:spacevim_filemanager ==# 'defx'
-    " TODO: fix all these command
-    call SpaceVim#mapping#space#def('nnoremap', ['f', 't'], 'Defx', 'toggle-file-tree', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['f', 'T'], 'Defx -no-toggle', 'show-file-tree', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['f', 'o'], "Defx  -no-toggle -search=`expand('%:p')` `stridx(expand('%:p'), getcwd()) < 0? expand('%:p:h'): getcwd()`", 'open-file-tree', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['b', 't'], 'Defx -no-toggle', 'show-file-tree-at-buffer-dir', 1)
-  endif
-  call SpaceVim#mapping#space#def('nnoremap', ['f', 'y'], 'call SpaceVim#util#CopyToClipboard()', 'show-and-copy-buffer-filename', 1)
-  let g:_spacevim_mappings_space.f.v = {'name' : '+Vim/SpaceVim'}
-  call SpaceVim#mapping#space#def('nnoremap', ['f', 'v', 'v'], 'let @+=g:spacevim_version | echo g:spacevim_version', 'display-and-copy-version', 1)
-  let lnum = expand('<slnum>') + s:lnum - 1
-  call SpaceVim#mapping#space#def('nnoremap', ['f', 'v', 'd'], 'SPConfig',
-        \ ['open-custom-configuration',
-        \ [
-        \ '[SPC f v d] is to open the custom configuration file for SpaceVim',
-        \ '',
-        \ 'Definition: ' . s:filename . ':' . lnum,
-        \ ]
-        \ ]
-        \ , 1)
+  " " file tree key bindings
+  " if g:spacevim_filemanager ==# 'vimfiler'
+  "   call SpaceVim#mapping#space#def('nnoremap', ['f', 't'], 'VimFiler | doautocmd WinEnter', 'toggle_file_tree', 1)
+  "   call SpaceVim#mapping#space#def('nnoremap', ['f', 'T'], 'VimFiler -no-toggle | doautocmd WinEnter', 'show_file_tree', 1)
+  "   call SpaceVim#mapping#space#def('nnoremap', ['f', 'o'], 'VimFiler -find', 'open_file_tree', 1)
+  "   call SpaceVim#mapping#space#def('nnoremap', ['b', 't'], 'VimFilerBufferDir -no-toggle', 'show_file_tree_at_buffer_dir', 1)
+  " elseif g:spacevim_filemanager ==# 'nerdtree'
+  "   call SpaceVim#mapping#space#def('nnoremap', ['f', 't'], 'NERDTreeToggle', 'toggle_file_tree', 1)
+  "   call SpaceVim#mapping#space#def('nnoremap', ['f', 'T'], 'NERDTree', 'show_file_tree', 1)
+  "   call SpaceVim#mapping#space#def('nnoremap', ['f', 'o'], 'NERDTreeFind', 'open_file_tree', 1)
+  "   call SpaceVim#mapping#space#def('nnoremap', ['b', 't'], 'NERDTree %', 'show_file_tree_at_buffer_dir', 1)
+  " elseif g:spacevim_filemanager ==# 'defx'
+  "   " TODO: fix all these command
+  "   call SpaceVim#mapping#space#def('nnoremap', ['f', 't'], 'Defx', 'toggle_file_tree', 1)
+  "   call SpaceVim#mapping#space#def('nnoremap', ['f', 'T'], 'Defx -no-toggle', 'show_file_tree', 1)
+  "   call SpaceVim#mapping#space#def('nnoremap', ['f', 'o'], "Defx  -no-toggle -search=`expand('%:p')` `stridx(expand('%:p'), getcwd()) < 0? expand('%:p:h'): getcwd()`", 'open_file_tree', 1)
+  "   call SpaceVim#mapping#space#def('nnoremap', ['b', 't'], 'Defx -no-toggle', 'show_file_tree_at_buffer_dir', 1)
+  " endif
+  " call SpaceVim#mapping#space#def('nnoremap', ['f', 'y'], 'call SpaceVim#util#CopyToClipboard()', 'show-and-copy-buffer-filename', 1)
+  " let g:_spacevim_mappings_space.f.v = {'name' : '+Vim(SpaceVim)'}
+  " call SpaceVim#mapping#space#def('nnoremap', ['f', 'v', 'v'], 'let @+=g:spacevim_version | echo g:spacevim_version', 'display-and-copy-version', 1)
+  " let lnum = expand('<slnum>') + s:lnum - 1
+  " call SpaceVim#mapping#space#def('nnoremap', ['f', 'v', 'd'], 'SPConfig',
+  "       \ ['open-custom-configuration',
+  "       \ [
+  "       \ '[SPC f v d] is to open the custom configuration file for SpaceVim',
+  "       \ '',
+  "       \ 'Definition: ' . s:filename . ':' . lnum,
+  "       \ ]
+  "       \ ]
+  "       \ , 1)
+
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['n', '-'], 'call call('
         \ . string(s:_function('s:number_transient_state')) . ', ["-"])',
@@ -426,7 +428,7 @@ function! s:split_string(newline) abort
 endfunction
 
 
-" @toto add sting highlight for other filetype
+" @todo add string highlight for other filetype
 let s:string_hi = {
       \ 'c' : 'cCppString',
       \ 'cpp' : 'cCppString',
@@ -758,15 +760,4 @@ function! s:explore_current_dir(cur) abort
       Defx -no-toggle
     endif
   endif
-endfunction
-
-
-let g:_spacevim_filetree_show_hidden_files = 0
-
-function! SpaceVim#layers#core#set_variable(var) abort
-
-  let g:_spacevim_filetree_show_hidden_files = get(a:var,
-        \ 'filetree_show_hidden',
-        \ g:_spacevim_filetree_show_hidden_files)
-
 endfunction

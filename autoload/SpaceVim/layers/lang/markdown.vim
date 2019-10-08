@@ -29,7 +29,7 @@ function! SpaceVim#layers#lang#markdown#plugins() abort
         \ { 'on_ft' : 'markdown',
         \ 'depends': 'open-browser.vim',
         \ 'build' : 'cd app & yarn install' }])
-  call add(plugins, ['lvht/tagbar-markdown',{'merged' : 0}])
+  " call add(plugins, ['lvht/tagbar-markdown',{'merged' : 0}])
   if !has('nvim')
     call add(plugins, ['neoclide/vim-node-rpc',  {'merged': 0, 'build' : 'yarn install'}])
   endif
@@ -124,7 +124,7 @@ function! s:markdown_insert_link(isVisual, isPicture) abort
     if !a:isVisual
       execute "normal! viw\<esc>"
     endif
-    let l:paste = (col("'>") == col('$') - 1 ? 'p' : 'P')
+    let l:paste = (col("'>") == col("$") - 1 ? 'p' : 'P')
     normal! gvx
     let @" = '[' . @" . '](' . @+ . ')'
     if a:isPicture

@@ -13,10 +13,13 @@ let s:SYS = SpaceVim#api#import('system')
 
 function! SpaceVim#layers#fzf#plugins() abort
   let plugins = []
-  call add(plugins, ['junegunn/fzf',                { 'merged' : 0}])
-  call add(plugins, ['Shougo/neoyank.vim', {'merged' : 0}])
-  call add(plugins, ['Shougo/neomru.vim', {'merged' : 0}])
-  call add(plugins, ['SpaceVim/fzf-neoyank',                { 'merged' : 0}])
+  "==============================
+  " NOTE: this is what I amended
+  call add(plugins, ['/opt/vim/fzf'])
+  "==============================
+  call add(plugins, ['Shougo/neoyank.vim',   {'merged' : 0}])
+  call add(plugins, ['Shougo/neomru.vim',    {'merged' : 0}])
+  call add(plugins, ['SpaceVim/fzf-neoyank', {'merged' : 0}])
   return plugins
 endfunction
 
@@ -516,7 +519,7 @@ function! s:menu(name) abort
 endfunction
 
 
-function! s:tags_sink(line) abort
+function! s:tags_sink(line)
   let parts = split(a:line, '\t\zs')
   let excmd = matchstr(parts[2:], '^.*\ze;"\t')
   execute 'silent e' parts[1][:-2]
@@ -525,7 +528,7 @@ function! s:tags_sink(line) abort
   let &magic = magic
 endfunction
 
-function! s:tags() abort
+function! s:tags()
   if empty(tagfiles())
     echohl WarningMsg
     echom 'Preparing tags'

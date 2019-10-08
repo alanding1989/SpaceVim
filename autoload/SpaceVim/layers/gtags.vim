@@ -57,7 +57,7 @@ function! SpaceVim#layers#gtags#set_variable(var) abort
 endfunction
 
 
-function! SpaceVim#layers#gtags#get_options() abort
+function! SpaceVim#layers#gtags#get_options()
 
   return ['gtagslabel']
 

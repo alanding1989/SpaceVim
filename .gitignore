@@ -31,5 +31,6 @@ build/
 .coverage.covimerage
 *.swp
 .gtm/
+.mypy_cache
 .metadata/
 jdt.ls-java-project/

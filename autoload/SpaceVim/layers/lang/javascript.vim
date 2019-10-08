@@ -102,9 +102,9 @@ function! s:on_ft() abort
   nnoremap <silent><buffer> <Leader>jg :ImportJSGoto<CR>
 
   inoremap <silent><buffer> <F4> <Esc>:ImportJSWord<CR>a
-  inoremap <silent><buffer> <C-j>i <Esc>:ImportJSWord<CR>a
-  inoremap <silent><buffer> <C-j>f <Esc>:ImportJSFix<CR>a
-  inoremap <silent><buffer> <C-j>g <Esc>:ImportJSGoto<CR>a
+  inoremap <silent><buffer> <C-;>i <Esc>:ImportJSWord<CR>a
+  inoremap <silent><buffer> <C-;>f <Esc>:ImportJSFix<CR>a
+  inoremap <silent><buffer> <C-;>g <Esc>:ImportJSGoto<CR>a
 
 
   " Allow prompt for interactive input.

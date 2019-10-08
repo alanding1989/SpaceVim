@@ -66,39 +66,39 @@ function! SpaceVim#layers#checkers#config() abort
 
   call SpaceVim#mapping#space#def('nnoremap', ['e', 'c'], 'call call('
         \ . string(s:_function('s:clear_errors')) . ', [])',
-        \ 'clear-all-errors', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['e', 'h'], '', 'describe-a-syntax-checker', 1)
+        \ 'clear all errors', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['e', 'h'], '', 'describe a syntax checker', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['e', 'n'], 'call call('
+        " \ . string(s:_function('s:jump_to_next_error')) . ', [])',
+        " \ 'next-error', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['e', 'v'], '', 'verify-syntax-checker-setup', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['e', 'n'], 'call call('
-        \ . string(s:_function('s:jump_to_next_error')) . ', [])',
-        \ 'next-error', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['e', 'l'], 'call call('
         \ . string(s:_function('s:toggle_show_error')) . ', [0])',
         \ 'toggle-showing-the-error-list', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['e', 'L'], 'call call('
         \ . string(s:_function('s:toggle_show_error')) . ', [1])',
-        \ 'toggle-showing-the-error-list', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['e', 'p'], 'call call('
-        \ . string(s:_function('s:jump_to_previous_error')) . ', [])',
-        \ 'previous-error', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['e', 'N'], 'call call('
-        \ . string(s:_function('s:jump_to_previous_error')) . ', [])',
-        \ 'previous-error', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['e', 'v'], 'call call('
-        \ . string(s:_function('s:verify_syntax_setup')) . ', [])',
-        \ 'verify-syntax-setup', 1)
+        \ 'toggle showing the error list', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['e', 'p'], 'call call('
+        " \ . string(s:_function('s:jump_to_previous_error')) . ', [])',
+        " \ 'previous-error', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['e', 'N'], 'call call('
+        " \ . string(s:_function('s:jump_to_previous_error')) . ', [])',
+        " \ 'previous-error', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['e', 'v'], 'call call('
+        " \ . string(s:_function('s:verify_syntax_setup')) . ', [])',
+        " \ 'verify syntax setup', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['e', '.'], 'call call('
         \ . string(s:_function('s:error_transient_state')) . ', [])',
         \ 'error-transient-state', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['t', 's'], 'call call('
-        \ . string(s:_function('s:toggle_syntax_checker')) . ', [])',
-        \ 'toggle-syntax-checker', 1)
+  " call SpaceVim#mapping#space#def('nnoremap', ['t', 's'], 'call call('
+        " \ . string(s:_function('s:toggle_syntax_checker')) . ', [])',
+        " \ 'toggle syntax checker', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['e', 'e'], 'call call('
         \ . string(s:_function('s:explain_the_error')) . ', [])',
         \ 'explain-the-error', 1)
   augroup SpaceVim_layer_checker
     autocmd!
-    if g:spacevim_enable_neomake
+    if g:spacevim_enable_neomake && !g:spacevim_enable_ale
       if SpaceVim#layers#isLoaded('core#statusline')
         autocmd User NeomakeFinished nested
               \ let &l:statusline = SpaceVim#layers#core#statusline#get(1)
@@ -151,33 +151,41 @@ function! s:toggle_show_error(...) abort
   endif
 endfunction
 
-function! s:jump_to_next_error() abort
-  try
-    lnext
-  catch
-    try
-      cnext
-    catch
-      echohl WarningMsg
-      echon 'There is no errors!'
-      echohl None
-    endtry
-  endtry
-endfunction
+" function! s:jump_to_next_error() abort
+  " if exists(':Neomake')
+    " try
+      " lnext
+    " catch
+      " try
+        " cnext
+      " catch
+        " echohl WarningMsg
+        " echon 'There is no errors!'
+        " echohl None
+      " endtry
+    " endtry
+  " elseif exists(':ALEInfo')
+    " ALENextWrap
+  " endif
+" endfunction
 
-function! s:jump_to_previous_error() abort
-  try
-    lprevious
-  catch
-    try
-      cprevious
-    catch
-      echohl WarningMsg
-      echon 'There is no errors!'
-      echohl None
-    endtry
-  endtry
-endfunction
+" function! s:jump_to_previous_error() abort
+  " if exists(':Neomake')
+    " try
+      " lprevious
+    " catch
+      " try
+        " cprevious
+      " catch
+        " echohl WarningMsg
+        " echon 'There is no errors!'
+        " echohl None
+      " endtry
+    " endtry
+  " elseif exists(':ALEInfo')
+    " ALEPreviousWrap
+  " endif
+" endfunction
 
 let s:last_echoed_error = ''
 function! s:neomake_signatures_current_error(...) abort
@@ -212,19 +220,32 @@ function! s:neomake_signatures_clear() abort
   call s:SIG.clear()
 endfunction
 
-function! s:verify_syntax_setup() abort
-  if g:spacevim_enable_neomake
-    NeomakeInfo
-  elseif g:spacevim_enable_ale
-  else
-  endif
-endfunction
+" function! s:verify_syntax_setup() abort
+  " if exists(':Neomake')
+    " NeomakeInfo
+  " elseif exists(':ALEInfo')
+    " ALEInfo
+  " endif
+" endfunction
 
-function! s:toggle_syntax_checker() abort
-  call SpaceVim#layers#core#statusline#toggle_section('syntax checking')
-  call SpaceVim#layers#core#statusline#toggle_mode('syntax-checking')
-  verbose NeomakeToggle
-endfunction
+" let s:ale_flag = 1
+" function! s:toggle_syntax_checker() abort
+  " call SpaceVim#layers#core#statusline#toggle_section('syntax checking')
+  " call SpaceVim#layers#core#statusline#toggle_mode('syntax-checking')
+  " if exists(':Neomake')
+    " verbose NeomakeToggle
+  " elseif exists(':ALEInfo')
+    " if s:ale_flag == 1
+      " ALEToggle
+      " echo ' Ale is disabled globally.'
+      " let s:ale_flag = 0
+    " else
+      " ALEToggle
+      " echo ' Ale is enabled.'
+      " let s:ale_flag = 1
+    " endif
+  " endif
+" endfunction
 
 
 function! s:explain_the_error() abort
@@ -249,7 +270,7 @@ function! s:explain_the_error() abort
 endfunction
 
 function! s:error_transient_state() abort
-  if g:spacevim_enable_neomake
+  if g:spacevim_enable_neomake && !g:spacevim_enable_ale
     let num_errors = neomake#statusline#LoclistCounts()
   elseif g:spacevim_enable_ale
     let counts = ale#statusline#Count(buffer_name('%'))

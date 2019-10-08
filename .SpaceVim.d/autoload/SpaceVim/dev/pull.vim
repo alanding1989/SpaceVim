@@ -1,4 +1,4 @@
-function! SpaceVim#dev#pull#create(branch) abort
+function! SpaceVim#dev#pull#create(branch)
   let title = input('title:')
   call inputsave()
   let username = input('github username:')

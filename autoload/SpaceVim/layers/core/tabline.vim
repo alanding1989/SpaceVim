@@ -225,16 +225,16 @@ function! SpaceVim#layers#core#tabline#config() abort
     autocmd!
     autocmd ColorScheme * call SpaceVim#layers#core#tabline#def_colors()
   augroup END
-  for i in range(1, 9)
-    exe "call SpaceVim#mapping#def('nmap <silent>', '<leader>" . i
-          \ . "', ':call SpaceVim#layers#core#tabline#jump("
-          \ . i . ")<cr>', 'Switch to airline tab " . i
-          \ . "', '', 'tabline index " . i . "')"
-  endfor
-  call SpaceVim#mapping#def('nmap', '<leader>-', ':bprevious<cr>', 'Switch to previous airline tag', '', 'window previous')
-  call SpaceVim#mapping#def('nmap', '<leader>+', ':bnext<cr>', 'Switch to next airline tag', '', 'window next')
-  "call SpaceVim#mapping#space#def('nmap', ['-'], 'bprevious', 'window previous', 1)
-  "call SpaceVim#mapping#space#def('nmap', ['+'], 'bnext', 'window next', 1)
+  " for i in range(1, 9)
+    " exe "call SpaceVim#mapping#def('nmap <silent>', '<leader>" . i
+          " \ . "', ':call SpaceVim#layers#core#tabline#jump("
+          " \ . i . ")<cr>', 'Switch to airline tab " . i
+          " \ . "', '', 'tabline index " . i . "')"
+  " endfor
+  " call SpaceVim#mapping#def('nmap', '<leader>-', ':bprevious<cr>', 'Switch to previous airline tag', '', 'window previous')
+  " call SpaceVim#mapping#def('nmap', '<leader>+', ':bnext<cr>', 'Switch to next airline tag', '', 'window next')
+  " call SpaceVim#mapping#space#def('nmap', ['-'], 'bprevious', 'window previous', 1)
+  " call SpaceVim#mapping#space#def('nmap', ['+'], 'bnext', 'window next', 1)
 endfunction
 
 function! SpaceVim#layers#core#tabline#jump(id, ...) abort

@@ -30,9 +30,9 @@ function! SpaceVim#layers#lang#python#plugins() abort
   endif
   call add(plugins, ['heavenshell/vim-pydocstring',
         \ { 'on_cmd' : 'Pydocstring'}])
-  call add(plugins, ['Vimjas/vim-python-pep8-indent', 
+  call add(plugins, ['Vimjas/vim-python-pep8-indent',
         \ { 'on_ft' : 'python'}])
-  call add(plugins, ['jeetsukumaran/vim-pythonsense', 
+  call add(plugins, ['jeetsukumaran/vim-pythonsense',
         \ { 'on_ft' : 'python'}])
   call add(plugins, ['alfredodeza/coveragepy.vim', 
         \ { 'merged' : 0}])
@@ -58,7 +58,7 @@ function! SpaceVim#layers#lang#python#config() abort
     augroup end
   endif
   " }}}
- let g:deoplete#sources#jedi#enable_typeinfo = s:enable_typeinfo
+  let g:deoplete#sources#jedi#enable_typeinfo = s:enable_typeinfo
   call SpaceVim#plugins#runner#reg_runner('python', 
         \ {
         \ 'exe' : function('s:getexe'),
@@ -176,14 +176,10 @@ function! SpaceVim#layers#lang#python#set_variable(var) abort
 
   let s:format_on_save = get(a:var,
         \ 'format_on_save',
-        \ get(a:var,
-        \ 'format-on-save',
-        \ s:format_on_save))
+        \ s:format_on_save)
   let s:python_file_head = get(a:var,
         \ 'python_file_head',
-        \ get(a:var,
-        \ 'python-file-head',
-        \ s:python_file_head))
+        \ s:python_file_head)
   let s:enable_typeinfo = get(a:var,
         \ 'enable_typeinfo',
         \ s:enable_typeinfo

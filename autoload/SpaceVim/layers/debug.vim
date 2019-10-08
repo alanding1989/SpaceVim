@@ -9,6 +9,7 @@ scriptencoding utf-8
 
 function! SpaceVim#layers#debug#plugins() abort
   let plugins = []
+  " need 'Shougo/vimproc.vim'
   " @todo fork verbugger
   call add(plugins,['wsdjeg/vim-debug', {'merged' : 0}])
   if g:spacevim_filemanager !=# 'vimfiler'

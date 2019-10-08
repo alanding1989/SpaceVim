@@ -123,7 +123,7 @@ function! SpaceVim#layers#lang#java#config() abort
   endtry
 endfunction
 
-function! s:JspFileTypeInit() abort
+function! s:JspFileTypeInit()
   setlocal omnifunc=javacomplete#Complete
   inoremap . <c-r>=OnmiConfigForJsp()<cr>
   nnoremap <F4> :JCimportAdd<cr>
@@ -142,13 +142,13 @@ function! s:language_specified_mappings() abort
   nmap <silent><buffer> <F4> <Plug>(JavaComplete-Imports-Add)
   imap <silent><buffer> <F4> <Plug>(JavaComplete-Imports-Add)
 
-  imap <silent><buffer> <C-j>I <Plug>(JavaComplete-Imports-AddMissing)
-  imap <silent><buffer> <C-j>R <Plug>(JavaComplete-Imports-RemoveUnused)
-  imap <silent><buffer> <C-j>i <Plug>(JavaComplete-Imports-AddSmart)
-  imap <silent><buffer> <C-j>s <Plug>(JavaComplete-Generate-AccessorSetter)
-  imap <silent><buffer> <C-j>g <Plug>(JavaComplete-Generate-AccessorGetter)
-  imap <silent><buffer> <C-j>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
-  imap <silent><buffer> <C-j>jM <Plug>(JavaComplete-Generate-AbstractMethods)
+  imap <silent><buffer> <C-;>I <Plug>(JavaComplete-Imports-AddMissing)
+  imap <silent><buffer> <C-;>R <Plug>(JavaComplete-Imports-RemoveUnused)
+  imap <silent><buffer> <C-;>i <Plug>(JavaComplete-Imports-AddSmart)
+  imap <silent><buffer> <C-;>s <Plug>(JavaComplete-Generate-AccessorSetter)
+  imap <silent><buffer> <C-;>g <Plug>(JavaComplete-Generate-AccessorGetter)
+  imap <silent><buffer> <C-;>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
+  imap <silent><buffer> <C-;>jM <Plug>(JavaComplete-Generate-AbstractMethods)
   " Import key bindings
   call SpaceVim#mapping#space#langSPC('nmap', ['l','I'],
         \ '<Plug>(JavaComplete-Imports-AddMissing)',
@@ -189,6 +189,9 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l', 'g', 't'],
         \ '<Plug>(JavaComplete-Generate-ToString)',
         \ 'Generate toString function', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l', 'g', 'n'],
+        \ '<Plug>(JavaComplete-Generate-NewClass)',
+        \ 'Generate NewClass in current Package', 0)
 
   " Jump
   let g:_spacevim_mappings_space.l.j = {'name' : '+Jump'}
@@ -230,16 +233,18 @@ function! s:language_specified_mappings() abort
         \ 'Run maven package', 1)
 
   " Gradle
-  let g:_spacevim_mappings_space.l.g = {'name' : '+Gradle'}
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','g', 'b'], 'call call('
+  let g:_spacevim_mappings_space.l.d = {'name' : '+Gradle'}
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','d', 'b'], 'call call('
         \ . string(function('s:execCMD')) . ', ["gradle clean build"])',
         \ 'Run gradle clean build', 1)
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','g', 'B'], 'call call('
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','d', 'B'], 'call call('
         \ . string(function('s:execCMD')) . ', ["gradle build"])',
         \ 'Run gradle build', 1)
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','g', 't'], 'call call('
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','d', 't'], 'call call('
         \ . string(function('s:execCMD')) . ', ["gradle test"])',
         \ 'Run gradle test', 1)
+  
+  " REPL
   let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],
         \ 'call SpaceVim#plugins#repl#start("java")',
@@ -257,8 +262,8 @@ function! s:language_specified_mappings() abort
   if SpaceVim#layers#lsp#check_filetype('java')
     nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
 
-    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
-          \ 'call SpaceVim#lsp#show_doc()', 'show_document', 1)
+    " call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
+          " \ 'call SpaceVim#lsp#show_doc()', 'show_document', 1)
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
           \ 'call SpaceVim#lsp#rename()', 'rename symbol', 1)
   endif

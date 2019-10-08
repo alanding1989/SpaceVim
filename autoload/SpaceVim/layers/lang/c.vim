@@ -56,6 +56,7 @@ let s:CPT = SpaceVim#api#import('vim#compatible')
 
 function! SpaceVim#layers#lang#c#plugins() abort
   let plugins = []
+  call add(plugins, ['pboettch/vim-cmake-syntax', {'merged' : 0}])
   if !SpaceVim#layers#lsp#check_filetype('c') && !SpaceVim#layers#lsp#check_filetype('cpp')
     if g:spacevim_autocomplete_method ==# 'deoplete'
       call add(plugins, ['Shougo/deoplete-clangx', {'merged' : 0}])

@@ -21,10 +21,12 @@ endif
 
 function! SpaceVim#layers#git#plugins() abort
   let plugins = [
-        \ ['junegunn/gv.vim',      { 'on_cmd' : ['GV']}],
+        \ ['junegunn/gv.vim'       , {'on_cmd': ['GV']}],
+        \ ['tpope/vim-fugitive'    , {'merged': 0}]     ,
         \ ]
-  call add(plugins, ['tpope/vim-fugitive',   { 'merged' : 0}])
-  call add(plugins, ['airblade/vim-gitgutter',   { 'merged' : 0}])
+  if g:spacevim_gitgutter_plugin ==# 'vim-gitgutter'
+    call add(plugins, ['airblade/vim-gitgutter', {'merged': 0}])
+  endif
   if s:git_plugin ==# 'gina'
     call add(plugins, ['lambdalisue/gina.vim', { 'on_cmd' : 'Gina'}])
   elseif s:git_plugin ==# 'fugitive'
@@ -40,35 +42,35 @@ endfunction
 
 
 function! SpaceVim#layers#git#config() abort
-  let g:signify_vcs_list = ['hg']
+  " let g:signify_vcs_list = ['hg']
   let g:_spacevim_mappings_space.g = get(g:_spacevim_mappings_space, 'g',  {'name' : '+VersionControl/git'})
   if s:git_plugin ==# 'gina'
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 's'], 'Gina status --opener=10split', 'git-status', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 'S'], 'Gina add %', 'stage-current-file', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 'U'], 'Gina reset -q %', 'unstage-current-file', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 'c'], 'Gina commit', 'edit-git-commit', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 'p'], 'Gina push', 'git-push', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 'd'], 'Gina diff', 'view-git-diff', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 'A'], 'Gina add .', 'stage-all-files', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 'b'], 'Gina blame', 'view-git-blame', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 's'], 'Gina status --opener=10split', 'git status', 1)
+    " call SpaceVim#mapping#space#def('nnoremap', ['g', 'S'], 'Gina add %', 'stage current file', 1)
+    " call SpaceVim#mapping#space#def('nnoremap', ['g', 'U'], 'Gina reset -q %', 'unstage current file', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'c'], 'Gina commit', 'edit git commit', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'p'], 'Gina push', 'git push', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'd'], 'Gina diff', 'view git diff', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'A'], 'Gina add .', 'stage all files', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'b'], 'Gina blame', 'view git blame', 1)
   elseif s:git_plugin ==# 'fugitive'
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 's'], 'Gstatus', 'git-status', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 'S'], 'Git add %', 'stage-current-file', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 'U'], 'Git reset -q %', 'unstage-current-file', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 'c'], 'Git commit', 'edit-git-commit', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 'p'], 'Gpush', 'git-push', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 'd'], 'Gdiff', 'view-git-diff', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 'A'], 'Git add .', 'stage-all-files', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 'b'], 'Gblame', 'view-git-blame', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 's'], 'Gstatus', 'git status', 1)
+    " call SpaceVim#mapping#space#def('nnoremap', ['g', 'S'], 'Git add %', 'stage current file', 1)
+    " call SpaceVim#mapping#space#def('nnoremap', ['g', 'U'], 'Git reset -q %', 'unstage current file', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'c'], 'Git commit', 'edit git commit', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'p'], 'Gpush', 'git push', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'd'], 'Gdiff', 'view git diff', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'A'], 'Git add .', 'stage all files', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'b'], 'Gblame', 'view git blame', 1)
   else
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 's'], 'Gita status', 'git-status', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 'S'], 'Gita add %', 'stage-current-file', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 'U'], 'Gita reset %', 'unstage-current-file', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 'c'], 'Gita commit', 'edit-git-commit', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 'p'], 'Gita push', 'git-push', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 'd'], 'Gita diff', 'view-git-diff', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 'A'], 'Gita add .', 'stage-all-files', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 'b'], 'Gina blame', 'view-git-blame', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 's'], 'Gita status', 'git status', 1)
+    " call SpaceVim#mapping#space#def('nnoremap', ['g', 'S'], 'Gita add %', 'stage current file', 1)
+    " call SpaceVim#mapping#space#def('nnoremap', ['g', 'U'], 'Gita reset %', 'unstage current file', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'c'], 'Gita commit', 'edit git commit', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'p'], 'Gita push', 'git push', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'd'], 'Gita diff', 'view git diff', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'A'], 'Gita add .', 'stage all files', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'b'], 'Gina blame', 'view git blame', 1)
   endif
   augroup spacevim_layer_git
     autocmd!
@@ -84,17 +86,12 @@ function! SpaceVim#layers#git#config() abort
         \ 'commit-message-of-current-line', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['g', 'V'], 'GV!', 'git-log-of-current-file', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['g', 'v'], 'GV', 'git-log-of-current-repo', 1)
-
-	if !exists('g:_spacevim_mappings_space.g.h')
-		let g:_spacevim_mappings_space.g.h = {'name' : ''}
-	endif
-	let l:h_submenu_name = SpaceVim#layers#isLoaded('github') ? '+GitHub/Hunks' : '+Hunks'
-	let g:_spacevim_mappings_space.g.h['name'] = l:h_submenu_name
-
-	let l:stage_hunk_key = SpaceVim#layers#isLoaded('github') ? 's' : 'a'
-	call SpaceVim#mapping#space#def('nmap', ['g', 'h', l:stage_hunk_key], '<Plug>(GitGutterStageHunk)', 'stage-current-hunk', 0)
-	call SpaceVim#mapping#space#def('nmap', ['g', 'h', 'r'], '<Plug>(GitGutterUndoHunk)', 'undo-cursor-hunk', 0)
-	call SpaceVim#mapping#space#def('nmap', ['g', 'h', 'v'], '<Plug>(GitGutterPreviewHunk)', 'preview-cursor-hunk', 0)
+  let g:_spacevim_mappings_space.g.h = {'name' : '+Hunks'}
+  if g:spacevim_gitgutter_plugin ==# 'gitgutter'
+    call SpaceVim#mapping#space#def('nmap', ['g', 'h', 'a'], '<Plug>GitGutterStageHunk', 'stage current hunk', 0)
+    call SpaceVim#mapping#space#def('nmap', ['g', 'h', 'r'], '<Plug>GitGutterUndoHunk', 'undo cursor hunk', 0)
+    call SpaceVim#mapping#space#def('nmap', ['g', 'h', 'v'], '<Plug>GitGutterPreviewHunk', 'preview cursor hunk', 0)
+  endif
 endfunction
 
 function! SpaceVim#layers#git#set_variable(var) abort

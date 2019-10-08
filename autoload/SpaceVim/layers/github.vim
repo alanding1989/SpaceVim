@@ -43,14 +43,8 @@ function! SpaceVim#layers#github#config() abort
   let g:_spacevim_mappings_space.g = get(g:_spacevim_mappings_space, 'g',  {
         \ 'name' : '+VersionControl/git',
         \ })
-
-	if !exists('g:_spacevim_mappings_space.g.h')
-		let g:_spacevim_mappings_space.g.h = {'name' : ''}
-	endif
-	let l:h_submenu_name = SpaceVim#layers#isLoaded('git') ? '+GitHub/Hunks' : '+GitHub'
-	let g:_spacevim_mappings_space.g.h['name'] = l:h_submenu_name
-
-	let g:_spacevim_mappings_space.g.g = { 'name': '+Gist' }
+  let g:_spacevim_mappings_space.g.i = { 'name': '+GitHub' }
+  let g:_spacevim_mappings_space.g.g = { 'name': '+Gist' }
 
   " @todo remove the username
   " autoload to set default username
@@ -64,7 +58,7 @@ function! SpaceVim#layers#github#config() abort
   " provides more powerful completion.
   let g:github_issues_no_omni = 1
 
-  call SpaceVim#mapping#space#def('nnoremap', ['g', 'h', 'i'], 'Gissues',
+  call SpaceVim#mapping#space#def('nnoremap', ['g', 'i', 'i'], 'Gissues',
         \ 'show issues', 1)
   "" }}}
 
@@ -73,18 +67,18 @@ function! SpaceVim#layers#github#config() abort
         \ 'username': g:spacevim_github_username,
         \ }
 
-  call SpaceVim#mapping#space#def('nnoremap', ['g', 'h', 'a'], 'GHActivity',
+  call SpaceVim#mapping#space#def('nnoremap', ['g', 'i', 'a'], 'GHActivity',
         \ 'show activities', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['g', 'h', 'd'], 'GHDashboard',
+  call SpaceVim#mapping#space#def('nnoremap', ['g', 'i', 'd'], 'GHDashboard',
         \ 'show dashboard', 1)
   "" }}}
 
   "" tyru/open-browser-github.vim {{{
-  call SpaceVim#mapping#space#def('nnoremap', ['g', 'h', 'f'], 'OpenGithubFile',
+  call SpaceVim#mapping#space#def('nnoremap', ['g', 'i', 'f'], 'OpenGithubFile',
         \ 'show current file in browser', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['g', 'h', 'I'],
+  call SpaceVim#mapping#space#def('nnoremap', ['g', 'i', 'I'],
         \ 'OpenGithubIssue', 'show issues in browser', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['g', 'h', 'p'],
+  call SpaceVim#mapping#space#def('nnoremap', ['g', 'i', 'p'],
         \ 'OpenGithubPullReq', 'show PRs in browser', 1)
   "" }}}
 endfunction
