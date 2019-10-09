@@ -9,6 +9,11 @@
 ""
 " @section vim#buffer, api-vim-buffer
 " @parentsection api
+" @subsection Intro
+"
+" vim#buffer API provides some basic functions for setting and getting config
+" of vim buffer.
+"
 " @subsection Functions
 "
 " is_cmdwin()
@@ -82,6 +87,21 @@ function! s:self.filter_do(expr) abort
     exe printf(a:expr.do, b)
   endfor
 endfunction
+
+if exists('*nvim_buf_line_count')
+  function! s:self.line_count(buf) abort
+    return nvim_buf_line_count(a:buf)
+  endfunction
+elseif has('lua')
+  function! s:self.line_count(buf) abort
+    " lua numbers are floats, so use float2nr
+    return float2nr(luaeval('#vim.buffer(vim.eval("a:buf"))'))
+  endfunction
+else
+  function! s:self.line_count(buf) abort
+    return len(getbufline(a:buf, 1, '$'))
+  endfunction
+endif
 
 
 " just same as nvim_buf_set_lines
