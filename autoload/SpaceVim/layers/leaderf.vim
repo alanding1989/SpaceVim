@@ -209,7 +209,7 @@ function! SpaceVim#layers#leaderf#config() abort
         \ 1)
 
   let lnum = expand('<slnum>') + s:lnum - 1
-  call SpaceVim#mapping#space#def('nnoremap', ['T', 's'], 'Leaderf colorscheme',
+  call SpaceVim#mapping#space#def('nnoremap', ['T', 'c'], 'Leaderf colorscheme',
         \ ['fuzzy find colorschemes',
         \ [
         \ 'SPC T s is to fuzzy find colorschemes',
