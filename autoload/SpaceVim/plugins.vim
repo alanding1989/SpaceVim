@@ -20,7 +20,6 @@ function! s:load_plugins() abort
   for group in SpaceVim#layers#get()
     let g:_spacevim_plugin_layer = group
     for plugin in s:getLayerPlugins(group)
-      " check whether has been disabled
       if index(g:spacevim_disabled_plugins, split(plugin[0], '/')[-1]) == -1
         if len(plugin) == 2
           call SpaceVim#plugins#add(plugin[0], plugin[1])
