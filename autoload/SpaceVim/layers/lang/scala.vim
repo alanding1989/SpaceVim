@@ -209,8 +209,8 @@ function! s:language_specified_mappings() abort
     " after entering vim, so check `exists(':EnTypeCheck')` is ok.
     nnoremap <silent><buffer> <F4>     :EnSuggestImport<CR>
     inoremap <silent><buffer> <F4>     <Esc>:EnSuggestImport<CR>
-    inoremap <silent><buffer> <C-;>i   <Esc>:EnAddImport<CR>
-    inoremap <silent><buffer> <C-;>o   <Esc>:EnOrganizeImports<CR>
+    " inoremap <silent><buffer> <C-;>i   <Esc>:EnAddImport<CR>
+    " inoremap <silent><buffer> <C-;>o   <Esc>:EnOrganizeImports<CR>
     if !SpaceVim#layers#lsp#check_filetype('scala')
       nnoremap <silent><buffer> K      :EnDocBrowse<CR>
     endif

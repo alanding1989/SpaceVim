@@ -1938,6 +1938,54 @@ This layer also provides REPL support for racket, the key bindings are:
 
 
 ==============================================================================
+LANG#RUST                                           *SpaceVim-layer-lang-rust*
+
+This layer is for Rust development.
+
+Requirements:
+
+  1. Racer needs a copy of the rust source. The easiest way to do this is with
+    rustup. Once rustup is installed, download the source with:
+
+>
+      rustup component add rust-src
+<
+  2. Install Rust nightly build
+
+
+>
+      rustup install nightly
+<
+  3. Install racer:
+
+>
+      cargo +nightly install racer
+<
+  4. Set the RUST_SRC_PATH variable in your .bashrc:
+
+>
+      RUST_SRC_PATH=~/.multirust/toolchains/<change>/lib/rustlib/src/rust/src
+      export RUST_SRC_PATH
+<
+  5. Add racer to your path, or set the path with:
+
+>
+      let g:racer_cmd = "/path/to/racer/bin"
+<
+
+MAPPINGS
+
+>
+  Mode        Key         Function
+  -----------------------------------------------
+  normal      gd          rust-definition
+  normal      SPC l d     rust-doc
+  normal      SPC l r     execute current file
+  normal      SPC l s     rust-def-split
+  normal      SPC l x     rust-def-vertical
+<
+
+==============================================================================
 LANG#SCALA                                         *SpaceVim-layer-lang-scala*
 
 This layer is for Scala development.
