@@ -12,7 +12,6 @@ function! SpaceVim#plugins#load() abort
     call SpaceVim#plugins#begin(g:spacevim_plugin_bundle_dir)
     call SpaceVim#plugins#fetch()
     call s:load_plugins()
-    call s:disable_plugins(g:spacevim_disabled_plugins)
     call SpaceVim#plugins#end()
   endif
 
@@ -89,17 +88,6 @@ function! SpaceVim#plugins#Plugin(...) abort
     endif
   endfor
   echo string(adds) . "\n" . string(updates)
-endfunction
-function! s:disable_plugins(plugin_list) abort
-  if g:spacevim_plugin_manager ==# 'dein'
-    for name in a:plugin_list
-      call dein#disable(name)
-    endfor
-  elseif g:spacevim_plugin_manager ==# 'neobundle'
-    for name in a:plugin_list
-      call neobundle#config#disable(name)
-    endfor
-  endif
 endfunction
 
 function! SpaceVim#plugins#get(...) abort
