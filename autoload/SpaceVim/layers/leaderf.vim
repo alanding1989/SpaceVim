@@ -491,7 +491,7 @@ function! s:defind_fuzzy_finder() abort
 endfunction
 
 function! s:accept_mru(line) abort
-  exe 'e ' . line
+  exe 'e ' . a:line
 endfunction
 
 function! s:warp_denite(cmd) abort
