@@ -57,13 +57,12 @@ function! SpaceVim#layers#lang#rust#plugins() abort
   return plugins
 endfunction
 
-let s:recommended_style = 0
-
 function! SpaceVim#layers#lang#rust#config() abort
   let g:racer_experimental_completer = 1
-  let g:racer_cmd = get(g:, 'racer_cmd', $HOME . '/.cargo/bin/racer')
+  let g:racer_cmd = s:racer_cmd ==# ''
+          \ ? get(g:, 'racer_cmd', $HOME . '/.cargo/bin/racer')
+          \ : s:racer_cmd
   let g:rust_recommended_style = s:recommended_style
-
 
   call SpaceVim#mapping#space#regesit_lang_mappings('rust', function('s:language_specified_mappings'))
   call add(g:spacevim_project_rooter_patterns, 'Cargo.toml')
@@ -74,27 +73,14 @@ function! SpaceVim#layers#lang#rust#config() abort
     call SpaceVim#mapping#gd#add('rust', function('s:gotodef'))
   endif
 
-  " let runner = {
-        " \ 'exe' : 'rustc',
-        " \ 'targetopt' : '-o',
-        " \ 'opt' : ['-'],
-        " \ 'usestdin' : 1,
-        " \ }
-  " let runner = {
-        " \ 'exe' : 'cargo',
-        " \ 'targetopt' : 'run',
-        " \ 'opt' : ['-'],
-        " \ 'usestdin' : 1,
-        " \ }
-  " call SpaceVim#plugins#runner#reg_runner('rust', [runner, '#TEMP#'])
 endfunction
 
+let s:recommended_style = 0
+let s:racer_cmd = ''
 function! SpaceVim#layers#lang#rust#set_variable(var) abort
 
-  let s:recommended_style = get(a:var,
-        \ 'recommended-style',
-        \ s:recommended_style)
-
+  let s:recommended_style = get(a:var, 'recommended-style', s:recommended_style)
+  let s:racer_cmd = get(a:var, 'racer_cmd', s:racer_cmd)
 endfunction
 
 function! s:language_specified_mappings() abort
@@ -142,14 +128,14 @@ function! s:language_specified_mappings() abort
           \ '<Plug>(rust-doc)', 'show documentation', 1)
   endif
 
-  " call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'r'],
-        " \ 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
 endfunction
 
 function! s:gotodef() abort
-  " if exists('*racer#GoToDefinition')
+  if exists('*racer#GoToDefinition')
     call racer#GoToDefinition()
-  " endif
+  else
+    exec 'normal! gd'
+  endif
 endfunction
 
 function! s:execCMD(cmd) abort
