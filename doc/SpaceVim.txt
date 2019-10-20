@@ -106,15 +106,16 @@ CONTENTS                                                   *SpaceVim-contents*
       36. lang#puppet.............................|SpaceVim-layer-lang-puppet|
       37. lang#python.............................|SpaceVim-layer-lang-python|
       38. lang#racket.............................|SpaceVim-layer-lang-racket|
-      39. lang#scala...............................|SpaceVim-layer-lang-scala|
-      40. lang#tcl...................................|SpaceVim-layer-lang-tcl|
-      41. lang#xml...................................|SpaceVim-layer-lang-xml|
-      42. operator...................................|SpaceVim-layer-operator|
-      43. shell.........................................|SpaceVim-layer-shell|
-      44. test...........................................|SpaceVim-layer-test|
-      45. tmux...........................................|SpaceVim-layer-tmux|
-      46. tools#dash...............................|SpaceVim-layer-tools-dash|
-      47. tools#zeal...............................|SpaceVim-layer-tools-zeal|
+      39. lang#rust.................................|SpaceVim-layer-lang-rust|
+      40. lang#scala...............................|SpaceVim-layer-lang-scala|
+      41. lang#tcl...................................|SpaceVim-layer-lang-tcl|
+      42. lang#xml...................................|SpaceVim-layer-lang-xml|
+      43. operator...................................|SpaceVim-layer-operator|
+      44. shell.........................................|SpaceVim-layer-shell|
+      45. test...........................................|SpaceVim-layer-test|
+      46. tmux...........................................|SpaceVim-layer-tmux|
+      47. tools#dash...............................|SpaceVim-layer-tools-dash|
+      48. tools#zeal...............................|SpaceVim-layer-tools-zeal|
   7. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
@@ -1935,6 +1936,54 @@ This layer also provides REPL support for racket, the key bindings are:
   SPC l s s       send selection text
 <
 
+
+==============================================================================
+LANG#RUST                                           *SpaceVim-layer-lang-rust*
+
+This layer is for Rust development.
+
+Requirements:
+
+  1. Racer needs a copy of the rust source. The easiest way to do this is with
+    rustup. Once rustup is installed, download the source with:
+
+>
+      rustup component add rust-src
+<
+  2. Install Rust nightly build
+
+
+>
+      rustup install nightly
+<
+  3. Install racer:
+
+>
+      cargo +nightly install racer
+<
+  4. Set the RUST_SRC_PATH variable in your .bashrc:
+
+>
+      RUST_SRC_PATH=~/.multirust/toolchains/<change>/lib/rustlib/src/rust/src
+      export RUST_SRC_PATH
+<
+  5. Add racer to your path, or set the path with:
+
+>
+      let g:racer_cmd = "/path/to/racer/bin"
+<
+
+MAPPINGS
+
+>
+  Mode        Key         Function
+  -----------------------------------------------
+  normal      gd          rust-definition
+  normal      SPC l d     rust-doc
+  normal      SPC l r     execute current file
+  normal      SPC l s     rust-def-split
+  normal      SPC l x     rust-def-vertical
+<
 
 ==============================================================================
 LANG#SCALA                                         *SpaceVim-layer-lang-scala*
