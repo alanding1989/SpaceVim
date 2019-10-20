@@ -166,15 +166,15 @@ function! SpaceVim#layers#leaderf#config() abort
         \ 1)
 
   let lnum = expand('<slnum>') + s:lnum - 1
-  let g:Lf_Extensions = get(g:, 'Lf_Extensions', {})
-  let g:Lf_Extensions = {
-  \ "neomru": {
-  \       "source": function("neomru#_gather_file_candidates()"),
-  \       "accept": function("s:accept_mru"),
-  \       "supports_name_only": 1,
-  \       "supports_multi": 0,
-  \ },
-  \}
+  " let g:Lf_Extensions = get(g:, 'Lf_Extensions', {})
+  " let g:Lf_Extensions = {
+  " \ "neomru": {
+  " \       "source": function("neomru#_gather_file_candidates()"),
+  " \       "accept": function("s:accept_mru"),
+  " \       "supports_name_only": 1,
+  " \       "supports_multi": 0,
+  " \ },
+  " \}
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'r'], 'Leaderf neomru',
         \ ['open-recent-file',
         \ [

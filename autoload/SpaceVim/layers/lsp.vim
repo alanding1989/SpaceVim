@@ -28,6 +28,32 @@ function! SpaceVim#layers#lsp#plugins() abort
 endfunction
 
 function! SpaceVim#layers#lsp#config() abort
+  if !SpaceVim#layers#isLoaded('checkers')
+    call SpaceVim#mapping#space#def('nnoremap', ['e', 'c'], 'call call('
+          \ . string(s:_function('s:clear_errors')) . ', [])',
+          \ 'clear all errors', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['e', 'n'], 'call call('
+          \ . string(s:_function('s:jump_to_next_error')) . ', [])',
+          \ 'next-error', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['e', 'p'], 'call call('
+          \ . string(s:_function('s:jump_to_previous_error')) . ', [])',
+          \ 'previous-error', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['e', 'N'], 'call call('
+          \ . string(s:_function('s:jump_to_previous_error')) . ', [])',
+          \ 'previous-error', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['e', 'l'], 'call call('
+          \ . string(s:_function('s:toggle_show_error')) . ', [0])',
+          \ 'toggle showing the error list', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['e', 'L'], 'call call('
+          \ . string(s:_function('s:toggle_show_error')) . ', [1])',
+          \ 'toggle showing the error list', 1)
+  endif
+
+  " NOTE: alanding add this {{{
+  if get(g:, 'spacevim_autocomplete_method') ==# 'coc'
+    return
+  endif " }}}
+
   " SpaceVim/LanguageClient-neovim {{{
   let g:LanguageClient_diagnosticsDisplay = {
         \ 1: {
@@ -74,28 +100,6 @@ function! SpaceVim#layers#lsp#config() abort
 
     let g:LanguageClient_diagnosticsDisplay[4].texthl = 'ALEInfo'
     let g:LanguageClient_diagnosticsDisplay[4].signTexthl = 'ALEInfoSign'
-  endif
-
-
-  if !SpaceVim#layers#isLoaded('checkers')
-    call SpaceVim#mapping#space#def('nnoremap', ['e', 'c'], 'call call('
-          \ . string(s:_function('s:clear_errors')) . ', [])',
-          \ 'clear all errors', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['e', 'n'], 'call call('
-          \ . string(s:_function('s:jump_to_next_error')) . ', [])',
-          \ 'next-error', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['e', 'p'], 'call call('
-          \ . string(s:_function('s:jump_to_previous_error')) . ', [])',
-          \ 'previous-error', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['e', 'N'], 'call call('
-          \ . string(s:_function('s:jump_to_previous_error')) . ', [])',
-          \ 'previous-error', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['e', 'l'], 'call call('
-          \ . string(s:_function('s:toggle_show_error')) . ', [0])',
-          \ 'toggle showing the error list', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['e', 'L'], 'call call('
-          \ . string(s:_function('s:toggle_show_error')) . ', [1])',
-          \ 'toggle showing the error list', 1)
   endif
 
   let g:LanguageClient_autoStart = 1

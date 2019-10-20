@@ -30,7 +30,11 @@ if SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplete_me
     " actually the same.
     " We need to keep an id to distinguish among conflicting keys.
 
+
+"--------------------------------------------------------------------------------
     return
+"--------------------------------------------------------------------------------
+
 
     if stridx(a:cmds[0], '.') >= 0
       let l:key = split(a:cmds[0], "\\.")[-1]

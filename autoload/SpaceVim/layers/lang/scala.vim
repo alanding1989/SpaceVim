@@ -276,9 +276,6 @@ function! s:language_specified_mappings() abort
           \ 'call SpaceVim#lsp#references()', 'find References', 1)
   endif
 
-  " code runner
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','r'],
-        \ 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
 
   " Sbt
   let g:_spacevim_mappings_space.l.b = {'name' : '+Sbt'}

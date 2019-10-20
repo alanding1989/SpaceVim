@@ -63,9 +63,13 @@ function! SpaceVim#layers#lang#rust#config() abort
   let g:racer_experimental_completer = 1
   let g:racer_cmd = get(g:, 'racer_cmd', $HOME . '/.cargo/bin/racer')
   let g:rust_recommended_style = s:recommended_style
+
+
+  call SpaceVim#mapping#space#regesit_lang_mappings('rust', function('s:language_specified_mappings'))
+  call add(g:spacevim_project_rooter_patterns, 'Cargo.toml')
+
   if SpaceVim#layers#lsp#check_filetype('rust')
-    call SpaceVim#mapping#gd#add('rust',
-          \ function('SpaceVim#lsp#go_to_def'))
+    call SpaceVim#mapping#gd#add('rust', function('SpaceVim#lsp#go_to_def'))
   else
     call SpaceVim#mapping#gd#add('rust', function('s:gotodef'))
   endif
@@ -76,15 +80,13 @@ function! SpaceVim#layers#lang#rust#config() abort
         " \ 'opt' : ['-'],
         " \ 'usestdin' : 1,
         " \ }
-  let runner = {
-        \ 'exe' : 'cargo',
-        \ 'targetopt' : 'run',
-        \ 'opt' : ['-'],
-        \ 'usestdin' : 1,
-        \ }
-  call SpaceVim#plugins#runner#reg_runner('rust', [runner, '#TEMP#'])
-  call SpaceVim#mapping#space#regesit_lang_mappings('rust',
-        \ function('s:language_specified_mappings'))
+  " let runner = {
+        " \ 'exe' : 'cargo',
+        " \ 'targetopt' : 'run',
+        " \ 'opt' : ['-'],
+        " \ 'usestdin' : 1,
+        " \ }
+  " call SpaceVim#plugins#runner#reg_runner('rust', [runner, '#TEMP#'])
 endfunction
 
 function! SpaceVim#layers#lang#rust#set_variable(var) abort
@@ -101,6 +103,31 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'x'],
         \ '<Plug>(rust-def-vertical)', 'rust-def-vertical', 0)
 
+
+  let g:_spacevim_mappings_space.l.c = {'name' : '+Cargo'}
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','c', 'r'], 'call call('
+        \ . string(function('s:execCMD')) . ', ["cargo run"])',
+        \ 'cargo-run', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','c', 'b'], 'call call('
+        \ . string(function('s:execCMD')) . ', ["cargo build"])',
+        \ 'cargo-build', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','c', 'c'], 'call call('
+        \ . string(function('s:execCMD')) . ', ["cargo clean"])',
+        \ 'cargo-clean', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','c', 't'], 'call call('
+        \ . string(function('s:execCMD')) . ', ["cargo test"])',
+        \ 'cargo-test', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','c', 'u'], 'call call('
+        \ . string(function('s:execCMD')) . ', ["cargo update"])',
+        \ 'update-external-dependencies', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','c', 'B'], 'call call('
+        \ . string(function('s:execCMD')) . ', ["cargo bench"])',
+        \ 'run the benchmarks', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','c', 'D'], 'call call('
+        \ . string(function('s:execCMD')) . ', ["cargo doc"])',
+        \ 'build-docs', 1)
+
+
   if SpaceVim#layers#lsp#check_filetype('rust')
     nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
@@ -115,12 +142,18 @@ function! s:language_specified_mappings() abort
           \ '<Plug>(rust-doc)', 'show documentation', 1)
   endif
 
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'r'],
-        \ 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
+  " call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'r'],
+        " \ 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
 endfunction
 
 function! s:gotodef() abort
-  if exists('*racer#GoToDefinition')
+  " if exists('*racer#GoToDefinition')
     call racer#GoToDefinition()
-  endif
+  " endif
 endfunction
+
+function! s:execCMD(cmd) abort
+  call SpaceVim#plugins#runner#open(a:cmd)
+endfunction
+
+" vim:set et sw=2 cc=80:
