@@ -71,6 +71,12 @@ function! SpaceVim#layers#lang#rust#config() abort
     call SpaceVim#mapping#gd#add('rust', function('s:gotodef'))
   endif
 
+  " let runner = {
+        " \ 'exe' : 'rustc',
+        " \ 'targetopt' : '-o',
+        " \ 'opt' : ['-'],
+        " \ 'usestdin' : 1,
+        " \ }
   let runner = {
         \ 'exe' : 'cargo',
         \ 'targetopt' : 'run',
