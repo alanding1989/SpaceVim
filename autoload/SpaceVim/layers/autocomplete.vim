@@ -73,7 +73,7 @@ function! SpaceVim#layers#autocomplete#plugins() abort
           \ 'on_event' : 'InsertEnter',
           \ 'loadconf' : 1,
           \ }])
-    call add(plugins, ['ujihisa/neco-look', { 'on_event' : 'InsertEnter'}])
+    " call add(plugins, ['ujihisa/neco-look', { 'on_event' : 'InsertEnter'}])
     if !has('nvim')
       call add(plugins, ['SpaceVim/nvim-yarp',  {'merged': 0}])
       call add(plugins, ['SpaceVim/vim-hug-neovim-rpc',  {'merged': 0}])
