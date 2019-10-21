@@ -31,10 +31,10 @@ let s:SYS = SpaceVim#api#import('system')
 function! SpaceVim#layers#autocomplete#plugins() abort
   let plugins = [
         \ ['Shougo/neco-syntax',          { 'on_event' : 'InsertEnter'}],
-        \ ['ujihisa/neco-look',           { 'if' : executable('look')}],
         \ ['Shougo/context_filetype.vim', { 'on_event' : 'InsertEnter'}],
         \ ['Shougo/neoinclude.vim',       { 'on_event' : 'InsertEnter'}],
         \ ]
+  call add(plugins, ['deoplete-plugins/deoplete-dictionary',        { 'merged' : 0}])
   if g:spacevim_autocomplete_parens
     call add(plugins, ['Raimondi/delimitMate',        { 'merged' : 0}])
   endif
