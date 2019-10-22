@@ -16,9 +16,23 @@ endfunction
 
 function! SpaceVim#layers#lang#plantuml#config() abort
   " call SpaceVim#mapping#space#regesit_lang_mappings('plantuml', function('s:language_specified_mappings'))
+
+  augroup lang_plantuml
+    autocmd!
+    au FileType plantuml let g:plantuml_previewer#plantuml_jar_path = '/opt/lang-tools/java/plantuml.jar'
+  augroup END
 endfunction
 function! s:language_specified_mappings() abort
+  " call SpaceVim#mapping#space#langSPC('nnoremap', ['l','p'],
+        " \ 'call SpaceVim#plugins#runner#open()',
+        " \ 'preview uml file', 1)
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','p'],
-        \ 'call SpaceVim#plugins#runner#open()',
+        \ 'PlantumlOpen',
         \ 'preview uml file', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','c'],
+        \ 'PlantumlStop',
+        \ 'close uml preview file', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','s'],
+        \ 'PlantumlSave',
+        \ 'save uml file', 1)
 endfunction
