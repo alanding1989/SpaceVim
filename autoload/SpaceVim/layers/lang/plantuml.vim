@@ -10,6 +10,7 @@ function! SpaceVim#layers#lang#plantuml#plugins() abort
   let plugins = []
   call add(plugins, ['aklt/plantuml-syntax', {'on_ft' : 'plantuml'}])
   call add(plugins, ['wsdjeg/vim-slumlord', {'on_ft' : 'plantuml'}])
+  call add(plugins, ['weirongxu/plantuml-previewer.vim'])
   return plugins
 endfunction
 
