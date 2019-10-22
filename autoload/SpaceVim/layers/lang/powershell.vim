@@ -26,20 +26,31 @@ function! SpaceVim#layers#lang#powershell#plugins() abort
   let plugins = []
   " syntax highlighting and indent
   call add(plugins, ['wsdjeg/vim-powershell', {'merged' : 0}])
-  if g:spacevim_autocomplete_method ==# 'coc'
-    call add(plugins, ['yatli/coc-powershell', {'build': 'call coc#powershell#install()',
-          \ 'do': { -> coc#powershell#install()}}])
-  endif
   return plugins
 endfunction
 
 
 function! SpaceVim#layers#lang#powershell#config() abort
+  call SpaceVim#plugins#repl#reg('powershell', 'powershell')
+  call SpaceVim#plugins#runner#reg_runner('powershell', 'powershell %s')
+  call SpaceVim#mapping#space#regesit_lang_mappings('powershell', function('s:language_specified_mappings'))
 
-  call SpaceVim#mapping#gd#add('ps1', function('s:go_to_def'))
-  call SpaceVim#mapping#space#regesit_lang_mappings('ps1', function('s:language_specified_mappings'))
+  call SpaceVim#mapping#gd#add('powershell', function('s:go_to_def'))
 endfunction
 
+
+function! s:go_to_def() abort
+  if !SpaceVim#layers#lsp#check_filetype('ps1')
+    exec 'normal! gd'
+  elseif g:spacevim_autocomplete_method ==# 'coc'
+    call SpaceVim#lsp#go_to_def()
+  endif
+endfunction
+
+
+function! SpaceVim#layers#lang#powershell#set_variable(var) abort
+
+endfunction
 
 function! s:language_specified_mappings() abort
   if g:spacevim_autocomplete_method ==# 'coc'
@@ -49,30 +60,12 @@ function! s:language_specified_mappings() abort
           \ 'call SpaceVim#lsp#show_doc()', 'show_document', 1)
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
           \ 'call SpaceVim#lsp#rename()', 'rename symbol', 1)
-    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'r'],
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'u'],
           \ 'call SpaceVim#lsp#references()', 'find references', 1)
   endif
-endfunction
 
-
-function! s:go_to_def() abort
-  if !SpaceVim#layers#lsp#check_filetype('ps1')
-
-  elseif g:spacevim_autocomplete_method ==# 'coc'
-    call SpaceVim#lsp#go_to_def()
-  endif
-endfunction
-
-
-function! SpaceVim#layers#lang#powershell#set_variable(var) abort
-
-  call SpaceVim#plugins#repl#reg('powershell', 'powershell')
-  call SpaceVim#plugins#runner#reg_runner('powershell', 'powershell %s')
-  call SpaceVim#mapping#space#regesit_lang_mappings('powershell', function('s:language_specified_mappings'))
-endfunction
-
-function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
+
   let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],
         \ 'call SpaceVim#plugins#repl#start("powershell")',
