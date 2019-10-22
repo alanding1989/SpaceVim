@@ -18,13 +18,14 @@ endfunction
 function! SpaceVim#layers#lang#plantuml#config() abort
   let g:plantuml_previewer#plantuml_jar_path = s:plantuml_jar_path
 
-  call SpaceVim#mapping#space#regesit_lang_mappings('plantuml', function('s:language_specified_mappings'))
+  call SpaceVim#mapping#space#regesit_lang_mappings('plantuml',
+        \ function('s:language_specified_mappings'))
 
 endfunction
 
 
 let s:plantuml_jar_path = ''
-function! SpaceVim#layers#lang#scala#set_variable(var) abort
+function! SpaceVim#layers#lang#plantuml#set_variable(var) abort
 
   let s:plantuml_jar_path = get(a:var, 'plantuml_jar_path', s:plantuml_jar_path)
 
@@ -34,10 +35,10 @@ endfunction
 function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','p'],
         \ 'PlantumlOpen',
-        \ 'preview uml file', 1)
+        \ 'preview uml file in browser', 1)
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','c'],
         \ 'PlantumlStop',
-        \ 'close uml preview file', 1)
+        \ 'close uml preview', 1)
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','s'],
         \ 'PlantumlSave',
         \ 'save uml file', 1)
