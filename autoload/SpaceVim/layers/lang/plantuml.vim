@@ -10,22 +10,28 @@ function! SpaceVim#layers#lang#plantuml#plugins() abort
   let plugins = []
   call add(plugins, ['aklt/plantuml-syntax', {'on_ft' : 'plantuml'}])
   call add(plugins, ['wsdjeg/vim-slumlord', {'on_ft' : 'plantuml'}])
-  call add(plugins, ['weirongxu/plantuml-previewer.vim'])
+  call add(plugins, ['weirongxu/plantuml-previewer.vim', {'depends': 'open-browser.vim'}])
   return plugins
 endfunction
 
-function! SpaceVim#layers#lang#plantuml#config() abort
-  " call SpaceVim#mapping#space#regesit_lang_mappings('plantuml', function('s:language_specified_mappings'))
 
-  augroup lang_plantuml
-    autocmd!
-    au FileType plantuml let g:plantuml_previewer#plantuml_jar_path = '/opt/lang-tools/java/plantuml.jar'
-  augroup END
+function! SpaceVim#layers#lang#plantuml#config() abort
+  let g:plantuml_previewer#plantuml_jar_path = s:plantuml_jar_path
+
+  call SpaceVim#mapping#space#regesit_lang_mappings('plantuml', function('s:language_specified_mappings'))
+
 endfunction
+
+
+let s:plantuml_jar_path = ''
+function! SpaceVim#layers#lang#scala#set_variable(var) abort
+
+  let s:plantuml_jar_path = get(a:var, 'plantuml_jar_path', s:plantuml_jar_path)
+
+endfunction
+
+
 function! s:language_specified_mappings() abort
-  " call SpaceVim#mapping#space#langSPC('nnoremap', ['l','p'],
-        " \ 'call SpaceVim#plugins#runner#open()',
-        " \ 'preview uml file', 1)
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','p'],
         \ 'PlantumlOpen',
         \ 'preview uml file', 1)
