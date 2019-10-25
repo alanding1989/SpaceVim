@@ -147,9 +147,9 @@ function! SpaceVim#layers#lang#scala#plugins() abort
         \ ['alanding1989/vim-scala', {'on_ft' : 'scala'}],
         \ ['derekwyatt/vim-sbt'    , {'merged': 0}],
         \ ]
-  if has('python3') || has('python')
-    call add(plugins, ['ensime/ensime-vim', {'on_ft': 'scala'}])
-  endif
+  " if has('python3') || has('python')
+    " call add(plugins, ['ensime/ensime-vim', {'on_ft': 'scala'}])
+  " endif
   return plugins
 endfunction
 
@@ -159,12 +159,17 @@ function! SpaceVim#layers#lang#scala#config() abort
   call SpaceVim#mapping#space#regesit_lang_mappings('scala', function('s:language_specified_mappings'))
   call SpaceVim#plugins#repl#reg('scala', 'scala')
   call SpaceVim#plugins#runner#reg_runner('scala', 'sbt run')
-  call SpaceVim#mapping#gd#add('scala', function('s:go_to_def'))
   call add(g:spacevim_project_rooter_patterns, 'build.sbt')
+
+  if SpaceVim#layers#lsp#check_filetype('scala') && executable('metals-vim')
+    call SpaceVim#mapping#gd#add('scala', function('SpaceVim#lsp#go_to_def'))
+  else
+    call SpaceVim#mapping#gd#add('scala', function('s:go_to_def'))
+  endif
 
   augroup SpaceVim_lang_scala
     auto!
-    if has('python3') || has('python')
+    if exists(':EnTypeCheck') && (has('python3') || has('python'))
       autocmd BufWritePost *.scala silent :EnTypeCheck
     endif
     if s:format_on_save
@@ -345,10 +350,10 @@ endfunction
 
 
 function! s:go_to_def() abort
-  if SpaceVim#layers#lsp#check_filetype('scala') && executable('metals-vim')
-    call SpaceVim#lsp#go_to_def()
-  else
+  if exists(':EnTypeCheck')
     EnDeclarationSplit v
+  else
+    exec 'normal! gd'
   endif
 endfunction
 
