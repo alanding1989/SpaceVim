@@ -40,7 +40,7 @@ endfunction
 
 
 function! s:go_to_def() abort
-  if !SpaceVim#layers#lsp#check_filetype('ps1')
+  if !SpaceVim#layers#lsp#check_filetype('powershell')
     exec 'normal! gd'
   elseif g:spacevim_autocomplete_method ==# 'coc'
     call SpaceVim#lsp#go_to_def()
