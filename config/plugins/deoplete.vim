@@ -104,7 +104,7 @@ call deoplete#custom#source('vim'  , 'rank', 9998)
 call deoplete#custom#source('LC', 'rank', 9999)
 
 " denite
-call deoplete#custom#option('ignore_sources', {'denite-filter': ['denite', 'buffer', 'around', 'member']})
+call deoplete#custom#option('ignore_sources', {'denite-filter': ['denite', 'buffer', 'around', 'member', 'neosnippet']})
 
 " clojure
 call deoplete#custom#option('keyword_patterns', {

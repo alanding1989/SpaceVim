@@ -85,37 +85,41 @@ CONTENTS                                                   *SpaceVim-contents*
       15. lang#dart.................................|SpaceVim-layer-lang-dart|
       16. lang#elixir.............................|SpaceVim-layer-lang-elixir|
       17. lang#elm...................................|SpaceVim-layer-lang-elm|
-      18. lang#go.....................................|SpaceVim-layer-lang-go|
-      19. lang#groovy.............................|SpaceVim-layer-lang-groovy|
-      20. lang#hack.................................|SpaceVim-layer-lang-hack|
-      21. lang#haskell...........................|SpaceVim-layer-lang-haskell|
-      22. lang#hy.....................................|SpaceVim-layer-lang-hy|
-      23. lang#java.................................|SpaceVim-layer-lang-java|
-      24. lang#julia...............................|SpaceVim-layer-lang-julia|
-      25. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
-      26. lang#livescript.....................|SpaceVim-layer-lang-livescript|
-      27. lang#lua...................................|SpaceVim-layer-lang-lua|
-      28. lang#nim...................................|SpaceVim-layer-lang-nim|
-      29. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
-      30. lang#pact.................................|SpaceVim-layer-lang-pact|
-      31. lang#php...................................|SpaceVim-layer-lang-php|
-      32. lang#pony.................................|SpaceVim-layer-lang-pony|
-      33. lang#powershell.....................|SpaceVim-layer-lang-powershell|
-      34. lang#processing.....................|SpaceVim-layer-lang-processing|
-      35. lang#prolog.............................|SpaceVim-layer-lang-prolog|
-      36. lang#puppet.............................|SpaceVim-layer-lang-puppet|
-      37. lang#python.............................|SpaceVim-layer-lang-python|
-      38. lang#racket.............................|SpaceVim-layer-lang-racket|
-      39. lang#rust.................................|SpaceVim-layer-lang-rust|
-      40. lang#scala...............................|SpaceVim-layer-lang-scala|
-      41. lang#tcl...................................|SpaceVim-layer-lang-tcl|
-      42. lang#xml...................................|SpaceVim-layer-lang-xml|
-      43. operator...................................|SpaceVim-layer-operator|
-      44. shell.........................................|SpaceVim-layer-shell|
-      45. test...........................................|SpaceVim-layer-test|
-      46. tmux...........................................|SpaceVim-layer-tmux|
-      47. tools#dash...............................|SpaceVim-layer-tools-dash|
-      48. tools#zeal...............................|SpaceVim-layer-tools-zeal|
+      18. lang#erlang.............................|SpaceVim-layer-lang-erlang|
+      19. lang#fsharp.............................|SpaceVim-layer-lang-fsharp|
+      20. lang#go.....................................|SpaceVim-layer-lang-go|
+      21. lang#goby.................................|SpaceVim-layer-lang-goby|
+      22. lang#gosu.................................|SpaceVim-layer-lang-gosu|
+      23. lang#groovy.............................|SpaceVim-layer-lang-groovy|
+      24. lang#hack.................................|SpaceVim-layer-lang-hack|
+      25. lang#haskell...........................|SpaceVim-layer-lang-haskell|
+      26. lang#hy.....................................|SpaceVim-layer-lang-hy|
+      27. lang#java.................................|SpaceVim-layer-lang-java|
+      28. lang#julia...............................|SpaceVim-layer-lang-julia|
+      29. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
+      30. lang#livescript.....................|SpaceVim-layer-lang-livescript|
+      31. lang#lua...................................|SpaceVim-layer-lang-lua|
+      32. lang#nim...................................|SpaceVim-layer-lang-nim|
+      33. lang#nix...................................|SpaceVim-layer-lang-nix|
+      34. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
+      35. lang#pact.................................|SpaceVim-layer-lang-pact|
+      36. lang#php...................................|SpaceVim-layer-lang-php|
+      37. lang#pony.................................|SpaceVim-layer-lang-pony|
+      38. lang#processing.....................|SpaceVim-layer-lang-processing|
+      39. lang#prolog.............................|SpaceVim-layer-lang-prolog|
+      40. lang#puppet.............................|SpaceVim-layer-lang-puppet|
+      41. lang#python.............................|SpaceVim-layer-lang-python|
+      42. lang#racket.............................|SpaceVim-layer-lang-racket|
+      43. lang#rust.................................|SpaceVim-layer-lang-rust|
+      44. lang#scala...............................|SpaceVim-layer-lang-scala|
+      45. lang#tcl...................................|SpaceVim-layer-lang-tcl|
+      46. lang#xml...................................|SpaceVim-layer-lang-xml|
+      47. operator...................................|SpaceVim-layer-operator|
+      48. shell.........................................|SpaceVim-layer-shell|
+      49. test...........................................|SpaceVim-layer-test|
+      50. tmux...........................................|SpaceVim-layer-tmux|
+      51. tools#dash...............................|SpaceVim-layer-tools-dash|
+      52. tools#zeal...............................|SpaceVim-layer-tools-zeal|
   7. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
@@ -1425,10 +1429,32 @@ checker which is loaded in |SpaceVim-layer-checkers|
 ==============================================================================
 LANG#ELIXIR                                       *SpaceVim-layer-lang-elixir*
 
-INTRO
-The lang#elixir layer provides code completion, documentation lookup, jump to
-definition, mix integration, and iex integration for Elixir. SpaceVim uses
-neomake as default syntax checker which is loaded in |SpaceVim-layer-checkers|
+This layer is for elixir development, disabled by default, to enable this
+layer, add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#elixir'
+<
+
+KEY BINDINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l r         run current file
+  normal          g d             jump to definition
+<
+
+This layer also provides REPL support for d, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
 
 ==============================================================================
 LANG#ELM                                             *SpaceVim-layer-lang-elm*
@@ -1437,6 +1463,56 @@ INTRO
 The lang#elm layer provides code completion, documentation lookup, jump to
 definition, mix integration, and iex integration for elm. SpaceVim uses
 neomake as default syntax checker which is loaded in |SpaceVim-layer-checkers|
+
+==============================================================================
+LANG#ERLANG                                       *SpaceVim-layer-lang-erlang*
+
+This layer is for erlang development, disabled by default, to enable this
+layer, add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#erlang'
+<
+
+KEY BINDINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l r         run current file
+<
+
+This layer also provides REPL support for erlang, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
+
+==============================================================================
+LANG#FSHARP                                       *SpaceVim-layer-lang-fsharp*
+
+This layer is for fsharp development, disabled by default, to enable this
+layer, add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#fsharp'
+<
+
+This layer also provides REPL support for goby, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
 
 ==============================================================================
 LANG#GO                                               *SpaceVim-layer-lang-go*
@@ -1470,6 +1546,53 @@ MAPPINGS
   normal          SPC l t         go test
   normal          SPC l v         freevars
   normal          SPC l r         go run
+<
+
+==============================================================================
+LANG#GOBY                                           *SpaceVim-layer-lang-goby*
+
+This layer is for goby development, disabled by default, to enable this layer,
+add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#goby'
+<
+
+KEY BINDINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l r         run current file
+<
+
+This layer also provides REPL support for goby, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
+
+==============================================================================
+LANG#GOSU                                           *SpaceVim-layer-lang-gosu*
+
+This layer is for gosu development, disabled by default, to enable this layer,
+add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#gosu'
+<
+
+KEY BINDINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l r         run current file
 <
 
 ==============================================================================
