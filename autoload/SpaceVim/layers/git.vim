@@ -16,10 +16,7 @@ let s:git_plugin = 'git'
 
 
 function! SpaceVim#layers#git#plugins() abort
-  let plugins = [
-        \ ['junegunn/gv.vim'       , {'on_cmd': ['GV']}],
-        \ ['tpope/vim-fugitive'    , {'merged': 0}]     ,
-        \ ]
+  let plugins = []
 
   if g:spacevim_gitgutter_plugin ==# 'vim-gitgutter'
     call add(plugins, ['airblade/vim-gitgutter', {'merged': 0}])
@@ -32,7 +29,7 @@ function! SpaceVim#layers#git#plugins() abort
     call add(plugins, ['tpope/vim-dispatch', { 'merged' : 0}])
   elseif s:git_plugin ==# 'gita'
     call add(plugins, ['lambdalisue/vim-gita', { 'on_cmd' : 'Gita'}])
-  else
+  elseif s:git_plugin ==# 'git'
     call add(plugins, ['wsdjeg/git.vim', { 'on_cmd' : 'Git'}])
   endif
 
