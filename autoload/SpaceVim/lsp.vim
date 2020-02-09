@@ -120,7 +120,7 @@ else
   " use vim-lsp
   function! SpaceVim#lsp#reg_server(ft, cmds) abort
     exe 'au User lsp_setup call lsp#register_server({'
-          \ . "'name': 'LSP',"
+          \ . "'name': '" . a:ft . "-lsp',"
           \ . "'cmd': {server_info -> " . string(a:cmds) . '},'
           \ . "'whitelist': ['" .  a:ft . "' ],"
           \ . '})'
