@@ -88,6 +88,7 @@ description: "General documentation about how to using SpaceVim, including the q
   - [Errors handling](#errors-handling)
   - [Managing projects](#managing-projects)
     - [Searching files in project](#searching-files-in-project)
+    - [Custom alternate file](#custom-alternate-file)
 - [EditorConfig](#editorconfig)
 - [Vim Server](#vim-server)
 - [Achievements](#achievements)
@@ -1022,6 +1023,7 @@ Windows manipulation commands (start with `w`):
 
 | Key Bindings          | Descriptions                                                                                                  |
 | --------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `SPC w .`             | windows transient state                                                                             |
 | `SPC w <Tab>`         | switch to alternate window in the current frame (switch back and forth)                                       |
 | `SPC w =`             | balance split windows                                                                                         |
 | `SPC w b`             | force the focus back to the minibuffer (TODO)                                                                 |
@@ -1856,6 +1858,25 @@ Project manager commands start with `p`:
 | `SPC p k`    | kill all buffers of current project      |
 | `SPC p t`    | find project root                        |
 | `SPC p p`    | list all projects                        |
+
+#### Custom alternate file
+
+To manager the alternate file of the project, you need to create a `.project_alt.json` file
+in the root of your project. Then you can use command `:A` to jump to the alternate file of
+current file. You can also specific the type of alternate file, for example `:A doc`.
+With a bang `:A!`, SpaceVim will paser the configuration file additionally. If no type specificed,
+the default type `alternate` will be used.
+
+here is an example of `.project_alt.json`:
+
+```json
+{
+  "autoload/SpaceVim/layers/lang/*.vim": {
+    "doc": "docs/layers/lang/{}.md",
+    "test": "test/layer/lang/{}.vader"
+  }
+}
+```
 
 ## EditorConfig
 
