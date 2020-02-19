@@ -933,6 +933,10 @@ let g:spacevim_project_rooter_automatically = 1
 let g:spacevim_commandline_prompt = '➭'
 
 ""
+" Option for setting todo labels in current project.
+let g:spacevim_todo_labels = map(['fixme', 'question', 'todo', 'idea'], '"@" . v:val')
+
+""
 " @section lint_on_the_fly, options-lint_on_the_fly
 " @parentsection options
 " Enable/Disable lint on the fly feature of SpaceVim's maker. Default is true.
@@ -1109,6 +1113,8 @@ function! SpaceVim#end() abort
     " Navigation in command line
     cnoremap <C-a> <Home>
     cnoremap <C-b> <Left>
+    " @bug_vim with <silent> command line can not be cleared
+    cnoremap <expr> <C-k> repeat('<Delete>', strchars(getcmdline()) - getcmdpos() + 1)
   endif
   call SpaceVim#server#connect()
 
