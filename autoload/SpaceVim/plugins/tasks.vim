@@ -24,36 +24,35 @@ let s:select_task = {}
 let s:conf = []
 let s:bufnr = -1
 let s:variables = {}
+let s:providers = []
 
 
 function! s:load() abort
-  let s:conf = s:TOML.parse_file('.SpaceVim.d/tasks.toml')
+  let [global_conf, local_conf] = [{}, {}]
+  if filereadable(expand('~/.SpaceVim.d/tasks.toml'))
+    let global_conf = s:TOML.parse_file(expand('~/.SpaceVim.d/tasks.toml'))
+    for task_key in keys(global_conf)
+      let global_conf[task_key]['isGlobal'] = 1
+    endfor
+  endif
+  if filereadable('.SpaceVim.d/tasks.toml')
+    let local_conf = s:TOML.parse_file('.SpaceVim.d/tasks.toml')
+  endif
+  let s:conf = extend(global_conf, local_conf)
 endfunction
 
 function! s:init_variables() abort
-  " ${workspaceFolder} - /home/your-username/your-project
-  let s:variables.workspaceFolder = SpaceVim#plugins#projectmanager#current_root()
-  " ${workspaceFolderBasename} - your-project
+  let s:variables.workspaceFolder = s:FILE.unify_path(SpaceVim#plugins#projectmanager#current_root())
   let s:variables.workspaceFolderBasename = fnamemodify(s:variables.workspaceFolder, ':t')
-  " ${file} - /home/your-username/your-project/folder/file.ext
   let s:variables.file = s:FILE.unify_path(expand('%:p'))
-  " ${relativeFile} - folder/file.ext
-  let s:variables.relativeFile = s:FILE.unify_path(expand('%'))
-  " ${relativeFileDirname} - folder
-  let s:variables.relativeFileDirname = s:FILE.unify_path(expand('%:h'))
-  " ${fileBasename} - file.ext
+  let s:variables.relativeFile = s:FILE.unify_path(expand('%'), ':.')
+  let s:variables.relativeFileDirname = s:FILE.unify_path(expand('%'), ':h')
   let s:variables.fileBasename = expand('%:t')
-  " ${fileBasenameNoExtension} - file
   let s:variables.fileBasenameNoExtension = expand('%:t:r')
-  " ${fileDirname} - /home/your-username/your-project/folder
   let s:variables.fileDirname = s:FILE.unify_path(expand('%:p:h'))
-  " ${fileExtname} - .ext
   let s:variables.fileExtname = expand('%:e')
-  " ${lineNumber} - line number of the cursor
   let s:variables.lineNumber = line('.')
-  " ${selectedText} - text selected in your code editor
   let s:variables.selectedText = ''
-  " ${execPath} - location of Code.exe
   let s:variables.execPath = ''
 endfunction
 
@@ -65,7 +64,14 @@ function! s:pick() abort
   let s:select_task = {}
   let ques = []
   for key in keys(s:conf)
-    call add(ques, [key, function('s:select_task'), [key]])
+    if has_key(s:conf[key], 'isGlobal') && s:conf[key].isGlobal
+      let task_name = key . '(global)'
+    elseif has_key(s:conf[key], 'isDetected') && s:conf[key].isDetected
+      let task_name = s:conf[key].detectedName . key . '(detected)'
+    else
+      let task_name = key
+    endif
+    call add(ques, [task_name, function('s:select_task'), [key]])
   endfor
   call s:MENU.menu(ques)
   return s:select_task
@@ -74,13 +80,16 @@ endfunction
 function! s:replace_variables(str) abort
   let str = a:str
   for key in keys(s:variables)
-    let str = substitute(str, '$(' . key . ')', s:variables[key], 'g')
+    let str = substitute(str, '${' . key . '}', s:variables[key], 'g')
   endfor
   return str
 endfunction
 
 function! SpaceVim#plugins#tasks#get()
   call s:load()
+  for Provider in s:providers
+    call extend(s:conf, call(Provider, []))
+  endfor
   call s:init_variables()
   let task = s:pick()
   if has_key(task, 'windows') && s:SYS.isWindows
@@ -92,6 +101,11 @@ function! SpaceVim#plugins#tasks#get()
   endif
   if has_key(task, 'command') && type(task.command) ==# 1
     let task.command = s:replace_variables(task.command)
+  endif
+  if has_key(task, 'options') && type(task.options) ==# 4
+    if has_key(task.options, 'cwd') && type(task.options.cwd) ==# 1
+      let task.options.cwd = s:replace_variables(task.options.cwd)
+    endif
   endif
   return task
 endfunction
@@ -144,3 +158,25 @@ function! SpaceVim#plugins#tasks#edit(...)
     exe 'e .SpaceVim.d/tasks.toml'
   endif
 endfunction
+
+function! s:detect_npm_tasks() abort
+  let detect_task = {}
+  let conf = {}
+  if filereadable('package.json')
+    let conf = s:JSON.json_decode(join(readfile('package.json', ''), ''))
+  endif
+  if has_key(conf, 'scripts')
+    for task_name in keys(conf.scripts)
+      call extend(detect_task, {
+            \ task_name : {'command' : conf.scripts[task_name], 'isDetected' : 1, 'detectedName' : 'npm:'}
+            \ })
+    endfor
+  endif
+  return detect_task
+endfunction
+
+function! SpaceVim#plugins#tasks#reg_provider(provider)
+  call add(s:providers, a:provider)
+endfunction
+
+call SpaceVim#plugins#tasks#reg_provider(funcref('s:detect_npm_tasks'))

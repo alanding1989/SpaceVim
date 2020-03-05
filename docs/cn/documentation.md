@@ -79,6 +79,9 @@ lang: zh
     - [自定义跳转文件](#自定义跳转文件)
   - [标签管理](#标签管理)
   - [任务管理](#任务管理)
+    - [任务自动识别](#任务自动识别)
+    - [任务提供源](#任务提供源)
+    - [自定义任务](#自定义任务)
   - [Iedit 多光标编辑](#iedit-多光标编辑)
     - [Iedit 快捷键](#iedit-快捷键)
   - [高亮光标下变量](#高亮光标下变量)
@@ -1684,13 +1687,121 @@ endfunction
 
 ### 任务管理
 
-构建、打包、测试等任务会涉及到多种外部命令，包括`make`、`mvn`等。
-可以通过任务集成外部工具这些外部命令。
+通过内置的任务管理系统，可以快速集成外部命令工具，类似于 vscode 的任务管理系统，
+支持项目局部配置文件(`.SpaceVim.d/tasks.toml`)和全局配置文件(`~/.SpaceVim.d/tasks.toml`)，项目局部配置文件具有更高的优先权：
 
-| 快捷键      | 功能描述         |
-| ----------- | ---------------- |
-| `SPC p t e` | 编辑任务配置文件 |
-| `SPC p t r` | 选择任务并执行   |
+| 快捷键 | 功能描述             |
+| ------------ | ----------------------------- |
+| `SPC p t e`  | 编辑任务配置文件 |
+| `SPC p t r`  | 选定任务并执行            |
+
+
+#### 任务自动识别
+
+SpaceVim 目前支持自动识别以下构建系统的任务：npm。
+任务管理插件将自动读取并分析 npm 系统的文件`package.json`。
+比如，克隆示例项目 [eslint-starter](https://github.com/spicydonuts/eslint-starter)，
+编辑其中的任意文件，然后按下快捷键`SPC p t r`，将会显示如下任务列表：
+
+![task-auto-detection](https://user-images.githubusercontent.com/13142418/75089003-471d2c80-558f-11ea-8aea-cbf7417191d9.png)
+
+#### 任务提供源
+
+任务提供源可以自动检测并新建任务。例如，一个任务提供源可以自动检测是否存在项目构建文件，比如：`package.json`，
+如果存在则根据其内容创建 npm 的构建任务。
+
+
+在 SpaceVim 里，如果需要新建任务提供源，需要使用启动函数，任务提供源是一个 Vim 函数，该函数返回一系列任务对象。
+
+以下为一个简单的示例：
+
+
+```vim
+function! s:make_tasks() abort
+    if filereadable('Makefile')
+        let subcmd = filter(readfile('Makefile', ''), "v:val=~#'^.PHONY'")
+        if !empty(subcmd)
+            let commands = split(subcmd[0])[1:]
+            let conf = {}
+            for cmd in commands
+                call extend(conf, {
+                            \ cmd : {
+                            \ 'command': 'make',
+                            \ 'args' : [cmd],
+                            \ 'isDetected' : 1,
+                            \ 'detectedName' : 'make:'
+                            \ }
+                            \ })
+            endfor
+            return conf
+        else
+            return {}
+        endif
+    else
+        return {}
+    endif
+endfunction
+call SpaceVim#plugins#tasks#reg_provider(funcref('s:make_tasks'))
+```
+
+将以上内容加入启动函数，在 SpceVim 仓库内按下 `SPC p t r` 快捷键，将会展示如下任务：
+
+![task-make](https://user-images.githubusercontent.com/13142418/75105016-084cac80-564b-11ea-9fe6-75d86a0dbb9b.png)
+
+
+#### 自定义任务
+
+以下为一个简单的任务配置示例，异步运行 `echo hello world`，并将结果打印至输出窗口。
+
+```toml
+[my-task]
+    command = 'echo'
+    args = ['hello world']
+```
+
+![task hello world](https://user-images.githubusercontent.com/13142418/74582981-74049900-4ffd-11ea-9b38-7858042225b9.png)
+
+对于不需要打印输出结果，后台运行的任务，可以设置 `isBackground` 为 `true`:
+
+```toml
+[my-task]
+    command = 'echo'
+    args = ['hello world']
+    isBackground = true
+```
+
+任务的配置，可以设置如下关键字：
+
+- **command**: 需要运行的命令。
+- **args**: 传递给命令的参数，可以省略。
+- **options**: 设置命令运行的一些选项，比如 `cwd`,`env` 或者 `shell`。
+
+在编辑任务配置文件时，可以使用一些预设定的变量，以下列出目前已经支持的预设定变量：
+
+- **\${workspaceFolder}**: - 当前项目的根目录；
+- **\${workspaceFolderBasename}**: - 当前项目根目录所在父目录的文件夹名称；
+- **\${file}**: - 当前文件的绝对路径；
+- **\${relativeFile}**: - 当前文件相对项目根目录的相对路径；
+- **\${relativeFileDirname}**: - 当前文件所在的文件夹相对项目根目录的相对路径；
+- **\${fileBasename}**: - 当前文件的文件名
+- **\${fileBasenameNoExtension}**: - 当前文件的文件名，不包括后缀名
+- **\${fileDirname}**: - 当前文件所在的目录的绝对路径
+- **\${fileExtname}**: - 当前文件的后缀名
+- **\${lineNumber}**: - 光标所在行号
+
+例如：假定目前正在编辑文件 `/home/your-username/your-project/folder/file.ext` ，光标位于第十行；
+该文件所在的项目根目录为 `/home/your-username/your-project`，那么任务系统的预设定变量的值为：
+
+- **\${workspaceFolder}**: - `/home/your-username/your-project/`
+- **\${workspaceFolderBasename}**: - `your-project`
+- **\${file}**: - `/home/your-username/your-project/folder/file.ext`
+- **\${relativeFile}**: - `folder/file.ext`
+- **\${relativeFileDirname}**: - `folder/`
+- **\${fileBasename}**: - `file.ext`
+- **\${fileBasenameNoExtension}**: - `file`
+- **\${fileDirname}**: - `/home/your-username/your-project/folder/`
+- **\${fileExtname}**: - `.ext`
+- **\${lineNumber}**: - `10`
 
 ### Iedit 多光标编辑
 

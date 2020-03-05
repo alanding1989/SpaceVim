@@ -78,6 +78,9 @@ description: "General documentation about how to using SpaceVim, including the q
     - [Custom alternate file](#custom-alternate-file)
   - [Bookmarks management](#bookmarks-management)
   - [Tasks](#tasks)
+    - [Task auto-detection](#task-auto-detection)
+    - [Task provider](#task-provider)
+    - [Custom tasks](#custom-tasks)
   - [Replace text with iedit](#replace-text-with-iedit)
     - [iedit states key bindings](#iedit-states-key-bindings)
   - [Code runner and REPL](#code-runner-and-repl)
@@ -1718,6 +1721,61 @@ file: global tasks configuration(`~/.SpaceVim.d/tasks.toml`) and local configura
 | `SPC p t e`  | edit tasks configuration file |
 | `SPC p t r`  | select task to run            |
 
+#### Task auto-detection
+
+SpaceVim currently auto-detects tasks for npm.
+the tasks manager will paser the `package.json` file for npm systems.
+If you have cloned the [eslint-starter](https://github.com/spicydonuts/eslint-starter) example,
+then pressing `SPC p t r` shows the following list:
+
+![task-auto-detection](https://user-images.githubusercontent.com/13142418/75089003-471d2c80-558f-11ea-8aea-cbf7417191d9.png)
+
+
+#### Task provider
+
+Some tasks can be automatically detected by task provider. For example,
+a Task Provider could check if there is a specific build file, such as `package.json`,
+and create npm tasks. 
+
+To build a task provider, you need to use Bootstrap function. The task provider should be a vim function.
+and return a task object. 
+
+here is an example for building task provider.
+
+```vim
+function! s:make_tasks() abort
+    if filereadable('Makefile')
+        let subcmd = filter(readfile('Makefile', ''), "v:val=~#'^.PHONY'")
+        if !empty(subcmd)
+            let commands = split(subcmd[0])[1:]
+            let conf = {}
+            for cmd in commands
+                call extend(conf, {
+                            \ cmd : {
+                            \ 'command': 'make',
+                            \ 'args' : [cmd],
+                            \ 'isDetected' : 1,
+                            \ 'detectedName' : 'make:'
+                            \ }
+                            \ })
+            endfor
+            return conf
+        else
+            return {}
+        endif
+    else
+        return {}
+    endif
+endfunction
+call SpaceVim#plugins#tasks#reg_provider(funcref('s:make_tasks'))
+```
+
+with above configuration, you will see following tasks in SpaceVim repo:
+
+![task-make](https://user-images.githubusercontent.com/13142418/75105016-084cac80-564b-11ea-9fe6-75d86a0dbb9b.png)
+
+#### Custom tasks
+
 this is basic task configuration for running `echo hello world`, and print results to runner windows.
 
 ```toml
@@ -1763,14 +1821,14 @@ A file located at `/home/your-username/your-project/folder/file.ext` opened in y
 The directory `/home/your-username/your-project` opened as your root workspace.
 So you will have the following values for each variable:
 
-- **\${workspaceFolder}**: - `/home/your-username/your-project`
+- **\${workspaceFolder}**: - `/home/your-username/your-project/`
 - **\${workspaceFolderBasename}**: - `your-project`
 - **\${file}**: - `/home/your-username/your-project/folder/file.ext`
 - **\${relativeFile}**: - `folder/file.ext`
-- **\${relativeFileDirname}**: - `folder`
+- **\${relativeFileDirname}**: - `folder/`
 - **\${fileBasename}**: - `file.ext`
 - **\${fileBasenameNoExtension}**: - `file`
-- **\${fileDirname}**: - `/home/your-username/your-project/folder`
+- **\${fileDirname}**: - `/home/your-username/your-project/folder/`
 - **\${fileExtname}**: - `.ext`
 - **\${lineNumber}**: - line number of the cursor
 
