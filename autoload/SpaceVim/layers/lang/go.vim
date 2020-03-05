@@ -71,7 +71,7 @@ function! s:go_to_def() abort
   if SpaceVim#layers#lsp#check_filetype('go')
     call SpaceVim#lsp#go_to_def()
   else
-    call go#def#Jump('')
+    call go#def#Jump('', 0)
   endif
 endfunction
 
