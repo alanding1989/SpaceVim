@@ -704,6 +704,7 @@ Navigation is centered on the `hjkl` keys with the hope of providing a fast navi
 | `<Up>` / `k`          | select previous file or directory                 |
 | `<Right>` / `l`       | open selected file or expand directory            |
 | `N`                   | Create new file under cursor                      |
+| `K`                   | Create new directory under cursor                 |
 | `y y`                 | Copy file full path to system clipboard           |
 | `y Y`                 | Copy file to system clipboard                     |
 | `P`                   | Paste file to the position under the cursor       |
@@ -782,7 +783,7 @@ The following key bindings are the general key bindings for moving cursor.
 
 ### Command line mode key bidnings
 
-After pressing `:`, you can switch to comamnd line mode, here is a list of key bindings
+After pressing `:`, you can switch to command line mode, here is a list of key bindings
 can be used in command line mode:
 
 | Key bindings   | Descriptions                         |
@@ -955,6 +956,7 @@ Comments are handled by [nerdcommenter](https://github.com/scrooloose/nerdcommen
 | Key Bindings | Descriptions                                            |
 | ------------ | ------------------------------------------------------- |
 | `SPC ;`      | comment operator                                        |
+| `SPC c a`    | switch to the alternative set of delimiters             |
 | `SPC c h`    | hide/show comments                                      |
 | `SPC c l`    | toggle comment lines                                    |
 | `SPC c L`    | comment lines                                           |
