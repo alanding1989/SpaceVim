@@ -60,6 +60,7 @@ function! SpaceVim#layers#lang#go#config() abort
   let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
   let g:neomake_go_gometalinter_args = ['--disable-all']
   let g:go_snippet_engine = 'neosnippet'
+  let g:go_rename_command = 'gopls'
 
   call SpaceVim#mapping#gd#add('go', function('s:go_to_def'))
   call SpaceVim#mapping#space#regesit_lang_mappings('go', function('s:language_specified_mappings'))
