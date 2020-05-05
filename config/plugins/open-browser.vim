@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 " "for open-browser {{{
 " " This is my setting.
 " let g:netrw_nogx = get(g:, 'netrw_nogx', 1) " disable netrw's gx mapping.

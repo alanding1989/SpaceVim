@@ -6,6 +6,11 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section language server protocol, layer-lsp
+" @parentsection layers
+" This layer provides language client support for SpaceVim.
+
 function! SpaceVim#layers#lsp#plugins() abort
   let plugins = []
 
@@ -135,8 +140,8 @@ let s:lsp_servers = {
       \ 'scala' : ['metals-vim'],
       \ 'sh' : ['bash-language-server', 'start'],
       \ 'typescript' : ['typescript-language-server', '--stdio'],
-      \ 'ruby' : ['solargraph.BAT',  'stdio'],
       \ 'vim'        : ['vim-language-server', '--stdio'],
+      \ 'ruby' : ['solargraph',  'stdio'],
       \ 'vue' : ['vls']
       \ }
 

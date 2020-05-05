@@ -295,13 +295,31 @@ endfunction
 
 以下为 SpaceVim 中与 Vim 默认情况下的一些差异。
 
-- Noraml 模式下 `s` 按键不再删除光标下的字符，在 SpaceVim 中，
-  它是窗口相关快捷键的前缀（可以在配置文件中设置成其它按键）。
-  如果希望恢复 `s` 按键原先的功能，可以通过 `windows_leader = ""` 将窗口前缀键设为空字符串来禁用这一功能。
-- Normal 模式下 `,` 按键在 Vim 默认情况下是重复上一次的 `f`、`F`、`t` 和 `T` 按键，但在 SpaceVim 中默认被用作为语言专用的前缀键。如果需要禁用此选项，
+- 按键 `s` 是删除光标下的字符，但是在 SpaceVim 中，
+  它是**Normal**模式窗口快捷键的前缀，这一功能可以使用选项 `windows_leader` 来修改，默认是 `s`。
+  如果需要使用按键 `s` 的原生功能，可以将该选项设置为空。
+
+  ```toml
+  [options]
+      windows_leader = ''
+  ```
+
+- 按键 `,` 是重复上一次的搜索 `f`、`F`、`t` 和 `T` ，但在 SpaceVim 中默认被用作为语言专用的前缀键。如果需要禁用此选项，
   可设置 `enable_language_specific_leader = false`。
-- Normal 模式下 `q` 按键在 SpaceVim 中被设置为了智能关闭窗口，
-  即大多数情况下按下 `q` 键即可关闭当前窗口。可以通过 `windows_smartclose = ""` 使用一个空字符串来禁用这一功能，或修改为其它按键。
+
+  ```toml
+  [options]
+      enable_language_specific_leader = false
+  ```
+
+- 按键 `q` 是录制宏，但是在 SpaceVim 中被设置为了智能关闭窗口，设置该功能的选项是 `windows_smartclose`，默认值是 `q`，
+  可以通过将该选项设置成空字符串来禁用该功能，同时也可以设置成其他按键。
+
+  ```toml
+  [options]
+      windows_smartclose = ''
+  ```
+
 - 命令行模式下 `Ctrl-a` 按键在 SpaceVim 中被修改为了移动光标至命令行行首。
 - 命令行模式下 `Ctrl-b` 按键被映射为方向键 `<Left>`, 用以向左移动光标。
 - 命令行模式下 `Ctrl-f` 按键被映射为方向键 `<Right>`, 用以向右移动光标。
@@ -401,13 +419,13 @@ SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下�
 
 ### 字体
 
-在 SpaceVim 中默认的字体是 [SauceCodePro Nerd Font Mono](https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/SourceCodePro.zip)。
+在 SpaceVim 中默认的字体是 [SourceCodePro Nerd Font Mono](https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/SourceCodePro.zip)。
 如果你也喜欢这一字体，建议将这一字体安装到系统中。
 如果需要修改 SpaceVim 的字体，可以在 `~/.SpaceVim.d/init.toml` 的 `[options]`片段中修改选项 `guifont`，默认值为：
 
 ```toml
 [options]
-    guifont = "SauceCodePro Nerd Font Mono:h11"
+    guifont = "SourceCodePro Nerd Font Mono:h11"
 ```
 
 如果指定的字体不存在，将会使用系统默认的字体，此外，这一选项在终端下是无效的，终端下修改字体，需要修改终端自身配置。
@@ -490,6 +508,13 @@ SpaceVim 默认使用 `nerd fonts`，可参阅其安装指南进行安装。
 当使用 `/` 或 `?` 进行搜索时，或当按下 `n` 或 `N` 后，搜索结果序号将被展示在状态栏中，使用类似于 `20/22` 这样的分数显示搜索结果的当前序号以及结果总数。具体的效果图如下：
 
 ![search status](https://cloud.githubusercontent.com/assets/13142418/26313080/578cc68c-3f3c-11e7-9259-a27419d49572.png)
+
+搜索结果展示由`incsearch`模块提供，可以再配置中启用该模块：
+
+```toml
+[layers]
+    name = "incsearch"
+```
 
 **电池状态信息：**
 
@@ -655,7 +680,7 @@ SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性�
 会使得文件树插件比较慢，因此默认没有打开，如果需要使用这一特性，
 可向配置文件中加入 `enable_vimfiler_gitstatus = true`，启用后的截图如下：
 
-![file-tree](https://user-images.githubusercontent.com/13142418/26881817-279225b2-4bcb-11e7-8872-7e4bd3d1c84e.png)
+![file-tree](https://user-images.githubusercontent.com/13142418/80496111-5065b380-899b-11ea-95c7-02af4d304aaf.png)
 
 默认情况下文件树是在窗口的右边打开，如果需要设置文件树默认在左边，需要修改 `filetree_direction` 选项。
 需要注意的是，当设置文件树在左边时，函数列表 tagbar 将会在右边。
@@ -898,6 +923,8 @@ call SpaceVim#custom#SPC('nnoremap', ['f', 't'], 'echom "hello world"', 'test cu
 | `SPC i U 1` | insert UUIDv1 (use universal argument to insert with CID format)      |
 | `SPC i U 4` | insert UUIDv4 (use universal argument to insert with CID format)      |
 | `SPC i U U` | insert UUIDv4 (use universal argument to insert with CID format)      |
+
+**提示：** 您可以使用前缀参数指定密码字符的数量，（例如，`10 SPC i p 1` 将生成 `10` 个简单密码字符）
 
 #### 增加或减小数字
 

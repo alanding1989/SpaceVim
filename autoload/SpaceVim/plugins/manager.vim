@@ -81,7 +81,7 @@ function! s:install_manager() abort
           \ 'dein.vim'], s:Fsep)
   elseif g:spacevim_plugin_manager ==# 'vim-plug'
     "auto install vim-plug
-    if filereadable(expand('~/.cache/vim-plug/autoload/plug.vim'))
+    if filereadable(expand(g:spacevim_data_dir.'/vim-plug/autoload/plug.vim'))
       let g:_spacevim_vim_plug_installed = 1
     else
       if s:need_cmd('curl')
@@ -89,14 +89,14 @@ function! s:install_manager() abort
         call s:VIM_CO.system([
               \ 'curl',
               \ '-fLo',
-              \ expand('~/.cache/vim-plug/autoload/plug.vim'),
+              \ expand(g:spacevim_data_dir.'/vim-plug/autoload/plug.vim'),
               \ '--create-dirs',
               \ 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
               \ ])
         let g:_spacevim_vim_plug_installed = 1
       endif
     endif
-    exec 'set runtimepath+=~/.cache/vim-plug/'
+    exec 'set runtimepath+='.g:spacevim_data_dir.'/vim-plug/'
   endif
 endf
 
@@ -644,21 +644,21 @@ function! s:new_window() abort
     setf SpaceVimPlugManager
     nnoremap <silent> <buffer> q :bd<CR>
     nnoremap <silent> <buffer> gf :call <SID>open_plugin_dir()<cr>
+    nnoremap <silent> <buffer> gr :call <SID>fix_install()<cr>
     " process has finished or does not start.
     return 2
   endif
 endfunction
 
 function! s:open_plugin_dir() abort
-  let line = line('.') - 3
-  let plugin = filter(copy(s:ui_buf), 's:ui_buf[v:key] == line')
+  let plugin = get(split(getline('.')), 1, ':')[:-2]
   if !empty(plugin)
     let shell = empty($SHELL) ? SpaceVim#api#import('system').isWindows ? 'cmd.exe' : 'bash' : $SHELL
     let path = ''
     if g:spacevim_plugin_manager ==# 'dein'
-      let path = dein#get(keys(plugin)[0]).path
+      let path = dein#get(plugin).path
     elseif g:spacevim_plugin_manager ==# 'neobundle'
-      let path = neobundle#get(keys(plugin)[0]).path
+      let path = neobundle#get(plugin).path
     elseif g:spacevim_plugin_manager ==# 'vim-plug'
     endif
     if isdirectory(path)
@@ -679,6 +679,38 @@ function! s:open_plugin_dir() abort
     else
       echohl WarningMsg
       echo 'Plugin(' . keys(plugin)[0] . ') has not been installed!'
+      echohl None
+    endif
+  endif
+endfunction
+
+function! s:fix_install() abort
+  let plugin = get(split(getline('.')), 1, ':')[:-2]
+  if !empty(plugin)
+    if g:spacevim_plugin_manager ==# 'dein'
+      let repo = dein#get(plugin)
+    elseif g:spacevim_plugin_manager ==# 'neobundle'
+      let repo = neobundle#get(plugin)
+    else
+      let repo = {}
+    endif
+    if has_key(repo, 'path') && isdirectory(repo.path)
+      if index(s:failed_plugins, plugin) > 0
+        call remove(s:failed_plugins, plugin)
+      endif
+      let argv = 'git checkout . && git pull --progress'
+      let jobid = s:JOB.start(argv,{
+            \ 'on_stderr' : function('s:on_install_stdout'),
+            \ 'cwd' : repo.path,
+            \ 'on_exit' : function('s:on_pull_exit')
+            \ })
+      if jobid != 0
+        let s:pulling_repos[jobid] = repo
+        call s:msg_on_start(repo.name)
+      endif
+    else
+      echohl WarningMsg
+      echo 'Plugin(' . plugin . ') has not been installed!'
       echohl None
     endif
   endif
