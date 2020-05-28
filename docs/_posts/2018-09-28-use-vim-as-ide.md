@@ -1,8 +1,8 @@
 ---
 title: "Use Vim as IDE"
 categories: [blog]
-excerpt: "A general guide for using SpaceVim as general IDE"
-type: BlogPosting
+description: "A general guide for using SpaceVim as general IDE"
+type: article
 comments: true
 commentsID: "Use Vim as IDE"
 ---

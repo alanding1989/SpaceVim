@@ -1,10 +1,38 @@
 <!DOCTYPE html>
-<html lang="{{ page.lang | site.lang }}">
+<html
+  lang="{{ page.lang | default: site.lang }}"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:og="http://ogp.me/ns#"
+  xmlns:fb="http://www.facebook.com/2008/fbml"
+>
   <head>
     <title>{{ page.title }} | SpaceVim</title>
     <meta name="baidu-site-verification" content="AN14j6xQVd" />
     <meta name="yandex-verification" content="8de09d07572b8dcc" />
-    {% seo title=false %} {% if page.lang == "zh" %}
+    <meta name="author" content="Shidong Wang" />
+    <meta name="description" content="{{ page.description }}" />
+    {% if page.type %}
+    <meta property="og:type" content="{{ page.type }}" />
+    {% else %}
+    <meta property="og:type" content="webpage" />
+    {% endif %}
+    <meta property="og:title" content="{{ page.title }} | SpaceVim" />
+    <meta property="og:description" content="{{ page.description }}" />
+    <meta property="og:url" content="{{ site.url }}{{ page.url }}" />
+    <meta
+      property="og:image"
+      content="{{ page.image | default: site.image }}"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@SpaceVim" />
+    <meta name="twitter:creator" content="@wsdtty" />
+    <meta
+      name="twitter:image:src"
+      content="{{ page.image | default: site.image }}"
+    />
+    <meta name="twitter:title" content="{{ page.title }} | SpaceVim" />
+    <meta name="twitter:description" content="{{ page.description }}" />
+    {% if page.lang == "zh" %}
     <script
       type="text/javascript"
       src="https://tajs.qq.com/stats?sId=60680063"
@@ -62,7 +90,7 @@
     {% endif %}
     <script src="{{ '/assets/js/respond.js' | relative_url }}"></script>
     <meta
-      name="viewport"
+      property="viewport"
       content="width=device-width, initial-scale=1, user-scalable=no"
     />
     <script>
